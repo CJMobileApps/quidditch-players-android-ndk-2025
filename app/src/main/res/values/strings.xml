@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Quidditch Players</string>
+    <string name="some_error_occurred">Some Error Occurred</string>
 </resources>
