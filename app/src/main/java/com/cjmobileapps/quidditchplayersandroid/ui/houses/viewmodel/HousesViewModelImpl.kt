@@ -34,7 +34,7 @@ class HousesViewModelImpl @Inject constructor(
     private val coroutineContext =
         compositeJob + coroutineDispatchers.main + exceptionHandler + SupervisorJob()
 
-    private val coroutineContextDuckItTokenFlow =
+    private val coroutineContextHousesFlow =
         compositeJob + coroutineDispatchers.main + exceptionHandler + SupervisorJob()
 
     private val housesState = mutableStateOf<HousesState>(HousesState.LoadingState)
@@ -49,37 +49,23 @@ class HousesViewModelImpl @Inject constructor(
 
     init {
         viewModelScope.launch(coroutineContext) {
-
-            quidditchPlayersUseCase
-                .fetchHouses()
-                .onSuccess {
-                    housesState.value = HousesState.HousesLoadedState()
-                }
-                .onError { statusCode, error ->
-                    //duckItListState.value = DuckItListState.DuckItListLoadedState()
-                    //snackbarState.value = DuckItSnackbarState.UnableToGetDuckItListError()
-                }
-
-//            duckItUseCase.getPosts { posts ->
-//                posts
-//                    .onSuccess { postsData ->
-//                        duckItListState.value = DuckItListState.DuckItListLoadedState(
-//                            posts = postsData.posts.convertToStateObj()
-//                        )
-//
-//                        viewModelScope.launch(coroutineContextDuckItTokenFlow) {
-//                            accountUseCase.initDuckItTokenFlow(onIsUserLoggedIn = { isUserLoggedIn ->
-//                                updateIsUserLoggedIn(isUserLoggedIn)
-//                            })
-//                        }
-//                    }
-//                    .onError { _ ->
-//                        duckItListState.value = DuckItListState.DuckItListLoadedState()
-//                        snackbarState.value = DuckItSnackbarState.UnableToGetDuckItListError()
-//                    }
-//            }
+            quidditchPlayersUseCase.fetchHouses()
         }
 
+        viewModelScope.launch(coroutineContextHousesFlow) {
+            quidditchPlayersUseCase.getHouses { housesResponse ->
+                housesResponse
+                    .onSuccess { houses ->
+                        housesState.value = HousesState.HousesLoadedState(houses = houses)
+                    }
+                    .onError { statusCode, error ->
+//                        Log.d("HERE_", "hosues!!!! getHouses error ")
+
+                        //                        duckItListState.value = DuckItListState.DuckItListLoadedState()
+//                        snackbarState.value = DuckItSnackbarState.UnableToGetDuckItListError()
+                    }
+            }
+        }
     }
 
     sealed class HousesState {

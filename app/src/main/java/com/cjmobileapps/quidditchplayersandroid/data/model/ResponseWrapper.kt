@@ -6,7 +6,7 @@ import retrofit2.Response
 data class ResponseWrapper<T>(
     val data: T? = null,
     val error: Error? = null,
-    val statusCode: Int? = null
+    val statusCode: Int
 )
 
 data class Error(

@@ -36,7 +36,7 @@ inline fun <T : Any> ResponseWrapper<T>.onSuccess(action: (T) -> Unit): Response
     return this
 }
 
-inline fun <T : Any> ResponseWrapper<T>.onError(action: (statusCode: Int?, error: Error) -> Unit): ResponseWrapper<T> {
+inline fun <T : Any> ResponseWrapper<T>.onError(action: (statusCode: Int, error: Error) -> Unit): ResponseWrapper<T> {
     if (error != null && !isSuccessful()) {
         action(statusCode, error)
     }

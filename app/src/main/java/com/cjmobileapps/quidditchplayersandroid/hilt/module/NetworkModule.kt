@@ -1,21 +1,39 @@
 package com.cjmobileapps.quidditchplayersandroid.hilt.module
 
+import android.content.Context
 import com.cjmobileapps.quidditchplayersandroid.BuildConfig
+import com.cjmobileapps.quidditchplayersandroid.network.NetworkConstants.HTTP_CACHE_DIR
+import com.cjmobileapps.quidditchplayersandroid.network.NetworkConstants.HTTP_CACHE_SIZE
 import com.cjmobileapps.quidditchplayersandroid.network.QuidditchPlayersApi
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
+
+    @Singleton
+    @Provides
+    fun httpCacheDirectory(@ApplicationContext context: Context): File {
+        return File(context.cacheDir, HTTP_CACHE_DIR)
+    }
+
+    @Singleton
+    @Provides
+    fun cache(httpCacheDirectory: File): Cache {
+        return Cache(httpCacheDirectory, HTTP_CACHE_SIZE)
+    }
 
     @Singleton
     @Provides
@@ -32,9 +50,11 @@ class NetworkModule {
     @Singleton
     @Provides
     fun okHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor
+        loggingInterceptor: HttpLoggingInterceptor,
+        cache: Cache
     ): OkHttpClient {
         return OkHttpClient.Builder()
+            .cache(cache)
             .addInterceptor(loggingInterceptor)
             .build()
     }
