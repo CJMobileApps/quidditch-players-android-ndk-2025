@@ -38,7 +38,7 @@ private val LightColorScheme = lightColorScheme(
     tertiary = QuidditchPlayersBlackDark,
 
     // The background color appears behind scrollable content.
-    background = Color.White,
+    background = Color.LightGray,
 
     // Surface colors affect the surfaces of components.
     surface = Color.White,
