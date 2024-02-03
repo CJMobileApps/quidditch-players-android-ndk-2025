@@ -5,4 +5,6 @@ interface HousesViewModel {
     fun getState(): HousesViewModelImpl.HousesState
 
     fun getSnackbarState(): HousesViewModelImpl.HousesSnackbarState
+
+    fun resetSnackbarState()
 }

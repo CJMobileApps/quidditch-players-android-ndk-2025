@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Quidditch Players</string>
     <string name="some_error_occurred">Some Error Occurred</string>
+    <string name="unable_to_get_houses">Unable To Get Houses</string>
 </resources>

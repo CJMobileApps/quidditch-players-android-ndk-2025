@@ -15,7 +15,7 @@ class QuidditchPlayersUseCase(
 
     private val tag = QuidditchPlayersRepositoryImpl::class.java.simpleName
 
-    suspend fun getHouses(onHousesResponse: (ResponseWrapper<List<House>>) -> Unit) {
+    suspend fun getHousesFromDB(onHousesResponse: (ResponseWrapper<List<House>>) -> Unit) {
         try {
             quidditchPlayersRepository.getAllHousesFlow().collectLatest { houses ->
                 onHousesResponse(
@@ -26,6 +26,7 @@ class QuidditchPlayersUseCase(
                 )
             }
         } catch (e: Exception) {
+            Timber.tag(tag).e("quidditchPlayersRepository.getAllHousesFlow() error occurred: $e \\n ${e.message}")
             onHousesResponse(
                 ResponseWrapper(
                     error = Error(isError = true, message = e.message),
@@ -35,7 +36,7 @@ class QuidditchPlayersUseCase(
         }
     }
 
-    suspend fun fetchHouses(): ResponseWrapper<Boolean> {
+    suspend fun fetchHousesApi(): ResponseWrapper<Boolean> {
         var responseWrapper: ResponseWrapper<Boolean> = ResponseWrapper(statusCode = 999)
 
         quidditchPlayersRepository.getAllHouses()

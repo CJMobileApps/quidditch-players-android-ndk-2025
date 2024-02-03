@@ -49,28 +49,34 @@ class HousesViewModelImpl @Inject constructor(
 
     init {
         viewModelScope.launch(coroutineContext) {
-            quidditchPlayersUseCase.fetchHouses()
+            quidditchPlayersUseCase
+                .fetchHousesApi()
+                .onError { _, _ ->
+                    snackbarState.value = HousesSnackbarState.UnableToGetHousesListError()
+                }
         }
 
         viewModelScope.launch(coroutineContextHousesFlow) {
-            quidditchPlayersUseCase.getHouses { housesResponse ->
+            quidditchPlayersUseCase.getHousesFromDB { housesResponse ->
                 housesResponse
                     .onSuccess { houses ->
                         housesState.value = HousesState.HousesLoadedState(houses = houses)
                     }
-                    .onError { statusCode, error ->
-//                        Log.d("HERE_", "hosues!!!! getHouses error ")
-
-                        //                        duckItListState.value = DuckItListState.DuckItListLoadedState()
-//                        snackbarState.value = DuckItSnackbarState.UnableToGetDuckItListError()
+                    .onError { _, _ ->
+                        housesState.value = HousesState.HousesLoadedState()
+                        snackbarState.value = HousesSnackbarState.UnableToGetHousesListError()
                     }
             }
         }
     }
 
+    override fun resetSnackbarState() {
+        snackbarState.value = HousesSnackbarState.Idle
+    }
+
     sealed class HousesState {
 
-        object LoadingState : HousesState()
+        data object LoadingState : HousesState()
 
         data class HousesLoadedState(
             val houses: List<House> = emptyList(),
@@ -80,15 +86,19 @@ class HousesViewModelImpl @Inject constructor(
 
     sealed class HousesSnackbarState {
 
-        object Idle : HousesSnackbarState()
+        data object Idle : HousesSnackbarState()
 
         data class ShowGenericError(
+            val error: String? = null
+        ) : HousesSnackbarState()
+
+        data class UnableToGetHousesListError(
             val error: String? = null
         ) : HousesSnackbarState()
     }
 
     sealed class HousesNavRouteUi {
 
-        object Idle : HousesNavRouteUi()
+        data object Idle : HousesNavRouteUi()
     }
 }

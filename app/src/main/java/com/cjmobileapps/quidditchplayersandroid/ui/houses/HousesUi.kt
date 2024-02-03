@@ -11,16 +11,15 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +31,7 @@ import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewMo
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModelImpl
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModelImpl.HousesState
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun HousesUi(
@@ -65,15 +65,33 @@ fun HousesUi(
             is HousesViewModelImpl.HousesSnackbarState.Idle -> null
             is HousesViewModelImpl.HousesSnackbarState.ShowGenericError -> state.error
                 ?: stringResource(R.string.some_error_occurred)
+            is HousesViewModelImpl.HousesSnackbarState.UnableToGetHousesListError -> stringResource(
+                R.string.unable_to_get_houses
+            )
         }
 
         if (snackbarMessage != null) {
-//            DuckItListSnackbar(
-//                message = snackbarMessage,
-//                coroutineScope = coroutineScope,
-//                snackbarHostState = snackbarHostState,
-//                duckItListViewModel = duckItListViewModel
-//            )
+            HousesSnackbar(
+                message = snackbarMessage,
+                coroutineScope = coroutineScope,
+                snackbarHostState = snackbarHostState,
+                housesViewModel = housesViewModel
+            )
+        }
+    }
+}
+
+@Composable
+fun HousesSnackbar(
+    message: String,
+    coroutineScope: CoroutineScope,
+    snackbarHostState: SnackbarHostState,
+    housesViewModel: HousesViewModel
+) {
+    LaunchedEffect(key1 = message) {
+        coroutineScope.launch {
+            snackbarHostState.showSnackbar(message = message)
+            housesViewModel.resetSnackbarState()
         }
     }
 }
