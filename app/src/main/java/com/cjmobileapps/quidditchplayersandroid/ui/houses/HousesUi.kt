@@ -63,8 +63,10 @@ fun HousesUi(
 
         val snackbarMessage: String? = when (val state = housesViewModel.getSnackbarState()) {
             is HousesViewModelImpl.HousesSnackbarState.Idle -> null
+
             is HousesViewModelImpl.HousesSnackbarState.ShowGenericError -> state.error
                 ?: stringResource(R.string.some_error_occurred)
+
             is HousesViewModelImpl.HousesSnackbarState.UnableToGetHousesListError -> stringResource(
                 R.string.unable_to_get_houses
             )
@@ -101,8 +103,6 @@ fun HousesLoadedUi(
     modifier: Modifier,
     housesViewModel: HousesViewModel,
     housesLoadedState: HousesState.HousesLoadedState,
-//    duckItListLoadedState: DuckItListLoadedState,
-//    duckItListViewModel: DuckItListViewModel,
     navController: NavController
 ) {
 
@@ -118,7 +118,7 @@ fun HousesLoadedUi(
             ElevatedCard(
                 modifier = modifier
                     .fillMaxWidth()
-                    .clickable { },
+                    .clickable { housesViewModel.goToPlayerListUi(house.name.name) },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                 )
@@ -158,21 +158,11 @@ fun HousesLoadedUi(
         }
     }
 
-    //val posts = duckItListLoadedState.posts
-
-//    DuckItListUi(
-//        modifier = modifier,
-//        posts = posts,
-//        lastIndex = duckItListLoadedState.posts.lastIndex,
-//        onUpvoteButtonClicked = { duckItListViewModel.upvote(postId = it) },
-//        onDownvoteButtonClicked = { duckItListViewModel.downvote(postId = it) }
-//    )
-
-//    when (duckItListViewModel.getDuckItListNavRouteUiState()) {
-//        is DuckItListViewModelImpl.DuckItListNavRouteUi.Idle -> {}
-//        is DuckItListViewModelImpl.DuckItListNavRouteUi.GoToLogInScreenUi -> {
-//            navController.navigate(NavItem.LogIn.navRoute)
-//            duckItListViewModel.resetNavRouteUiToIdle()
-//        }
-//    }
+    when (val navigateRouteUiValue = housesViewModel.getHousesNavRouteUiState()) {
+        is HousesViewModelImpl.HousesNavRouteUi.Idle -> {}
+        is HousesViewModelImpl.HousesNavRouteUi.GoToPlayerListUi -> {
+            navController.navigate(navigateRouteUiValue.getNavRouteWithArguments())
+            housesViewModel.resetNavRouteUiToIdle()
+        }
+    }
 }

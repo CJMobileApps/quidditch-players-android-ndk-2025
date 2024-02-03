@@ -3,12 +3,18 @@ package com.cjmobileapps.quidditchplayersandroid.ui
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.HousesUi
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModelImpl
+import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.PlayerUi
+import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayerListViewModel
+import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayerListViewModelImpl
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -28,15 +34,13 @@ fun NavigationGraph(
                 snackbarHostState = snackbarHostState
             )
         }
-        composable(NavItem.PlayersList.navRoute) {
-//            val newPostViewModel: NewPostViewModel = hiltViewModel<NewPostViewModelImpl>()
-//
-//            NewPostUi(
-//                navController = navController,
-//                newPostViewModel = newPostViewModel,
-//                coroutineScope = coroutineScope,
-//                snackbarHostState = snackbarHostState
-//            )
+        composable(
+            NavItem.PlayersList.navRoute,
+            arguments = NavItem.PlayersList.arguments
+        ) {
+            val playerListViewModel: PlayerListViewModel = hiltViewModel<PlayerListViewModelImpl>()
+
+            PlayerUi()
         }
         composable(NavItem.PlayerDetail.navRoute) {
 //            val logInViewModel: LogInViewModel = hiltViewModel<LogInViewModelImpl>()
@@ -52,11 +56,22 @@ fun NavigationGraph(
 }
 
 sealed class NavItem(
-    val navRoute: String
+    val navRoute: String,
+    val arguments: List<NamedNavArgument> = emptyList()
 ) {
-    object Houses : NavItem(navRoute = "nav_houses")
+    data object Houses : NavItem(navRoute = "nav_houses")
 
-    object PlayersList : NavItem(navRoute = "nav_players_list")
+    data object PlayersList : NavItem(
+        navRoute = "nav_players_list/{houseName}",
+        arguments = listOf(
+            navArgument("houseName") { type = NavType.StringType }
+        )
+    ) {
 
-    object PlayerDetail : NavItem(navRoute = "nav_player_detail")
+        fun getNavRouteWithArguments(houseName: String): String {
+            return "nav_players_list/$houseName"
+        }
+    }
+
+    data object PlayerDetail : NavItem(navRoute = "nav_player_detail")
 }

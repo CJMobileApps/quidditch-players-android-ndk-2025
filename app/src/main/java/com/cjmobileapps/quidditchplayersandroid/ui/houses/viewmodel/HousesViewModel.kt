@@ -6,5 +6,11 @@ interface HousesViewModel {
 
     fun getSnackbarState(): HousesViewModelImpl.HousesSnackbarState
 
+    fun getHousesNavRouteUiState(): HousesViewModelImpl.HousesNavRouteUi
+
     fun resetSnackbarState()
+
+    fun resetNavRouteUiToIdle()
+
+    fun goToPlayerListUi(houseName: String)
 }

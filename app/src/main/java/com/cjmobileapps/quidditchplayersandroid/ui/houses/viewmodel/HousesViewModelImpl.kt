@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
+import com.cjmobileapps.quidditchplayersandroid.ui.NavItem
 import com.cjmobileapps.quidditchplayersandroid.util.coroutine.CoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.util.onError
 import com.cjmobileapps.quidditchplayersandroid.util.onSuccess
@@ -74,6 +75,24 @@ class HousesViewModelImpl @Inject constructor(
         snackbarState.value = HousesSnackbarState.Idle
     }
 
+    override fun goToPlayerListUi(houseName: String) {
+        val state = getState()
+        if (state !is HousesState.HousesLoadedState) return
+        state.housesNavRouteUi.value = HousesNavRouteUi.GoToPlayerListUi(houseName)
+    }
+
+    override fun getHousesNavRouteUiState(): HousesNavRouteUi {
+        val state = getState()
+        if (state !is HousesState.HousesLoadedState) return HousesNavRouteUi.Idle
+        return state.housesNavRouteUi.value
+    }
+
+    override fun resetNavRouteUiToIdle() {
+        val state = getState()
+        if (state !is HousesState.HousesLoadedState) return
+        state.housesNavRouteUi.value = HousesNavRouteUi.Idle
+    }
+
     sealed class HousesState {
 
         data object LoadingState : HousesState()
@@ -100,5 +119,11 @@ class HousesViewModelImpl @Inject constructor(
     sealed class HousesNavRouteUi {
 
         data object Idle : HousesNavRouteUi()
+
+        data class GoToPlayerListUi(val houseName: String) : HousesNavRouteUi() {
+
+            fun getNavRouteWithArguments(): String =
+                NavItem.PlayersList.getNavRouteWithArguments(houseName)
+        }
     }
 }
