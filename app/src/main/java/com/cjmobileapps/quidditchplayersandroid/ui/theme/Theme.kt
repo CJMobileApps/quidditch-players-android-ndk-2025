@@ -10,31 +10,44 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+//TODO test this
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = QuidditchPlayersBlack,
+    secondary = QuidditchPlayersBlack,
+    tertiary = QuidditchPlayersBlack,
+    surface = QuidditchPlayersBlack,
+    onPrimary = QuidditchPlayersGreen
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+    // A primary color is the color displayed most frequently across your app's screens and components.
+    primary = QuidditchPlayersBlack,
+
+    // A secondary color provides more ways to accent and distinguish your product.
+    secondary = QuidditchPlayersGreen,
+
+    // The tertiary key color is used to derive the roles of contrasting
+    // accents that can be used to balance primary and secondary colors or bring enhanced attention to an element.
+    tertiary = QuidditchPlayersBlackDark,
+
+    // The background color appears behind scrollable content.
+    background = Color.White,
+
+    // Surface colors affect the surfaces of components.
+    surface = Color.White,
+
     onPrimary = Color.White,
-    onSecondary = Color.White,
+    onSecondary = Color.Black,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    onBackground = QuidditchPlayersBlack,
+    onSurface = QuidditchPlayersBlack
 )
 
 @Composable
