@@ -75,7 +75,7 @@ class HousesViewModelImpl @Inject constructor(
         snackbarState.value = HousesSnackbarState.Idle
     }
 
-    override fun goToPlayerListUi(houseName: String) {
+    override fun goToPlayersListUi(houseName: String) {
         val state = getState()
         if (state !is HousesState.HousesLoadedState) return
         state.housesNavRouteUi.value = HousesNavRouteUi.GoToPlayerListUi(houseName)
