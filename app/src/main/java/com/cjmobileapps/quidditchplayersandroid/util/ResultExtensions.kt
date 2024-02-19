@@ -3,6 +3,7 @@ package com.cjmobileapps.quidditchplayersandroid.util
 import com.cjmobileapps.quidditchplayersandroid.data.model.Error
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseApiWrapper
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapper
+import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrappers
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.withContext
@@ -113,6 +114,45 @@ suspend fun <T : Any> withContextApiWrapper(
     } catch (e: Exception) {
         Timber.e(e.stackTraceToString())
         defaultErrorResultWrapper()
+    }
+}
+
+suspend fun <T : Any> apiWrapper(
+    requestFunc: suspend () -> Deferred<Response<ResponseWrapper<T>>>
+): ResponseWrapper<T> {
+    return try {
+        requestFunc
+            .invoke()
+            .await()
+            .responseWrapper()
+    } catch (e: HttpException) {
+        Timber.e(e.stackTraceToString())
+        return try {
+            @Suppress("UNCHECKED_CAST")
+            GsonBuilder().create().fromJson(
+                e.response()?.errorBody()?.string(),
+                ResponseWrapper::class.java
+            ) as ResponseWrapper<T>
+        } catch (e: Exception) {
+            Timber.e(e.stackTraceToString())
+            defaultErrorResultWrapper()
+        }
+    } catch (e: Exception) {
+        Timber.e(e.stackTraceToString())
+        defaultErrorResultWrapper()
+    }
+}
+
+suspend fun <T1 : Any, T2 : Any> withContextApiWrappers(
+    coroutineContext: CoroutineContext,
+    requestFunc1: suspend () -> Deferred<Response<ResponseWrapper<T1>>>,
+    requestFunc2: suspend () -> Deferred<Response<ResponseWrapper<T2>>>
+): ResponseWrappers<T1, T2> {
+    return withContext(coroutineContext) {
+        ResponseWrappers(
+            responseWrapper1 = apiWrapper(requestFunc1),
+            responseWrapper2 = apiWrapper(requestFunc2)
+        )
     }
 }
 

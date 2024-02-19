@@ -118,7 +118,7 @@ fun HousesLoadedUi(
             ElevatedCard(
                 modifier = modifier
                     .fillMaxWidth()
-                    .clickable { housesViewModel.goToPlayerListUi(house.name.name) },
+                    .clickable { housesViewModel.goToPlayersListUi(house.name.name) },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                 )

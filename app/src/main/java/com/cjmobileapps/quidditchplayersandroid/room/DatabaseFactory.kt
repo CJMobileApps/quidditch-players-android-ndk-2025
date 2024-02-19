@@ -6,8 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
+import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
 
-@Database(entities = [House::class], version = 1)
+@Database(entities = [House::class, PlayerEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class QuidditchPlayersDatabase : RoomDatabase() {
 

@@ -12,5 +12,5 @@ interface HousesViewModel {
 
     fun resetNavRouteUiToIdle()
 
-    fun goToPlayerListUi(houseName: String)
+    fun goToPlayersListUi(houseName: String)
 }

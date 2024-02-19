@@ -12,9 +12,9 @@ import androidx.navigation.navArgument
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.HousesUi
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModelImpl
-import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.PlayerUi
-import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayerListViewModel
-import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayerListViewModelImpl
+import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.PlayersListUi
+import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModel
+import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModelImpl
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -38,9 +38,14 @@ fun NavigationGraph(
             NavItem.PlayersList.navRoute,
             arguments = NavItem.PlayersList.arguments
         ) {
-            val playerListViewModel: PlayerListViewModel = hiltViewModel<PlayerListViewModelImpl>()
+            val playersListViewModel: PlayersListViewModel = hiltViewModel<PlayersListViewModelImpl>()
 
-            PlayerUi()
+            PlayersListUi(
+                navController = navController,
+                playersListViewModel = playersListViewModel,
+                coroutineScope = coroutineScope,
+                snackbarHostState = snackbarHostState
+            )
         }
         composable(NavItem.PlayerDetail.navRoute) {
 //            val logInViewModel: LogInViewModel = hiltViewModel<LogInViewModelImpl>()
@@ -73,5 +78,15 @@ sealed class NavItem(
         }
     }
 
-    data object PlayerDetail : NavItem(navRoute = "nav_player_detail")
+    data object PlayerDetail : NavItem(
+        navRoute = "nav_player_detail/{playerId}",
+        arguments = listOf(
+            navArgument("playerId") { type = NavType.StringType }
+        )
+    ) {
+
+        fun getNavRouteWithArguments(playerId: String): String {
+            return "nav_player_detail/$playerId"
+        }
+    }
 }
