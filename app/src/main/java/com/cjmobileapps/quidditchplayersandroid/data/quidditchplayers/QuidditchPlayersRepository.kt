@@ -6,6 +6,7 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
 import com.cjmobileapps.quidditchplayersandroid.data.model.Position
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapper
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrappers
+import com.cjmobileapps.quidditchplayersandroid.data.model.Status
 import kotlinx.coroutines.flow.Flow
 
 interface QuidditchPlayersRepository {
@@ -22,4 +23,6 @@ interface QuidditchPlayersRepository {
     suspend fun getAllPlayersFlow(): Flow<List<PlayerEntity>>
 
     suspend fun fetchPlayersAndPositions(houseName: String): ResponseWrappers<List<Player>, Map<Int, Position>>
+
+    suspend fun fetchStatusByHouseName(houseName: String): ResponseWrapper<Status>
 }
