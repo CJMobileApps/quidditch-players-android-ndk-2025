@@ -124,4 +124,7 @@ class QuidditchPlayersUseCase(
             )
         }
     }
+
+    suspend fun fetchStatusByHouseName(houseName: String) =
+        quidditchPlayersRepository.fetchStatusByHouseName(houseName)
 }

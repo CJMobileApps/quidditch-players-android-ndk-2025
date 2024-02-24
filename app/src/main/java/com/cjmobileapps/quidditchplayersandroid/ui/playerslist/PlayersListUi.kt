@@ -217,6 +217,9 @@ fun PlayersListLoadedUi(
                         modifier = modifier.padding(top = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        val statusState = player.status.value
+                        val status = statusState.ifEmpty { stringResource(R.string.no_status) }
+
                         Text(
                             modifier = modifier.weight(1f),
                             text = stringResource(R.string.status),
@@ -224,7 +227,7 @@ fun PlayersListLoadedUi(
                         )
                         Text(
                             modifier = modifier.weight(3f),
-                            text = "TODO add Status",
+                            text = status,
                             textAlign = TextAlign.Start,
                             color = Color.Black
                         )

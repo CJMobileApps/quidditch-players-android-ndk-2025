@@ -26,4 +26,7 @@ class QuidditchPlayersRepositoryImpl(
 
     override suspend fun fetchPlayersAndPositions(houseName: String) =
         quidditchPlayersApiDataSource.fetchPlayersAndPositions(houseName)
+
+    override suspend fun fetchStatusByHouseName(houseName: String) =
+        quidditchPlayersApiDataSource.fetchStatusByHouseName(houseName)
 }

@@ -8,4 +8,5 @@
     <string name="years_played">Years Played</string>
     <string name="status">Status</string>
     <string name="player_image">Player Image</string>
+    <string name="no_status">No Status</string>
 </resources>

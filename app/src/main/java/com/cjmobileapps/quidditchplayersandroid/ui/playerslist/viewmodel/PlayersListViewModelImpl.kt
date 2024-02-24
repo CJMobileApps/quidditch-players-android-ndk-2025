@@ -5,7 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
+import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
+import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
 import com.cjmobileapps.quidditchplayersandroid.ui.NavItem
 import com.cjmobileapps.quidditchplayersandroid.util.coroutine.CoroutineDispatchers
@@ -15,16 +16,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.UUID
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
 class PlayersListViewModelImpl @Inject constructor(
     coroutineDispatchers: CoroutineDispatchers,
     savedStateHandle: SavedStateHandle,
-    quidditchPlayersUseCase: QuidditchPlayersUseCase
+    private val quidditchPlayersUseCase: QuidditchPlayersUseCase
 ) : ViewModel(), PlayersListViewModel {
 
     private val houseName: String = checkNotNull(savedStateHandle["houseName"])
@@ -68,7 +72,9 @@ class PlayersListViewModelImpl @Inject constructor(
             quidditchPlayersUseCase.getAllPlayersToDB { playersResponse ->
                 playersResponse
                     .onSuccess { players ->
-                        playersListState.value = PlayersListState.PlayerListLoadedState(players)
+                        playersListState.value =
+                            PlayersListState.PlayerListLoadedState(players.toPlayersState())
+                        getStatuesForPlayer()
                     }
                     .onError { _, _ ->
                         playersListState.value = PlayersListState.PlayerListLoadedState()
@@ -76,6 +82,33 @@ class PlayersListViewModelImpl @Inject constructor(
                     }
             }
         }
+    }
+
+    private fun getStatuesForPlayer() {
+        val state = getState()
+        if (state !is PlayersListState.PlayerListLoadedState) return
+        coroutineContext.cancelChildren()
+        viewModelScope.launch(coroutineContext) {
+
+            while (true) {
+                delay(getRandomSeconds())
+                quidditchPlayersUseCase.fetchStatusByHouseName(houseName)
+                    .onSuccess { status ->
+                        state.players
+                            .find { it.id == status.playerId }
+                            ?.status?.value = status.status
+                    }
+                    .onError { _, error ->
+                        Timber.tag(tag)
+                            .e("quidditchPlayersUseCase.fetchStatusByHouseName(houseName) error occurred: $error \\n ${error.message}")
+                    }
+            }
+        }
+    }
+
+    private fun getRandomSeconds(): Long {
+        val seconds = (1..60).random().toLong()
+        return TimeUnit.SECONDS.toMillis(seconds)
     }
 
     override fun resetSnackbarState() {
@@ -106,7 +139,7 @@ class PlayersListViewModelImpl @Inject constructor(
         data object LoadingState : PlayersListState()
 
         data class PlayerListLoadedState(
-            val players: List<PlayerEntity> = emptyList(),
+            val players: List<PlayerState> = emptyList(),
             val playersNavRouteUi: MutableState<PlayersListNavRouteUi> = mutableStateOf(
                 PlayersListNavRouteUi.Idle
             )

@@ -5,6 +5,7 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.Player
 import com.cjmobileapps.quidditchplayersandroid.data.model.Position
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapper
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrappers
+import com.cjmobileapps.quidditchplayersandroid.data.model.Status
 import com.cjmobileapps.quidditchplayersandroid.network.QuidditchPlayersApi
 import com.cjmobileapps.quidditchplayersandroid.util.coroutine.CoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.util.withContextApiWrapper
@@ -29,9 +30,15 @@ class QuidditchPlayersApiDataSource(
 
     suspend fun fetchPlayersAndPositions(houseName: String): ResponseWrappers<List<Player>, Map<Int, Position>> {
         return withContextApiWrappers(
-                coroutineContext =  coroutineDispatchers.io,
-                requestFunc1 = { quidditchPlayersApi.getPlayersByHouse(houseName) } ,
-                requestFunc2 = { quidditchPlayersApi.getPositions() }
-            )
+            coroutineContext = coroutineDispatchers.io,
+            requestFunc1 = { quidditchPlayersApi.getPlayersByHouse(houseName) },
+            requestFunc2 = { quidditchPlayersApi.getPositions() }
+        )
+    }
+
+    suspend fun fetchStatusByHouseName(houseName: String): ResponseWrapper<Status> {
+        return withContextApiWrapper(coroutineDispatchers.io) {
+            quidditchPlayersApi.getStatusByHouseName(houseName)
+        }
     }
 }
