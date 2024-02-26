@@ -25,4 +25,6 @@ interface QuidditchPlayersRepository {
     suspend fun fetchPlayersAndPositions(houseName: String): ResponseWrappers<List<Player>, Map<Int, Position>>
 
     suspend fun fetchStatusByHouseName(houseName: String): ResponseWrapper<Status>
+
+    suspend fun fetchStatusByPlayerId(playerId: String): ResponseWrapper<Status>
 }

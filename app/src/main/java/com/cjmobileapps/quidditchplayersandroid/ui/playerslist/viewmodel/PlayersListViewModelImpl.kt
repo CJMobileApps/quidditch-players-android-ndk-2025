@@ -9,6 +9,7 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
 import com.cjmobileapps.quidditchplayersandroid.ui.NavItem
+import com.cjmobileapps.quidditchplayersandroid.util.TimeUtil
 import com.cjmobileapps.quidditchplayersandroid.util.coroutine.CoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.util.onError
 import com.cjmobileapps.quidditchplayersandroid.util.onSuccess
@@ -20,8 +21,6 @@ import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.UUID
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -91,7 +90,7 @@ class PlayersListViewModelImpl @Inject constructor(
         viewModelScope.launch(coroutineContext) {
 
             while (true) {
-                delay(getRandomSeconds())
+                delay(TimeUtil.getRandomSeconds())
                 quidditchPlayersUseCase.fetchStatusByHouseName(houseName)
                     .onSuccess { status ->
                         state.players
@@ -106,11 +105,6 @@ class PlayersListViewModelImpl @Inject constructor(
         }
     }
 
-    private fun getRandomSeconds(): Long {
-        val seconds = (1..60).random().toLong()
-        return TimeUnit.SECONDS.toMillis(seconds)
-    }
-
     override fun resetSnackbarState() {
         snackbarState.value = PlayersListSnackbarState.Idle
     }
@@ -121,11 +115,12 @@ class PlayersListViewModelImpl @Inject constructor(
         state.playersNavRouteUi.value = PlayersListNavRouteUi.Idle
     }
 
-    override fun goToPlayerDetailUi(playerId: UUID) {
+    override fun goToPlayerDetailUi(player: PlayerState) {
         val state = getState()
         if (state !is PlayersListState.PlayerListLoadedState) return
+        quidditchPlayersUseCase.currentPlayer = player
         state.playersNavRouteUi.value =
-            PlayersListNavRouteUi.GoToPlayerDetailUi(playerId.toString())
+            PlayersListNavRouteUi.GoToPlayerDetailUi(player.id.toString())
     }
 
     override fun getPlayersListNavRouteUiState(): PlayersListNavRouteUi {

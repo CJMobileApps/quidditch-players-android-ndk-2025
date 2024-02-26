@@ -41,4 +41,10 @@ class QuidditchPlayersApiDataSource(
             quidditchPlayersApi.getStatusByHouseName(houseName)
         }
     }
+
+    suspend fun fetchStatusByPlayerId(playerId: String): ResponseWrapper<Status> {
+        return withContextApiWrapper(coroutineDispatchers.io) {
+            quidditchPlayersApi.fetchStatusByPlayerId(playerId)
+        }
+    }
 }
