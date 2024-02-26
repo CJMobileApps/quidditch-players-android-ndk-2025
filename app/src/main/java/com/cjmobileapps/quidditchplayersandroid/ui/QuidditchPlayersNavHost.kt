@@ -12,6 +12,9 @@ import androidx.navigation.navArgument
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.HousesUi
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModelImpl
+import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.PlayerDetailUi
+import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModel
+import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModelImpl
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.PlayersListUi
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModelImpl
@@ -38,7 +41,8 @@ fun NavigationGraph(
             NavItem.PlayersList.navRoute,
             arguments = NavItem.PlayersList.arguments
         ) {
-            val playersListViewModel: PlayersListViewModel = hiltViewModel<PlayersListViewModelImpl>()
+            val playersListViewModel: PlayersListViewModel =
+                hiltViewModel<PlayersListViewModelImpl>()
 
             PlayersListUi(
                 navController = navController,
@@ -48,14 +52,14 @@ fun NavigationGraph(
             )
         }
         composable(NavItem.PlayerDetail.navRoute) {
-//            val logInViewModel: LogInViewModel = hiltViewModel<LogInViewModelImpl>()
-//
-//            LogInUi(
-//                navController = navController,
-//                logInViewModel = logInViewModel,
-//                coroutineScope = coroutineScope,
-//                snackbarHostState = snackbarHostState
-//            )
+            val playerDetailViewModel: PlayerDetailViewModel =
+                hiltViewModel<PlayerDetailViewModelImpl>()
+
+            PlayerDetailUi(
+                coroutineScope = coroutineScope,
+                playerDetailViewModel = playerDetailViewModel,
+                snackbarHostState = snackbarHostState
+            )
         }
     }
 }

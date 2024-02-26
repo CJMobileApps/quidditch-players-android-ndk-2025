@@ -1,6 +1,6 @@
 package com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel
 
-import java.util.UUID
+import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
 
 interface PlayersListViewModel {
 
@@ -12,7 +12,7 @@ interface PlayersListViewModel {
 
     fun resetNavRouteUiToIdle()
 
-    fun goToPlayerDetailUi(playerId: UUID)
+    fun goToPlayerDetailUi(player: PlayerState)
 
     fun getPlayersListNavRouteUiState(): PlayersListViewModelImpl.PlayersListNavRouteUi
 }

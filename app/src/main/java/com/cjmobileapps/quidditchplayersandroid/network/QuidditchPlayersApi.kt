@@ -8,6 +8,7 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.Status
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface QuidditchPlayersApi {
@@ -26,5 +27,10 @@ interface QuidditchPlayersApi {
     @GET("api/v1/quidditchplayers/player/status")
     fun getStatusByHouseName(
         @Query("houseName") houseName: String
+    ): Deferred<Response<ResponseWrapper<Status>>>
+
+    @GET("api/v1/quidditchplayers/player/status/{playerId}")
+    fun fetchStatusByPlayerId(
+        @Path("playerId") playerId: String
     ): Deferred<Response<ResponseWrapper<Status>>>
 }

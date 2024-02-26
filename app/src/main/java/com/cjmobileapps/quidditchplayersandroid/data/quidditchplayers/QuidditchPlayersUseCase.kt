@@ -3,6 +3,7 @@ package com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers
 import com.cjmobileapps.quidditchplayersandroid.data.model.Error
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
+import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapper
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapperUtil
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersEntities
@@ -16,6 +17,8 @@ class QuidditchPlayersUseCase(
 ) {
 
     private val tag = QuidditchPlayersRepositoryImpl::class.java.simpleName
+
+    var currentPlayer: PlayerState? = null
 
     suspend fun getHousesFromDB(onHousesResponse: (ResponseWrapper<List<House>>) -> Unit) {
         try {
@@ -127,4 +130,7 @@ class QuidditchPlayersUseCase(
 
     suspend fun fetchStatusByHouseName(houseName: String) =
         quidditchPlayersRepository.fetchStatusByHouseName(houseName)
+
+    suspend fun fetchStatusByPlayerId(playerId: String) =
+        quidditchPlayersRepository.fetchStatusByPlayerId(playerId)
 }

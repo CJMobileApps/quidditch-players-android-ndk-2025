@@ -120,7 +120,7 @@ fun PlayersListLoadedUi(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp)
-                    .clickable { playersListViewModel.goToPlayerDetailUi(player.id) },
+                    .clickable { playersListViewModel.goToPlayerDetailUi(player) },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                 )

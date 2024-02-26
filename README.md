@@ -8,11 +8,9 @@ TODO
 ----
 
 - Add shimmer to loading content 
-- Add detail screen
 - Add unit test
 - Add compose ui test
 - Add Top bars
-
 
 Dependencies
 ---
