@@ -46,6 +46,9 @@ class PlayersListViewModelImpl @Inject constructor(
     private val coroutineContextHousesFlow =
         compositeJob + coroutineDispatchers.main + exceptionHandler + SupervisorJob()
 
+    private val coroutineStatusContext =
+        compositeJob + coroutineDispatchers.main + exceptionHandler + SupervisorJob()
+
     private val playersListState = mutableStateOf<PlayersListState>(PlayersListState.LoadingState)
 
     private val snackbarState = mutableStateOf<PlayersListSnackbarState>(
@@ -86,8 +89,8 @@ class PlayersListViewModelImpl @Inject constructor(
     private fun getStatuesForPlayer() {
         val state = getState()
         if (state !is PlayersListState.PlayerListLoadedState) return
-        coroutineContext.cancelChildren()
-        viewModelScope.launch(coroutineContext) {
+        coroutineStatusContext.cancelChildren()
+        viewModelScope.launch(coroutineStatusContext) {
 
             while (true) {
                 delay(TimeUtil.getRandomSeconds())
