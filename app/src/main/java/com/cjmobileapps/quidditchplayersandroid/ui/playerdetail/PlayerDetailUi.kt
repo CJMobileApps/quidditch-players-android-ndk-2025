@@ -26,11 +26,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.cjmobileapps.quidditchplayersandroid.R
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModelImpl
+import com.cjmobileapps.quidditchplayersandroid.ui.util.QuidditchPlayersImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -134,8 +134,8 @@ fun PlayerDetail(
         horizontalAlignment = Alignment.Start
     ) {
         Row {
-            AsyncImage(
-                modifier = Modifier
+            QuidditchPlayersImage(
+                modifier = modifier
                     .size(60.dp)
                     .padding(0.dp)
                     .border(
@@ -143,7 +143,7 @@ fun PlayerDetail(
                         RoundedCornerShape(4.dp)
                     )
                     .clip(RoundedCornerShape(4.dp)),
-                model = player.imageUrl,
+                imageUrl = player.imageUrl + "ggghghg",
                 contentDescription = stringResource(R.string.player_image),
                 contentScale = ContentScale.FillBounds
             )
