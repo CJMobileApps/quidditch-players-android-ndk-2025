@@ -49,7 +49,7 @@ fun HousesUi(
         Box {
             when (val state = housesViewModel.getState()) {
                 is HousesState.LoadingState -> {
-
+                    HousesShimmerLoadingUi(modifier = Modifier.padding(innerPadding))
                 }
 
                 is HousesState.HousesLoadedState -> {
