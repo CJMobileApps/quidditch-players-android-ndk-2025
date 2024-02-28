@@ -39,7 +39,7 @@ fun PlayersListUi(
         Box {
             when (val state = playersListViewModel.getState()) {
                 is PlayersListViewModelImpl.PlayersListState.LoadingState -> {
-
+                    PlayerListShimmerLoadingUi(modifier = Modifier.padding(innerPadding))
                 }
 
                 is PlayersListViewModelImpl.PlayersListState.PlayerListLoadedState -> {
