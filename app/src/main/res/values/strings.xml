@@ -11,4 +11,6 @@
     <string name="player_image">Player Image</string>
     <string name="no_status">No Status</string>
     <string name="player_not_found">Player not found</string>
+    <string name="animation_transition">animation transition</string>
+    <string name="translateanimation">translateAnimation</string>
 </resources>
