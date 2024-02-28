@@ -7,7 +7,6 @@ Build Tools & Versions Used
 TODO
 ----
 
-- Add shimmer to loading content 
 - Add unit test
 - Add compose ui test
 - Add Top bars
