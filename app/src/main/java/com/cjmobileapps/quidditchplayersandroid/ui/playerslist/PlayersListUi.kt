@@ -105,7 +105,7 @@ fun PlayersListLoadedUi(
     ) {
         items(players) { player ->
             ElevatedCard(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp)
                     .clickable { playersListViewModel.goToPlayerDetailUi(player) },
@@ -113,7 +113,7 @@ fun PlayersListLoadedUi(
                     containerColor = MaterialTheme.colorScheme.surface,
                 )
             ) {
-                PlayerDetail(modifier = modifier, player = player)
+                PlayerDetail(player = player)
             }
         }
     }

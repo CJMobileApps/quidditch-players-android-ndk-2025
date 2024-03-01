@@ -56,6 +56,7 @@ fun NavigationGraph(
                 hiltViewModel<PlayerDetailViewModelImpl>()
 
             PlayerDetailUi(
+                navController = navController,
                 coroutineScope = coroutineScope,
                 playerDetailViewModel = playerDetailViewModel,
                 snackbarHostState = snackbarHostState

@@ -50,7 +50,7 @@ fun QuidditchPlayersTopAppBar(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Title title",
+                        text = stringResource(id = R.string.app_name),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge
                     )
