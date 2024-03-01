@@ -13,4 +13,5 @@
     <string name="player_not_found">Player not found</string>
     <string name="animation_transition">animation transition</string>
     <string name="translateanimation">translateAnimation</string>
+    <string name="back_description">Back</string>
 </resources>
