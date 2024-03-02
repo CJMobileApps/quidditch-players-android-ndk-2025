@@ -30,12 +30,12 @@ fun HousesShimmerLoadingUi(modifier: Modifier) {
     ) {
         items(houses) {
             ElevatedCard(
-                modifier = modifier
+                modifier = Modifier
                     .size(200.dp)
                     .fillMaxWidth()
             ) {
                 Column(
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxSize()
                         .background(brush = shimmerBrush(showShimmer = true))
                 ) { }

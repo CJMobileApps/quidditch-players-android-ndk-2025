@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cjmobileapps.quidditchplayersandroid.R
+import com.cjmobileapps.quidditchplayersandroid.ui.QuidditchPlayersTopAppBar
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModelImpl
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModelImpl.HousesState
@@ -43,7 +44,7 @@ fun HousesUi(
     snackbarHostState: SnackbarHostState
 ) {
     Scaffold(
-        topBar = { },
+        topBar = { QuidditchPlayersTopAppBar(navController) },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         Box {
@@ -118,7 +119,7 @@ fun HousesLoadedUi(
     ) {
         items(houses) { house ->
             ElevatedCard(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .clickable { housesViewModel.goToPlayersListUi(house.name.name) },
                 colors = CardDefaults.cardColors(
@@ -126,13 +127,13 @@ fun HousesLoadedUi(
                 )
             ) {
                 Column(
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     QuidditchPlayersImage(
-                        modifier = modifier
+                        modifier = Modifier
                             .size(160.dp)
                             .fillMaxWidth(),
                         imageUrl = house.imageUrl,
@@ -140,17 +141,17 @@ fun HousesLoadedUi(
                     )
 
                     Row(
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            modifier = modifier.wrapContentWidth(),
+                            modifier = Modifier.wrapContentWidth(),
                             textAlign = TextAlign.Center,
                             text = house.name.name
                         )
 
                         Text(
-                            modifier = modifier
+                            modifier = Modifier
                                 .wrapContentWidth()
                                 .padding(start = 4.dp),
                             textAlign = TextAlign.Center,

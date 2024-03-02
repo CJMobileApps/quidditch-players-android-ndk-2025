@@ -39,7 +39,12 @@ data class PlayerState(
     val imageUrl: String,
     val house: HouseName,
     val status: MutableState<String> = mutableStateOf("")
-)
+) {
+
+    fun getFullName(): String {
+        return "$firstName $lastName"
+    }
+}
 
 fun PlayerEntity.toPlayerState(): PlayerState {
     return PlayerState(

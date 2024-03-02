@@ -26,8 +26,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.cjmobileapps.quidditchplayersandroid.R
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
+import com.cjmobileapps.quidditchplayersandroid.ui.QuidditchPlayersTopAppBar
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModelImpl
 import com.cjmobileapps.quidditchplayersandroid.ui.util.QuidditchPlayersImage
@@ -36,12 +38,18 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun PlayerDetailUi(
+    navController: NavController,
     coroutineScope: CoroutineScope,
     playerDetailViewModel: PlayerDetailViewModel,
     snackbarHostState: SnackbarHostState
 ) {
     Scaffold(
-        topBar = {},
+        topBar = {
+            QuidditchPlayersTopAppBar(
+                navController,
+                playerDetailViewModel.getTopBarTitle()
+            )
+        },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
@@ -104,13 +112,10 @@ fun PlayerDetailLoadedUi(
     val player = state.player
 
     if (player != null) {
-        PlayerDetail(
-            modifier = modifier,
-            player = player
-        )
+        PlayerDetail(modifier = modifier, player = player)
     } else {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalAlignment = Alignment.Start
@@ -124,18 +129,18 @@ fun PlayerDetailLoadedUi(
 
 @Composable
 fun PlayerDetail(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     player: PlayerState
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalAlignment = Alignment.Start
     ) {
         Row {
             QuidditchPlayersImage(
-                modifier = modifier
+                modifier = Modifier
                     .size(60.dp)
                     .padding(0.dp)
                     .border(
@@ -143,7 +148,7 @@ fun PlayerDetail(
                         RoundedCornerShape(4.dp)
                     )
                     .clip(RoundedCornerShape(4.dp)),
-                imageUrl = player.imageUrl + "ggghghg",
+                imageUrl = player.imageUrl,
                 contentDescription = stringResource(R.string.player_image),
                 contentScale = ContentScale.FillBounds
             )
@@ -165,16 +170,16 @@ fun PlayerDetail(
         }
 
         Row(
-            modifier = modifier.padding(top = 8.dp),
+            modifier = Modifier.padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = modifier.weight(1f),
+                modifier = Modifier.weight(1f),
                 text = stringResource(R.string.house),
                 color = Color.Gray
             )
             Text(
-                modifier = modifier.weight(3f),
+                modifier = Modifier.weight(3f),
                 text = player.house.name,
                 textAlign = TextAlign.Start,
                 color = Color.Black
@@ -182,16 +187,16 @@ fun PlayerDetail(
         }
 
         Row(
-            modifier = modifier.padding(top = 8.dp),
+            modifier = Modifier.padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = modifier.weight(1f),
+                modifier = Modifier.weight(1f),
                 text = stringResource(R.string.favorite_subject),
                 color = Color.Gray
             )
             Text(
-                modifier = modifier.weight(3f),
+                modifier = Modifier.weight(3f),
                 text = player.favoriteSubject,
                 textAlign = TextAlign.Start,
                 color = Color.Black
@@ -199,16 +204,16 @@ fun PlayerDetail(
         }
 
         Row(
-            modifier = modifier.padding(top = 8.dp),
+            modifier = Modifier.padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = modifier.weight(1f),
+                modifier = Modifier.weight(1f),
                 text = stringResource(R.string.years_played),
                 color = Color.Gray
             )
             Text(
-                modifier = modifier.weight(3f),
+                modifier = Modifier.weight(3f),
                 text = player.yearsPlayed.toString(),
                 textAlign = TextAlign.Start,
                 color = Color.Black
@@ -216,19 +221,19 @@ fun PlayerDetail(
         }
 
         Row(
-            modifier = modifier.padding(top = 8.dp),
+            modifier = Modifier.padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             val statusState = player.status.value
             val status = statusState.ifEmpty { stringResource(R.string.no_status) }
 
             Text(
-                modifier = modifier.weight(1f),
+                modifier = Modifier.weight(1f),
                 text = stringResource(R.string.status),
                 color = Color.Gray
             )
             Text(
-                modifier = modifier.weight(3f),
+                modifier = Modifier.weight(3f),
                 text = status,
                 textAlign = TextAlign.Start,
                 color = Color.Black

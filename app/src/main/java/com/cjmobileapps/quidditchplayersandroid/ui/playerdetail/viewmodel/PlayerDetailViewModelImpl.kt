@@ -52,6 +52,13 @@ class PlayerDetailViewModelImpl @Inject constructor(
 
     override fun getSnackbarState() = snackbarState.value
 
+    override fun getTopBarTitle(): String {
+        val state = getState()
+        if (state !is PlayerDetailState.PlayerDetailLoadedState) return ""
+        val player = state.player ?: return ""
+        return player.getFullName()
+    }
+
     init {
         val player = quidditchPlayersUseCase.currentPlayer.takeIf { it?.id.toString() == playerId }
         if (player != null) {

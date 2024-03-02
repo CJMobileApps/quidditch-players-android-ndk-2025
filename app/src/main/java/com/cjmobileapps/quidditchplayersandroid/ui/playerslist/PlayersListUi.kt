@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cjmobileapps.quidditchplayersandroid.R
+import com.cjmobileapps.quidditchplayersandroid.ui.QuidditchPlayersTopAppBar
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.PlayerDetail
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModelImpl
@@ -33,7 +34,12 @@ fun PlayersListUi(
     snackbarHostState: SnackbarHostState
 ) {
     Scaffold(
-        topBar = { },
+        topBar = {
+            QuidditchPlayersTopAppBar(
+                navController,
+                playersListViewModel.getTopBarTitle()
+            )
+        },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         Box {
@@ -104,7 +110,7 @@ fun PlayersListLoadedUi(
     ) {
         items(players) { player ->
             ElevatedCard(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp)
                     .clickable { playersListViewModel.goToPlayerDetailUi(player) },
@@ -112,7 +118,7 @@ fun PlayersListLoadedUi(
                     containerColor = MaterialTheme.colorScheme.surface,
                 )
             ) {
-                PlayerDetail(modifier = modifier, player = player)
+                PlayerDetail(player = player)
             }
         }
     }

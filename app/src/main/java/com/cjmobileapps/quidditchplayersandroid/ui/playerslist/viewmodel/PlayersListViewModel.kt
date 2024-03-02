@@ -15,4 +15,6 @@ interface PlayersListViewModel {
     fun goToPlayerDetailUi(player: PlayerState)
 
     fun getPlayersListNavRouteUiState(): PlayersListViewModelImpl.PlayersListNavRouteUi
+
+    fun getTopBarTitle(): String
 }

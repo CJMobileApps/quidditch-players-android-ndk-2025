@@ -7,4 +7,6 @@ interface PlayerDetailViewModel {
     fun resetSnackbarState()
 
     fun getSnackbarState(): PlayerDetailViewModelImpl.PlayerDetailSnackbarState
+
+    fun getTopBarTitle(): String
 }
