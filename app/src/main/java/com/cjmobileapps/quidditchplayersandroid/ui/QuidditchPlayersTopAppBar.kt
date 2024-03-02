@@ -24,11 +24,18 @@ import com.cjmobileapps.quidditchplayersandroid.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuidditchPlayersTopAppBar(
-    navController: NavController
+    navController: NavController,
+    topBarTitle: String = ""
 ) {
 
     val horizontalArrangement =
         if (navController.previousBackStackEntry != null) Arrangement.Start else Arrangement.Center
+
+    val titleText = if (!topBarTitle.isNullOrEmpty()) {
+        topBarTitle
+    } else {
+        stringResource(id = R.string.app_name)
+    }
 
     TopAppBar(
         modifier = Modifier
@@ -50,7 +57,7 @@ fun QuidditchPlayersTopAppBar(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = stringResource(id = R.string.app_name),
+                        text = titleText,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge
                     )

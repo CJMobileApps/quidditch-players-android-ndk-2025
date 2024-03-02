@@ -108,6 +108,10 @@ class PlayersListViewModelImpl @Inject constructor(
         }
     }
 
+    override fun getTopBarTitle(): String {
+        return houseName
+    }
+
     override fun resetSnackbarState() {
         snackbarState.value = PlayersListSnackbarState.Idle
     }

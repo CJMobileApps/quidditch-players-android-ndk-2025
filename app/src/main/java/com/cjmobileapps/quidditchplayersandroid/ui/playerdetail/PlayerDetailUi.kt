@@ -44,7 +44,12 @@ fun PlayerDetailUi(
     snackbarHostState: SnackbarHostState
 ) {
     Scaffold(
-        topBar = { QuidditchPlayersTopAppBar(navController) },
+        topBar = {
+            QuidditchPlayersTopAppBar(
+                navController,
+                playerDetailViewModel.getTopBarTitle()
+            )
+        },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
@@ -143,7 +148,7 @@ fun PlayerDetail(
                         RoundedCornerShape(4.dp)
                     )
                     .clip(RoundedCornerShape(4.dp)),
-                imageUrl = player.imageUrl + "ggghghg",
+                imageUrl = player.imageUrl,
                 contentDescription = stringResource(R.string.player_image),
                 contentScale = ContentScale.FillBounds
             )

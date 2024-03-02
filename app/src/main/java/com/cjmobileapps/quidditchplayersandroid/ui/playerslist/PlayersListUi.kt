@@ -34,7 +34,12 @@ fun PlayersListUi(
     snackbarHostState: SnackbarHostState
 ) {
     Scaffold(
-        topBar = { QuidditchPlayersTopAppBar(navController) },
+        topBar = {
+            QuidditchPlayersTopAppBar(
+                navController,
+                playersListViewModel.getTopBarTitle()
+            )
+        },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         Box {
