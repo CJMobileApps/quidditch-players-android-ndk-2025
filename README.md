@@ -9,7 +9,6 @@ TODO
 
 - Add unit test
 - Add compose ui test
-- Add Top bars
 
 Dependencies
 ---
