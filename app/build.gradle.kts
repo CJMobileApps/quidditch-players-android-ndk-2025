@@ -1,48 +1,52 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
-    id 'de.mannodermaus.android-junit5'
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
+    id("de.mannodermaus.android-junit5")
 }
 
 android {
-    namespace 'com.cjmobileapps.quidditchplayersandroid'
-    compileSdk 34
+    namespace = "com.cjmobileapps.quidditchplayersandroid"
+    compileSdk = 34
 
     defaultConfig {
-        applicationId 'com.cjmobileapps.quidditchplayersandroid'
-        minSdk 26
-        targetSdk 34
-        versionCode 1
-        versionName '1.0'
+        applicationId = "com.cjmobileapps.quidditchplayersandroid"
+        minSdk = 26
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
 
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
-            useSupportLibrary true
+            useSupportLibrary = true
         }
     }
 
     buildTypes {
         debug {
-            applicationIdSuffix '.debug'
-            debuggable true
-            minifyEnabled false
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+            isMinifyEnabled = false
             // IMPORTANT: If testCoverageEnabled and Unit test break you can not see errors
-            testCoverageEnabled true
+//            isTestCoverageEnabled = true
+            enableUnitTestCoverage = true
         }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
-    flavorDimensions "version"
+    flavorDimensions += "version"
 
     productFlavors {
-        dev {
-            buildConfigField "String", "BASE_URL", "\"http://10.0.2.2:8080/\""
-            dimension "version"
+        create("dev") {
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/\"")
+            dimension = "version"
         }
     }
 
@@ -54,24 +58,26 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
-        compose true
-        buildConfig true
+        compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
+
 // Allow references to generated code
 kapt {
     correctErrorTypes = true
 }
 
 dependencies {
+
     // Android Compose
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
@@ -108,12 +114,11 @@ dependencies {
 
     // Junit 5
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
-    testImplementation "org.mockito.kotlin:mockito-kotlin:5.0.0"
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
 
     // Junit 4
     testImplementation("junit:junit:4.13.2")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.1")
-
 
     // Timber logger
     implementation("com.jakewharton.timber:timber:5.0.1")
