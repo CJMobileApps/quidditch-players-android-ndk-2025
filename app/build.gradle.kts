@@ -1,9 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("de.mannodermaus.android-junit5")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -71,11 +71,6 @@ android {
     }
 }
 
-// Allow references to generated code
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
 
     // Android Compose
@@ -99,7 +94,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
     implementation("androidx.test:rules:1.5.0")
-    kapt("com.google.dagger:hilt-compiler:2.48")
+    ksp("com.google.dagger:hilt-compiler:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     // Retrofit 2
@@ -126,6 +121,6 @@ dependencies {
     // Room
     implementation("androidx.room:room-runtime:2.5.2")
     annotationProcessor("androidx.room:room-compiler:2.5.2")
-    kapt("androidx.room:room-compiler:2.5.2")
+    ksp("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
 }
