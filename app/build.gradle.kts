@@ -1,15 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-//    kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("de.mannodermaus.android-junit5")
     id("com.google.devtools.ksp")
-
-//    id("jacoco-reports")
-//    java
-    jacoco
-//    id("jacoco-reports")
 }
 
 android {
@@ -35,12 +29,11 @@ android {
             isDebuggable = true
             isMinifyEnabled = false
             // IMPORTANT: If testCoverageEnabled and Unit test break you can not see errors
+//            isTestCoverageEnabled = true
             enableUnitTestCoverage = true
-//            isTestCoverageEnabled = false
         }
         release {
             isMinifyEnabled = false
-            enableUnitTestCoverage = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -77,11 +70,6 @@ android {
         }
     }
 }
-
-// Allow references to generated code
-//kapt {
-//    correctErrorTypes = true
-//}
 
 dependencies {
 
@@ -136,56 +124,3 @@ dependencies {
     ksp("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
 }
-//
-//jacoco {
-//    toolVersion = "0.8.7"
-//}
-
-//task {
-//    jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']
-//  {
-//
-//    reports {
-//        xml.required.set(true)
-//        html.required.set(true)
-//    }
-//
-//    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-//    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-//    def mainSrc = "${project.projectDir}/src/main/java"
-//
-//    sourceDirectories.setFrom(files([mainSrc]))
-//    classDirectories.setFrom(files([debugTree]))
-//    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
-//            "jacoco/testDebugUnitTest.exec",
-//            "outputs/code-coverage/connected/*coverage.ec"
-//    ]))
-//
-//    tasks.withType(Test) {
-//        jacoco.includeNoLocationClasses = true
-//        jacoco.excludes = ['jdk.internal.*']
-//    }
-//}
-
-//val jacocoTestReport = tasks.register("jacocoTestReport")
-//
-//tasks.withType<Test> {
-//    configure<JacocoTaskExtension> {
-//        isIncludeNoLocationClasses = true
-//    }
-//}
-
-//tasks.test {
-//    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
-//}
-//tasks.jacocoTestReport {
-//    dependsOn(tasks.test) // tests are required to run before generating the report
-//}
-
-//tasks {
-//    withType<Test> {
-//        configure<JacocoTaskExtension> {
-//            isIncludeNoLocationClasses = true
-//        }
-//    }
-//}
