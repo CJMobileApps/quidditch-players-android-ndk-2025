@@ -33,8 +33,8 @@ jobs:
           when: always
       - store_test_results:
           path: ~/test-results/junit
-#      - codecov/upload:
-#          file: jacocoTestReportDevDebug.xml
+      - codecov/upload:
+          file: jacocoTestReportDevDebug.xml
   android-test:
     executor:
       name: android/android-machine
@@ -135,8 +135,8 @@ jobs:
           when: always
       - store_test_results:
           path: ~/test-results/androidTest
-#      - codecov/upload:
-#          file: app/build/reports/coverage/androidTest/dev/debug/connected/index.html #TODO figure out how to get xml instead of just html
+      - codecov/upload:
+          file: app/build/reports/coverage/androidTest/dev/debug/connected/index.html #TODO figure out how to get xml instead of just html
 workflows:
   test-and-build:
     jobs:
