@@ -1,4 +1,5 @@
-# Quidditch Players Android 2023
+# Quidditch Players Android 2023 [![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=shield)](https://circleci.com/gh/circleci/circleci-docs) [![codecov](https://codecov.io/gh/CJMobileApps/quidditch-players-android-2023/graph/badge.svg?token=nruZM3ZAGj)](https://codecov.io/gh/CJMobileApps/quidditch-players-android-2023)
+
 Quidditch Players for Hogwarts Houses Android 2023
 
 Build Tools & Versions Used
