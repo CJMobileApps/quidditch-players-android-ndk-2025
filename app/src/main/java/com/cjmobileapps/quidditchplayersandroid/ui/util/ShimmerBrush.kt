@@ -19,24 +19,28 @@ fun shimmerBrush(showShimmer: Boolean = true): Brush {
     val durationMillis = 1000f
 
     return if (showShimmer) {
-        val shimmerColors = listOf(
-            Color.LightGray.copy(alpha = 0.3f),
-            Color.LightGray.copy(alpha = 0.5f),
-            Color.LightGray.copy(alpha = 1.0f),
-            Color.LightGray.copy(alpha = 0.5f),
-            Color.LightGray.copy(alpha = 0.3f),
-        )
+        val shimmerColors =
+            listOf(
+                Color.LightGray.copy(alpha = 0.3f),
+                Color.LightGray.copy(alpha = 0.5f),
+                Color.LightGray.copy(alpha = 1.0f),
+                Color.LightGray.copy(alpha = 0.5f),
+                Color.LightGray.copy(alpha = 0.3f),
+            )
 
         val transition =
             rememberInfiniteTransition(label = stringResource(R.string.animation_transition))
-        val translateAnimation = transition.animateFloat(
-            initialValue = 0f,
-            targetValue = durationMillis,
-            animationSpec = infiniteRepeatable(
-                animation = tween(durationMillis.toInt()), repeatMode = RepeatMode.Reverse
-            ),
-            label = stringResource(R.string.translateanimation)
-        )
+        val translateAnimation =
+            transition.animateFloat(
+                initialValue = 0f,
+                targetValue = durationMillis,
+                animationSpec =
+                    infiniteRepeatable(
+                        animation = tween(durationMillis.toInt()),
+                        repeatMode = RepeatMode.Reverse,
+                    ),
+                label = stringResource(R.string.translateanimation),
+            )
         Brush.linearGradient(
             colors = shimmerColors,
             start = Offset(x = translateAnimation.value - widthOfShadowBrush, y = 0.0f),
@@ -46,7 +50,7 @@ fun shimmerBrush(showShimmer: Boolean = true): Brush {
         Brush.linearGradient(
             colors = listOf(Color.Transparent, Color.Transparent),
             start = Offset.Zero,
-            end = Offset.Zero
+            end = Offset.Zero,
         )
     }
 }

@@ -11,18 +11,16 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
 @Database(entities = [House::class, PlayerEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class QuidditchPlayersDatabase : RoomDatabase() {
-
     abstract fun quidditchPlayersDao(): QuidditchPlayersDao
 }
 
 class DatabaseFactory {
-
     companion object {
-
         fun getDB(context: Context): QuidditchPlayersDatabase {
             return Room.databaseBuilder(
                 context,
-                QuidditchPlayersDatabase::class.java, "quidditch-players-database"
+                QuidditchPlayersDatabase::class.java,
+                "quidditch-players-database",
             ).build()
         }
     }

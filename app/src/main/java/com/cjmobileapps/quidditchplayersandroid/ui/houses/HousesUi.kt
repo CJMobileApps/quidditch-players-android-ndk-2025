@@ -41,11 +41,11 @@ fun HousesUi(
     navController: NavController,
     housesViewModel: HousesViewModel,
     coroutineScope: CoroutineScope,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
 ) {
     Scaffold(
         topBar = { QuidditchPlayersTopAppBar(navController) },
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
         Box {
             when (val state = housesViewModel.getState()) {
@@ -64,23 +64,26 @@ fun HousesUi(
             }
         }
 
-        val snackbarMessage: String? = when (val state = housesViewModel.getSnackbarState()) {
-            is HousesViewModelImpl.HousesSnackbarState.Idle -> null
+        val snackbarMessage: String? =
+            when (val state = housesViewModel.getSnackbarState()) {
+                is HousesViewModelImpl.HousesSnackbarState.Idle -> null
 
-            is HousesViewModelImpl.HousesSnackbarState.ShowGenericError -> state.error
-                ?: stringResource(R.string.some_error_occurred)
+                is HousesViewModelImpl.HousesSnackbarState.ShowGenericError ->
+                    state.error
+                        ?: stringResource(R.string.some_error_occurred)
 
-            is HousesViewModelImpl.HousesSnackbarState.UnableToGetHousesListError -> stringResource(
-                R.string.unable_to_get_houses
-            )
-        }
+                is HousesViewModelImpl.HousesSnackbarState.UnableToGetHousesListError ->
+                    stringResource(
+                        R.string.unable_to_get_houses,
+                    )
+            }
 
         if (snackbarMessage != null) {
             HousesSnackbar(
                 message = snackbarMessage,
                 coroutineScope = coroutineScope,
                 snackbarHostState = snackbarHostState,
-                housesViewModel = housesViewModel
+                housesViewModel = housesViewModel,
             )
         }
     }
@@ -91,7 +94,7 @@ fun HousesSnackbar(
     message: String,
     coroutineScope: CoroutineScope,
     snackbarHostState: SnackbarHostState,
-    housesViewModel: HousesViewModel
+    housesViewModel: HousesViewModel,
 ) {
     LaunchedEffect(key1 = message) {
         coroutineScope.launch {
@@ -106,56 +109,60 @@ fun HousesLoadedUi(
     modifier: Modifier,
     housesViewModel: HousesViewModel,
     housesLoadedState: HousesState.HousesLoadedState,
-    navController: NavController
+    navController: NavController,
 ) {
-
     val houses = housesLoadedState.houses
 
     LazyVerticalGrid(
         modifier = modifier.padding(16.dp),
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(houses) { house ->
             ElevatedCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { housesViewModel.goToPlayersListUi(house.name.name) },
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                )
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable { housesViewModel.goToPlayersListUi(house.name.name) },
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                    ),
             ) {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     QuidditchPlayersImage(
-                        modifier = Modifier
-                            .size(160.dp)
-                            .fillMaxWidth(),
+                        modifier =
+                            Modifier
+                                .size(160.dp)
+                                .fillMaxWidth(),
                         imageUrl = house.imageUrl,
-                        contentDescription = house.name.name
+                        contentDescription = house.name.name,
                     )
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
+                        horizontalArrangement = Arrangement.Center,
                     ) {
                         Text(
                             modifier = Modifier.wrapContentWidth(),
                             textAlign = TextAlign.Center,
-                            text = house.name.name
+                            text = house.name.name,
                         )
 
                         Text(
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .padding(start = 4.dp),
+                            modifier =
+                                Modifier
+                                    .wrapContentWidth()
+                                    .padding(start = 4.dp),
                             textAlign = TextAlign.Center,
-                            text = house.emoji
+                            text = house.emoji,
                         )
                     }
                 }

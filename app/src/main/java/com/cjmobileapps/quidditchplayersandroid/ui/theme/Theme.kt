@@ -16,56 +16,53 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-//TODO test this
-private val DarkColorScheme = darkColorScheme(
-    primary = QuidditchPlayersBlack,
-    secondary = QuidditchPlayersBlack,
-    tertiary = QuidditchPlayersBlack,
-    surface = QuidditchPlayersBlack,
-    onPrimary = QuidditchPlayersGreen
-)
+// TODO test this
+private val DarkColorScheme =
+    darkColorScheme(
+        primary = QuidditchPlayersBlack,
+        secondary = QuidditchPlayersBlack,
+        tertiary = QuidditchPlayersBlack,
+        surface = QuidditchPlayersBlack,
+        onPrimary = QuidditchPlayersGreen,
+    )
 
-private val LightColorScheme = lightColorScheme(
-
-    // A primary color is the color displayed most frequently across your app's screens and components.
-    primary = QuidditchPlayersBlack,
-
-    // A secondary color provides more ways to accent and distinguish your product.
-    secondary = QuidditchPlayersGreen,
-
-    // The tertiary key color is used to derive the roles of contrasting
-    // accents that can be used to balance primary and secondary colors or bring enhanced attention to an element.
-    tertiary = QuidditchPlayersBlackDark,
-
-    // The background color appears behind scrollable content.
-    background = Color.LightGray,
-
-    // Surface colors affect the surfaces of components.
-    surface = Color.White,
-
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onTertiary = Color.White,
-    onBackground = QuidditchPlayersBlack,
-    onSurface = QuidditchPlayersBlack
-)
+private val LightColorScheme =
+    lightColorScheme(
+        // A primary color is the color displayed most frequently across your app's screens and components.
+        primary = QuidditchPlayersBlack,
+        // A secondary color provides more ways to accent and distinguish your product.
+        secondary = QuidditchPlayersGreen,
+        // The tertiary key color is used to derive the roles of contrasting
+        // accents that can be used to balance primary and secondary colors or bring enhanced attention to an element.
+        tertiary = QuidditchPlayersBlackDark,
+        // The background color appears behind scrollable content.
+        background = Color.LightGray,
+        // Surface colors affect the surfaces of components.
+        surface = Color.White,
+        onPrimary = Color.White,
+        onSecondary = Color.Black,
+        onTertiary = Color.White,
+        onBackground = QuidditchPlayersBlack,
+        onSurface = QuidditchPlayersBlack,
+    )
 
 @Composable
 fun QuidditchPlayersAndroid2023Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val colorScheme =
+        when {
+            dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+                val context = LocalContext.current
+                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+            darkTheme -> DarkColorScheme
+            else -> LightColorScheme
+        }
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -78,6 +75,6 @@ fun QuidditchPlayersAndroid2023Theme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
-        content = content
+        content = content,
     )
 }

@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface QuidditchPlayersDao {
-
     @Query("SELECT * FROM house")
     fun getAllHouses(): Flow<List<House>>
 

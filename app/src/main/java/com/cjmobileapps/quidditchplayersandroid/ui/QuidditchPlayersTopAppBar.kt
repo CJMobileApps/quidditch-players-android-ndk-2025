@@ -25,41 +25,43 @@ import com.cjmobileapps.quidditchplayersandroid.R
 @Composable
 fun QuidditchPlayersTopAppBar(
     navController: NavController,
-    topBarTitle: String = ""
+    topBarTitle: String = "",
 ) {
-
     val horizontalArrangement =
         if (navController.previousBackStackEntry != null) Arrangement.Start else Arrangement.Center
 
-    val titleText = if (!topBarTitle.isNullOrEmpty()) {
-        topBarTitle
-    } else {
-        stringResource(id = R.string.app_name)
-    }
+    val titleText =
+        if (!topBarTitle.isNullOrEmpty()) {
+            topBarTitle
+        } else {
+            stringResource(id = R.string.app_name)
+        }
 
     TopAppBar(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier =
+            Modifier
+                .fillMaxWidth(),
         title = {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag(""),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .testTag(""),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Row(
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
                     horizontalArrangement = horizontalArrangement,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
                         text = titleText,
                         textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.titleLarge,
                     )
                 }
             }
@@ -70,16 +72,17 @@ fun QuidditchPlayersTopAppBar(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(R.string.back_description),
-                        tint = MaterialTheme.colorScheme.onPrimary
+                        tint = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary,
-            navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-            actionIconContentColor = MaterialTheme.colorScheme.onSecondary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                actionIconContentColor = MaterialTheme.colorScheme.onSecondary,
+            ),
     )
 }

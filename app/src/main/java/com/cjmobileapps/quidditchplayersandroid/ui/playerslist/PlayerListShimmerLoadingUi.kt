@@ -18,26 +18,28 @@ import com.cjmobileapps.quidditchplayersandroid.ui.util.shimmerBrush
 
 @Composable
 fun PlayerListShimmerLoadingUi(modifier: Modifier) {
-
     val players = listOf("1", "2", "3", "4", "5", "6", "7")
 
     LazyColumn(
-        modifier = modifier.padding(16.dp)
+        modifier = modifier.padding(16.dp),
     ) {
         items(players) { player ->
             ElevatedCard(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .size(300.dp)
-                    .padding(top = 8.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                )
+                modifier =
+                    modifier
+                        .fillMaxWidth()
+                        .size(300.dp)
+                        .padding(top = 8.dp),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                    ),
             ) {
                 Column(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .background(brush = shimmerBrush(showShimmer = true))
+                    modifier =
+                        modifier
+                            .fillMaxSize()
+                            .background(brush = shimmerBrush(showShimmer = true)),
                 ) { }
             }
         }

@@ -12,13 +12,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface QuidditchPlayersApi {
-
     @GET("api/v1/quidditchplayers/house")
     fun getAllHouses(): Deferred<Response<ResponseWrapper<List<House>>>>
 
     @GET("api/v1/quidditchplayers/player")
     fun getPlayersByHouse(
-        @Query("houseName") houseName: String
+        @Query("houseName") houseName: String,
     ): Deferred<Response<ResponseWrapper<List<Player>>>>
 
     @GET("api/v1/quidditchplayers/position")
@@ -26,11 +25,11 @@ interface QuidditchPlayersApi {
 
     @GET("api/v1/quidditchplayers/player/status")
     fun getStatusByHouseName(
-        @Query("houseName") houseName: String
+        @Query("houseName") houseName: String,
     ): Deferred<Response<ResponseWrapper<Status>>>
 
     @GET("api/v1/quidditchplayers/player/status/{playerId}")
     fun fetchStatusByPlayerId(
-        @Path("playerId") playerId: String
+        @Path("playerId") playerId: String,
     ): Deferred<Response<ResponseWrapper<Status>>>
 }

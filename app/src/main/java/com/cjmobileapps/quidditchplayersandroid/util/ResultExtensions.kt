@@ -57,11 +57,12 @@ fun <T : Any> ResponseApiWrapper<T>.responseWrapper(): ResponseWrapper<T> {
             Timber.e(response.errorBody()?.string())
             ResponseWrapper(
                 data = body?.data,
-                error = Error(
-                    isError = true,
-                    message = ""
-                ),
-                statusCode = 500
+                error =
+                    Error(
+                        isError = true,
+                        message = "",
+                    ),
+                statusCode = 500,
             )
         }
     }
@@ -79,11 +80,12 @@ fun <T : Any> Response<ResponseWrapper<T>>.responseWrapper(): ResponseWrapper<T>
             Timber.e(errorBody()?.string())
             ResponseWrapper(
                 data = body?.data,
-                error = Error(
-                    isError = true,
-                    message = ""
-                ),
-                statusCode = 500
+                error =
+                    Error(
+                        isError = true,
+                        message = "",
+                    ),
+                statusCode = 500,
             )
         }
     }
@@ -91,7 +93,7 @@ fun <T : Any> Response<ResponseWrapper<T>>.responseWrapper(): ResponseWrapper<T>
 
 suspend fun <T : Any> withContextApiWrapper(
     coroutineContext: CoroutineContext,
-    requestFunc: suspend () -> Deferred<Response<ResponseWrapper<T>>>
+    requestFunc: suspend () -> Deferred<Response<ResponseWrapper<T>>>,
 ): ResponseWrapper<T> {
     return try {
         withContext(coroutineContext) {
@@ -105,7 +107,7 @@ suspend fun <T : Any> withContextApiWrapper(
             @Suppress("UNCHECKED_CAST")
             GsonBuilder().create().fromJson(
                 e.response()?.errorBody()?.string(),
-                ResponseWrapper::class.java
+                ResponseWrapper::class.java,
             ) as ResponseWrapper<T>
         } catch (e: Exception) {
             Timber.e(e.stackTraceToString())
@@ -117,9 +119,7 @@ suspend fun <T : Any> withContextApiWrapper(
     }
 }
 
-suspend fun <T : Any> apiWrapper(
-    requestFunc: suspend () -> Deferred<Response<ResponseWrapper<T>>>
-): ResponseWrapper<T> {
+suspend fun <T : Any> apiWrapper(requestFunc: suspend () -> Deferred<Response<ResponseWrapper<T>>>): ResponseWrapper<T> {
     return try {
         requestFunc
             .invoke()
@@ -131,7 +131,7 @@ suspend fun <T : Any> apiWrapper(
             @Suppress("UNCHECKED_CAST")
             GsonBuilder().create().fromJson(
                 e.response()?.errorBody()?.string(),
-                ResponseWrapper::class.java
+                ResponseWrapper::class.java,
             ) as ResponseWrapper<T>
         } catch (e: Exception) {
             Timber.e(e.stackTraceToString())
@@ -146,12 +146,12 @@ suspend fun <T : Any> apiWrapper(
 suspend fun <T1 : Any, T2 : Any> withContextApiWrappers(
     coroutineContext: CoroutineContext,
     requestFunc1: suspend () -> Deferred<Response<ResponseWrapper<T1>>>,
-    requestFunc2: suspend () -> Deferred<Response<ResponseWrapper<T2>>>
+    requestFunc2: suspend () -> Deferred<Response<ResponseWrapper<T2>>>,
 ): ResponseWrappers<T1, T2> {
     return withContext(coroutineContext) {
         ResponseWrappers(
             responseWrapper1 = apiWrapper(requestFunc1),
-            responseWrapper2 = apiWrapper(requestFunc2)
+            responseWrapper2 = apiWrapper(requestFunc2),
         )
     }
 }
@@ -159,10 +159,11 @@ suspend fun <T1 : Any, T2 : Any> withContextApiWrappers(
 fun <T : Any> defaultErrorResultWrapper(): ResponseWrapper<T> {
     return ResponseWrapper(
         data = null,
-        error = Error(
-            isError = true,
-            message = ""
-        ),
-        statusCode = 500
+        error =
+            Error(
+                isError = true,
+                message = "",
+            ),
+        statusCode = 500,
     )
 }

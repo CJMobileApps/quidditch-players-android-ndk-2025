@@ -8,7 +8,6 @@ import com.google.gson.reflect.TypeToken
 import java.util.UUID
 
 class Converters {
-
     @TypeConverter
     fun toHouseList(value: String?): List<House> {
         if (value.isNullOrEmpty() || value == "null") return emptyList()

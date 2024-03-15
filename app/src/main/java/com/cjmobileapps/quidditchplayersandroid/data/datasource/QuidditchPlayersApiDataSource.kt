@@ -13,9 +13,8 @@ import com.cjmobileapps.quidditchplayersandroid.util.withContextApiWrappers
 
 class QuidditchPlayersApiDataSource(
     private val quidditchPlayersApi: QuidditchPlayersApi,
-    private val coroutineDispatchers: CoroutineDispatchers
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) {
-
     suspend fun getAllHouses(): ResponseWrapper<List<House>> {
         return withContextApiWrapper(coroutineDispatchers.io) {
             quidditchPlayersApi.getAllHouses()
@@ -32,7 +31,7 @@ class QuidditchPlayersApiDataSource(
         return withContextApiWrappers(
             coroutineContext = coroutineDispatchers.io,
             requestFunc1 = { quidditchPlayersApi.getPlayersByHouse(houseName) },
-            requestFunc2 = { quidditchPlayersApi.getPositions() }
+            requestFunc2 = { quidditchPlayersApi.getPositions() },
         )
     }
 

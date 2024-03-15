@@ -24,7 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 fun NavigationGraph(
     navController: NavHostController,
     coroutineScope: CoroutineScope,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
 ) {
     NavHost(navController = navController, startDestination = NavItem.Houses.navRoute) {
         composable(NavItem.Houses.navRoute) {
@@ -34,12 +34,12 @@ fun NavigationGraph(
                 navController = navController,
                 housesViewModel = housesViewModel,
                 coroutineScope = coroutineScope,
-                snackbarHostState = snackbarHostState
+                snackbarHostState = snackbarHostState,
             )
         }
         composable(
             NavItem.PlayersList.navRoute,
-            arguments = NavItem.PlayersList.arguments
+            arguments = NavItem.PlayersList.arguments,
         ) {
             val playersListViewModel: PlayersListViewModel =
                 hiltViewModel<PlayersListViewModelImpl>()
@@ -48,7 +48,7 @@ fun NavigationGraph(
                 navController = navController,
                 playersListViewModel = playersListViewModel,
                 coroutineScope = coroutineScope,
-                snackbarHostState = snackbarHostState
+                snackbarHostState = snackbarHostState,
             )
         }
         composable(NavItem.PlayerDetail.navRoute) {
@@ -59,7 +59,7 @@ fun NavigationGraph(
                 navController = navController,
                 coroutineScope = coroutineScope,
                 playerDetailViewModel = playerDetailViewModel,
-                snackbarHostState = snackbarHostState
+                snackbarHostState = snackbarHostState,
             )
         }
     }
@@ -67,17 +67,17 @@ fun NavigationGraph(
 
 sealed class NavItem(
     val navRoute: String,
-    val arguments: List<NamedNavArgument> = emptyList()
+    val arguments: List<NamedNavArgument> = emptyList(),
 ) {
     data object Houses : NavItem(navRoute = "nav_houses")
 
     data object PlayersList : NavItem(
         navRoute = "nav_players_list/{houseName}",
-        arguments = listOf(
-            navArgument("houseName") { type = NavType.StringType }
-        )
+        arguments =
+            listOf(
+                navArgument("houseName") { type = NavType.StringType },
+            ),
     ) {
-
         fun getNavRouteWithArguments(houseName: String): String {
             return "nav_players_list/$houseName"
         }
@@ -85,11 +85,11 @@ sealed class NavItem(
 
     data object PlayerDetail : NavItem(
         navRoute = "nav_player_detail/{playerId}",
-        arguments = listOf(
-            navArgument("playerId") { type = NavType.StringType }
-        )
+        arguments =
+            listOf(
+                navArgument("playerId") { type = NavType.StringType },
+            ),
     ) {
-
         fun getNavRouteWithArguments(playerId: String): String {
             return "nav_player_detail/$playerId"
         }
