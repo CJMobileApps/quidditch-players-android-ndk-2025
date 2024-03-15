@@ -31,16 +31,16 @@ fun PlayersListUi(
     navController: NavController,
     playersListViewModel: PlayersListViewModel,
     coroutineScope: CoroutineScope,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
 ) {
     Scaffold(
         topBar = {
             QuidditchPlayersTopAppBar(
                 navController,
-                playersListViewModel.getTopBarTitle()
+                playersListViewModel.getTopBarTitle(),
             )
         },
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
         Box {
             when (val state = playersListViewModel.getState()) {
@@ -53,28 +53,31 @@ fun PlayersListUi(
                         modifier = Modifier.padding(innerPadding),
                         playersListViewModel = playersListViewModel,
                         playersLoadedState = state,
-                        navController = navController
+                        navController = navController,
                     )
                 }
             }
         }
 
-        val snackbarMessage: String? = when (val state = playersListViewModel.getSnackbarState()) {
-            is PlayersListViewModelImpl.PlayersListSnackbarState.Idle -> null
-            is PlayersListViewModelImpl.PlayersListSnackbarState.ShowGenericError -> state.error
-                ?: stringResource(R.string.some_error_occurred)
+        val snackbarMessage: String? =
+            when (val state = playersListViewModel.getSnackbarState()) {
+                is PlayersListViewModelImpl.PlayersListSnackbarState.Idle -> null
+                is PlayersListViewModelImpl.PlayersListSnackbarState.ShowGenericError ->
+                    state.error
+                        ?: stringResource(R.string.some_error_occurred)
 
-            is PlayersListViewModelImpl.PlayersListSnackbarState.UnableToGetPlayersListError -> stringResource(
-                R.string.unable_to_get_players
-            )
-        }
+                is PlayersListViewModelImpl.PlayersListSnackbarState.UnableToGetPlayersListError ->
+                    stringResource(
+                        R.string.unable_to_get_players,
+                    )
+            }
 
         if (snackbarMessage != null) {
             PlayerListSnackbar(
                 message = snackbarMessage,
                 coroutineScope = coroutineScope,
                 snackbarHostState = snackbarHostState,
-                playersListViewModel = playersListViewModel
+                playersListViewModel = playersListViewModel,
             )
         }
     }
@@ -85,7 +88,7 @@ fun PlayerListSnackbar(
     message: String,
     coroutineScope: CoroutineScope,
     snackbarHostState: SnackbarHostState,
-    playersListViewModel: PlayersListViewModel
+    playersListViewModel: PlayersListViewModel,
 ) {
     LaunchedEffect(key1 = message) {
         coroutineScope.launch {
@@ -100,23 +103,24 @@ fun PlayersListLoadedUi(
     modifier: Modifier,
     playersListViewModel: PlayersListViewModel,
     playersLoadedState: PlayersListViewModelImpl.PlayersListState.PlayerListLoadedState,
-    navController: NavController
+    navController: NavController,
 ) {
-
     val players = playersLoadedState.players
 
     LazyColumn(
-        modifier = modifier.padding(16.dp)
+        modifier = modifier.padding(16.dp),
     ) {
         items(players) { player ->
             ElevatedCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-                    .clickable { playersListViewModel.goToPlayerDetailUi(player) },
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                )
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                        .clickable { playersListViewModel.goToPlayerDetailUi(player) },
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                    ),
             ) {
                 PlayerDetail(player = player)
             }

@@ -23,7 +23,7 @@ fun QuidditchPlayersUi() {
                 NavigationGraph(
                     navController = navController,
                     coroutineScope = coroutineScope,
-                    snackbarHostState = snackbarHostState
+                    snackbarHostState = snackbarHostState,
                 )
             }
         }

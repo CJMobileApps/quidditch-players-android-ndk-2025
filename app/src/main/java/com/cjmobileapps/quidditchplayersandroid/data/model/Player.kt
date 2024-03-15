@@ -14,7 +14,7 @@ data class Player(
     val favoriteSubject: String,
     val position: Int,
     val imageUrl: String,
-    val house: HouseName
+    val house: HouseName,
 )
 
 @Entity
@@ -26,7 +26,7 @@ data class PlayerEntity(
     val favoriteSubject: String,
     val position: String,
     val imageUrl: String,
-    val house: HouseName
+    val house: HouseName,
 )
 
 data class PlayerState(
@@ -38,9 +38,8 @@ data class PlayerState(
     val position: String,
     val imageUrl: String,
     val house: HouseName,
-    val status: MutableState<String> = mutableStateOf("")
+    val status: MutableState<String> = mutableStateOf(""),
 ) {
-
     fun getFullName(): String {
         return "$firstName $lastName"
     }
@@ -55,7 +54,7 @@ fun PlayerEntity.toPlayerState(): PlayerState {
         favoriteSubject = this.favoriteSubject,
         position = this.position,
         imageUrl = this.imageUrl,
-        house = this.house
+        house = this.house,
     )
 }
 
@@ -76,6 +75,6 @@ fun Player.toPlayerEntity(positions: Map<Int, Position>): PlayerEntity {
         favoriteSubject = favoriteSubject,
         position = positions[this.position]?.positionName ?: "",
         imageUrl = imageUrl,
-        house = house
+        house = house,
     )
 }

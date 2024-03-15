@@ -21,101 +21,101 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class PlayerDetailViewModelImpl @Inject constructor(
-    coroutineDispatchers: CoroutineDispatchers,
-    savedStateHandle: SavedStateHandle,
-    private val quidditchPlayersUseCase: QuidditchPlayersUseCase
-) : ViewModel(), PlayerDetailViewModel {
+class PlayerDetailViewModelImpl
+    @Inject
+    constructor(
+        coroutineDispatchers: CoroutineDispatchers,
+        savedStateHandle: SavedStateHandle,
+        private val quidditchPlayersUseCase: QuidditchPlayersUseCase,
+    ) : ViewModel(), PlayerDetailViewModel {
+        private val playerId: String = checkNotNull(savedStateHandle["playerId"])
 
-    private val playerId: String = checkNotNull(savedStateHandle["playerId"])
+        private val compositeJob = Job()
 
-    private val compositeJob = Job()
+        private val exceptionHandler =
+            CoroutineExceptionHandler { _, throwable ->
+                Timber.tag(tag)
+                    .e("coroutineExceptionHandler() error occurred: $throwable \n ${throwable.message}")
+                snackbarState.value = PlayerDetailSnackbarState.ShowGenericError()
+            }
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Timber.tag(tag)
-            .e("coroutineExceptionHandler() error occurred: $throwable \n ${throwable.message}")
-        snackbarState.value = PlayerDetailSnackbarState.ShowGenericError()
-    }
+        private val coroutineContextHousesFlow =
+            compositeJob + coroutineDispatchers.main + exceptionHandler + SupervisorJob()
+        private val playerDetailState =
+            mutableStateOf<PlayerDetailState>(PlayerDetailState.LoadingState)
 
-    private val coroutineContextHousesFlow =
-        compositeJob + coroutineDispatchers.main + exceptionHandler + SupervisorJob()
-    private val playerDetailState =
-        mutableStateOf<PlayerDetailState>(PlayerDetailState.LoadingState)
+        private val snackbarState =
+            mutableStateOf<PlayerDetailSnackbarState>(
+                PlayerDetailSnackbarState.Idle,
+            )
 
-    private val snackbarState = mutableStateOf<PlayerDetailSnackbarState>(
-        PlayerDetailSnackbarState.Idle
-    )
+        private val tag = PlayerDetailViewModelImpl::class.java.simpleName
 
-    private val tag = PlayerDetailViewModelImpl::class.java.simpleName
+        override fun getState() = playerDetailState.value
 
-    override fun getState() = playerDetailState.value
+        override fun getSnackbarState() = snackbarState.value
 
-    override fun getSnackbarState() = snackbarState.value
-
-    override fun getTopBarTitle(): String {
-        val state = getState()
-        if (state !is PlayerDetailState.PlayerDetailLoadedState) return ""
-        val player = state.player ?: return ""
-        return player.getFullName()
-    }
-
-    init {
-        val player = quidditchPlayersUseCase.currentPlayer.takeIf { it?.id.toString() == playerId }
-        if (player != null) {
-            playerDetailState.value = PlayerDetailState.PlayerDetailLoadedState(player = player)
-            getStatuesForPlayer()
-        } else {
-            playerDetailState.value = PlayerDetailState.PlayerDetailLoadedState()
-            snackbarState.value = PlayerDetailSnackbarState.UnableToGetPlayerError()
+        override fun getTopBarTitle(): String {
+            val state = getState()
+            if (state !is PlayerDetailState.PlayerDetailLoadedState) return ""
+            val player = state.player ?: return ""
+            return player.getFullName()
         }
-    }
 
-    private fun getStatuesForPlayer() {
-        val state = getState()
-        if (state !is PlayerDetailState.PlayerDetailLoadedState) return
-        coroutineContextHousesFlow.cancelChildren()
-        viewModelScope.launch(coroutineContextHousesFlow) {
-
-            val player = state.player
-            val playerId = player?.id.toString()
-
-            while (true) {
-                delay(TimeUtil.getRandomSeconds())
-                quidditchPlayersUseCase.fetchStatusByPlayerId(playerId)
-                    .onSuccess { status ->
-                        player?.status?.value = status.status
-                    }
-                    .onError { _, error ->
-                        Timber.tag(tag)
-                            .e("quidditchPlayersUseCase.fetchStatusByPlayerId(playerId) error occurred: $error \\n ${error.message}")
-                    }
+        init {
+            val player = quidditchPlayersUseCase.currentPlayer.takeIf { it?.id.toString() == playerId }
+            if (player != null) {
+                playerDetailState.value = PlayerDetailState.PlayerDetailLoadedState(player = player)
+                getStatuesForPlayer()
+            } else {
+                playerDetailState.value = PlayerDetailState.PlayerDetailLoadedState()
+                snackbarState.value = PlayerDetailSnackbarState.UnableToGetPlayerError()
             }
         }
+
+        private fun getStatuesForPlayer() {
+            val state = getState()
+            if (state !is PlayerDetailState.PlayerDetailLoadedState) return
+            coroutineContextHousesFlow.cancelChildren()
+            viewModelScope.launch(coroutineContextHousesFlow) {
+                val player = state.player
+                val playerId = player?.id.toString()
+
+                while (true) {
+                    delay(TimeUtil.getRandomSeconds())
+                    quidditchPlayersUseCase.fetchStatusByPlayerId(playerId)
+                        .onSuccess { status ->
+                            player?.status?.value = status.status
+                        }
+                        .onError { _, error ->
+                            Timber.tag(tag)
+                                .e("quidditchPlayersUseCase.fetchStatusByPlayerId(playerId) error occurred: $error \\n ${error.message}")
+                        }
+                }
+            }
+        }
+
+        override fun resetSnackbarState() {
+            snackbarState.value = PlayerDetailSnackbarState.Idle
+        }
+
+        sealed class PlayerDetailState {
+            data object LoadingState : PlayerDetailState()
+
+            data class PlayerDetailLoadedState(
+                val player: PlayerState? = null,
+            ) : PlayerDetailState()
+        }
+
+        sealed class PlayerDetailSnackbarState {
+            data object Idle : PlayerDetailSnackbarState()
+
+            data class ShowGenericError(
+                val error: String? = null,
+            ) : PlayerDetailSnackbarState()
+
+            data class UnableToGetPlayerError(
+                val error: String? = null,
+            ) : PlayerDetailSnackbarState()
+        }
     }
-
-    override fun resetSnackbarState() {
-        snackbarState.value = PlayerDetailSnackbarState.Idle
-    }
-
-    sealed class PlayerDetailState {
-
-        data object LoadingState : PlayerDetailState()
-
-        data class PlayerDetailLoadedState(
-            val player: PlayerState? = null
-        ) : PlayerDetailState()
-    }
-
-    sealed class PlayerDetailSnackbarState {
-
-        data object Idle : PlayerDetailSnackbarState()
-
-        data class ShowGenericError(
-            val error: String? = null
-        ) : PlayerDetailSnackbarState()
-
-        data class UnableToGetPlayerError(
-            val error: String? = null
-        ) : PlayerDetailSnackbarState()
-    }
-}

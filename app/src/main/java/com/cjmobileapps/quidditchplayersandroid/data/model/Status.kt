@@ -4,5 +4,5 @@ import java.util.*
 
 data class Status(
     val playerId: UUID,
-    val status: String
+    val status: String,
 )

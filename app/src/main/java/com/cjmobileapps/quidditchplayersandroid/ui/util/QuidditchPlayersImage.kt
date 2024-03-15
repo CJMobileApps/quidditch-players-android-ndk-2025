@@ -13,18 +13,19 @@ fun QuidditchPlayersImage(
     modifier: Modifier = Modifier,
     imageUrl: String,
     contentDescription: String,
-    contentScale: ContentScale = ContentScale.Fit
+    contentScale: ContentScale = ContentScale.Fit,
 ) {
     val showImageShimmer = remember { mutableStateOf(true) }
 
     AsyncImage(
-        modifier = modifier
-            .background(shimmerBrush(showShimmer = showImageShimmer.value)),
+        modifier =
+            modifier
+                .background(shimmerBrush(showShimmer = showImageShimmer.value)),
         model = imageUrl,
         contentScale = contentScale,
         contentDescription = contentDescription,
         onLoading = { showImageShimmer.value = true },
         onSuccess = { showImageShimmer.value = false },
-        onError = { showImageShimmer.value = false }
+        onError = { showImageShimmer.value = false },
     )
 }

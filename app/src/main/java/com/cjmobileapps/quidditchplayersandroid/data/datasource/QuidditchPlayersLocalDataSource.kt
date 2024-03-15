@@ -9,9 +9,8 @@ import kotlinx.coroutines.withContext
 
 class QuidditchPlayersLocalDataSource(
     private val quidditchPlayersDao: QuidditchPlayersDao,
-    private val coroutineDispatchers: CoroutineDispatchers
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) {
-
     suspend fun getAllHousesFlow(): Flow<List<House>> {
         return withContext(coroutineDispatchers.io) {
             quidditchPlayersDao.getAllHouses()

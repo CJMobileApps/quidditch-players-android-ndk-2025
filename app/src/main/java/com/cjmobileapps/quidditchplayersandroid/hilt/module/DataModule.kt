@@ -21,16 +21,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class DataModule {
-
     @Singleton
     @Provides
     fun quidditchPlayersApiDataSource(
         quidditchPlayersApi: QuidditchPlayersApi,
-        coroutineDispatchers: CoroutineDispatchers
+        coroutineDispatchers: CoroutineDispatchers,
     ): QuidditchPlayersApiDataSource {
         return QuidditchPlayersApiDataSource(
             quidditchPlayersApi = quidditchPlayersApi,
-            coroutineDispatchers = coroutineDispatchers
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 
@@ -38,27 +37,27 @@ class DataModule {
     @Provides
     fun quidditchPlayersRepository(
         quidditchPlayersApiDataSource: QuidditchPlayersApiDataSource,
-        quidditchPlayersLocalDataSource: QuidditchPlayersLocalDataSource
+        quidditchPlayersLocalDataSource: QuidditchPlayersLocalDataSource,
     ): QuidditchPlayersRepository {
         return QuidditchPlayersRepositoryImpl(
             quidditchPlayersApiDataSource = quidditchPlayersApiDataSource,
-            quidditchPlayersLocalDataSource = quidditchPlayersLocalDataSource
+            quidditchPlayersLocalDataSource = quidditchPlayersLocalDataSource,
         )
     }
 
     @Singleton
     @Provides
-    fun quidditchPlayersUseCase(
-        quidditchPlayersRepository: QuidditchPlayersRepository
-    ): QuidditchPlayersUseCase {
+    fun quidditchPlayersUseCase(quidditchPlayersRepository: QuidditchPlayersRepository): QuidditchPlayersUseCase {
         return QuidditchPlayersUseCase(
-            quidditchPlayersRepository = quidditchPlayersRepository
+            quidditchPlayersRepository = quidditchPlayersRepository,
         )
     }
 
     @Singleton
     @Provides
-    fun quidditchPlayersDatabase(@ApplicationContext context: Context): QuidditchPlayersDatabase {
+    fun quidditchPlayersDatabase(
+        @ApplicationContext context: Context,
+    ): QuidditchPlayersDatabase {
         return DatabaseFactory.getDB(context)
     }
 
@@ -72,11 +71,11 @@ class DataModule {
     @Provides
     fun quidditchPlayersLocalDataSource(
         quidditchPlayersDao: QuidditchPlayersDao,
-        coroutineDispatchers: CoroutineDispatchers
+        coroutineDispatchers: CoroutineDispatchers,
     ): QuidditchPlayersLocalDataSource {
         return QuidditchPlayersLocalDataSource(
             quidditchPlayersDao = quidditchPlayersDao,
-            coroutineDispatchers = coroutineDispatchers
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 }

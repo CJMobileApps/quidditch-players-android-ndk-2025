@@ -18,26 +18,28 @@ import com.cjmobileapps.quidditchplayersandroid.ui.util.shimmerBrush
 
 @Composable
 fun HousesShimmerLoadingUi(modifier: Modifier) {
-
     val houses = listOf("1", "2", "3", "4")
 
     LazyVerticalGrid(
-        modifier = modifier
-            .padding(16.dp),
+        modifier =
+            modifier
+                .padding(16.dp),
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(houses) {
             ElevatedCard(
-                modifier = Modifier
-                    .size(200.dp)
-                    .fillMaxWidth()
+                modifier =
+                    Modifier
+                        .size(200.dp)
+                        .fillMaxWidth(),
             ) {
                 Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(brush = shimmerBrush(showShimmer = true))
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .background(brush = shimmerBrush(showShimmer = true)),
                 ) { }
             }
         }

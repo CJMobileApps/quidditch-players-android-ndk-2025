@@ -22,10 +22,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
-
     @Singleton
     @Provides
-    fun httpCacheDirectory(@ApplicationContext context: Context): File {
+    fun httpCacheDirectory(
+        @ApplicationContext context: Context,
+    ): File {
         return File(context.cacheDir, HTTP_CACHE_DIR)
     }
 
@@ -51,7 +52,7 @@ class NetworkModule {
     @Provides
     fun okHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        cache: Cache
+        cache: Cache,
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .cache(cache)
