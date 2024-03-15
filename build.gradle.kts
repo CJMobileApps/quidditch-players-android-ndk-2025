@@ -3,6 +3,7 @@ buildscript {
     dependencies {
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.48")
         classpath("de.mannodermaus.gradle.plugins:android-junit5:1.10.0.0")
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:12.1.0")
     }
 }
 
@@ -12,4 +13,5 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.48" apply false
     id("de.mannodermaus.android-junit5") version "1.10.0.0" apply false
     id("com.google.devtools.ksp") version "1.9.21-1.0.15" apply false
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0" apply false
 }

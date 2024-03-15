@@ -4,6 +4,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("de.mannodermaus.android-junit5")
     id("com.google.devtools.ksp")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 android {
