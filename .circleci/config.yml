@@ -3,6 +3,16 @@ orbs:
   android: circleci/android@2.4.0
   codecov: codecov/codecov@3.3.0
 jobs:
+  ktlint-check:
+    executor:
+      name: android/android-docker
+      tag: 2022.08.1
+    steps:
+      - checkout
+      - run:
+          name: Install OpenJDK 17
+          command: |
+            ./gradlew ktlintCheck
   unit-test:
     executor:
       name: android/android-docker
@@ -140,5 +150,6 @@ jobs:
 workflows:
   test-and-build:
     jobs:
+      - ktlint-check
       - unit-test
       - android-test
