@@ -81,15 +81,15 @@ object MockData {
                 firstName = "Harry",
                 lastName = "Potter",
                 yearsPlayed =
-                listOf(
-                    1991,
-                    1992,
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                    1997,
-                ),
+                    listOf(
+                        1991,
+                        1992,
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                        1997,
+                    ),
                 favoriteSubject = "Defense Against The Dark Arts",
                 position = 4, // Seeker
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/9/97/Harry_Potter.jpg/revision/latest?cb=20140603201724",
@@ -100,15 +100,15 @@ object MockData {
                 firstName = "Katie",
                 lastName = "Bell",
                 yearsPlayed =
-                listOf(
-                    1991,
-                    1992,
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                    1997,
-                ),
+                    listOf(
+                        1991,
+                        1992,
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                        1997,
+                    ),
                 favoriteSubject = "Transfiguration",
                 position = 1,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/3/32/Katie_Bell_infobox.jpg/revision/latest?cb=20170118053940",
@@ -119,15 +119,15 @@ object MockData {
                 firstName = "Angelina",
                 lastName = "Johnson",
                 yearsPlayed =
-                listOf(
-                    1990,
-                    1991,
-                    1992,
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
+                    listOf(
+                        1990,
+                        1991,
+                        1992,
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                    ),
                 favoriteSubject = "Care of Magical Creatures",
                 position = 1,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/2/24/GOF_promo_Angelina_Johnson.jpg/revision/latest?cb=20100522214321",
@@ -138,15 +138,15 @@ object MockData {
                 firstName = "Fred",
                 lastName = "Weasley",
                 yearsPlayed =
-                listOf(
-                    1990,
-                    1991,
-                    1992,
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
+                    listOf(
+                        1990,
+                        1991,
+                        1992,
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                    ),
                 favoriteSubject = "Charms",
                 position = 2,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/9/90/Fred_HS_TDH_promo.jpg/revision/latest/scale-to-width-down/1000?cb=20230526122025",
@@ -157,15 +157,15 @@ object MockData {
                 firstName = "George",
                 lastName = "Weasley",
                 yearsPlayed =
-                listOf(
-                    1990,
-                    1991,
-                    1992,
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
+                    listOf(
+                        1990,
+                        1991,
+                        1992,
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                    ),
                 favoriteSubject = "Charms",
                 position = 2,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/2/2a/DH_promo_front_closeup_George_Weasley.jpg/revision/latest?cb=20161119235305",
@@ -176,15 +176,15 @@ object MockData {
                 firstName = "Alicia",
                 lastName = "Spinnet",
                 yearsPlayed =
-                listOf(
-                    1990,
-                    1991,
-                    1992,
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
+                    listOf(
+                        1990,
+                        1991,
+                        1992,
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                    ),
                 position = 1,
                 favoriteSubject = "Charms",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/7/7a/Alicia_Spinnet.png/revision/latest?cb=20160720064800",
@@ -195,14 +195,14 @@ object MockData {
                 firstName = "Oliver",
                 lastName = "Wood",
                 yearsPlayed =
-                listOf(
-                    1989,
-                    1990,
-                    1991,
-                    1992,
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1989,
+                        1990,
+                        1991,
+                        1992,
+                        1993,
+                        1994,
+                    ),
                 position = 3, // Keeper
                 favoriteSubject = "Potions",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/2/2f/Oliver_WoodDH2.jpg/revision/latest?cb=20110801072255",
@@ -217,14 +217,14 @@ object MockData {
                 firstName = "Draco",
                 lastName = "Malfoy",
                 yearsPlayed =
-                listOf(
-                    1992,
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                    1997,
-                ),
+                    listOf(
+                        1992,
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                        1997,
+                    ),
                 position = 4, // Seeker
                 favoriteSubject = "Potions",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/7/7e/Draco_Malfoy_TDH.png/revision/latest/scale-to-width-down/1000?cb=20180116013508",
@@ -235,14 +235,14 @@ object MockData {
                 firstName = "Miles",
                 lastName = "Bletchley",
                 yearsPlayed =
-                listOf(
-                    1991,
-                    1992,
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
+                    listOf(
+                        1991,
+                        1992,
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                    ),
                 position = KEEPER,
                 favoriteSubject = "Study of Ancient Runes",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/4/40/Miles_Bletchley.jpeg/revision/latest?cb=20110810003628",
@@ -253,11 +253,11 @@ object MockData {
                 firstName = "Gregory",
                 lastName = "Goyle",
                 yearsPlayed =
-                listOf(
-                    1995,
-                    1996,
-                    1997,
-                ),
+                    listOf(
+                        1995,
+                        1996,
+                        1997,
+                    ),
                 position = BEATER,
                 favoriteSubject = "Potions",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/e/e7/Gregory_Goyle_DH2.jpg/revision/latest?cb=20180306163743",
@@ -268,11 +268,11 @@ object MockData {
                 firstName = "Vincent",
                 lastName = "Crabbe",
                 yearsPlayed =
-                listOf(
-                    1995,
-                    1996,
-                    1997,
-                ),
+                    listOf(
+                        1995,
+                        1996,
+                        1997,
+                    ),
                 position = 2,
                 favoriteSubject = "Potions",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/b/ba/Vincent_Crabbe.jpg/revision/latest/scale-to-width-down/1000?cb=20091224183746",
@@ -283,12 +283,12 @@ object MockData {
                 firstName = "Cassius",
                 lastName = "Warrington",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                    ),
                 position = CHASER,
                 favoriteSubject = "History of Magic",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/0/08/Cassius_Warrington_OOTPF.bmp/revision/latest/thumbnail/width/360/height/360?cb=20130416151820",
@@ -299,10 +299,10 @@ object MockData {
                 firstName = "Adrian",
                 lastName = "Pucey",
                 yearsPlayed =
-                listOf(
-                    1995,
-                    1996,
-                ),
+                    listOf(
+                        1995,
+                        1996,
+                    ),
                 position = CHASER,
                 favoriteSubject = "Magical Theory",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/1/13/Adrianpucey-HS.jpg/revision/latest?cb=20101126164937",
@@ -313,12 +313,12 @@ object MockData {
                 firstName = "Graham",
                 lastName = "Montague",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                    ),
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/c/c3/Graham_montague.jpg/revision/latest?cb=20140701101409&path-prefix=fr",
                 position = 1, // Chaser
                 favoriteSubject = "Transfiguration",
@@ -333,12 +333,12 @@ object MockData {
                 firstName = "Cho",
                 lastName = "Chang",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                    ),
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/1/1e/Cho_Chang.jpg/revision/latest?cb=20180322164130",
                 position = SEEKER,
                 house = HouseName.RAVENCLAW,
@@ -349,10 +349,10 @@ object MockData {
                 firstName = "Grant",
                 lastName = "Page",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/9/93/GrantPage.png/revision/latest?cb=20130320232028",
                 position = 3, // Keeper
                 favoriteSubject = "Charms",
@@ -363,10 +363,10 @@ object MockData {
                 firstName = "Duncan",
                 lastName = "Inglebee",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/2/29/Dinglebee.png/revision/latest?cb=20140827133418",
                 position = 2, // Beater
                 favoriteSubject = "Astronomy",
@@ -377,10 +377,10 @@ object MockData {
                 firstName = "Jason",
                 lastName = "Samuels",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 position = 2, // Beater
                 favoriteSubject = "Transfiguration",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/1/1b/Jasonsamuelsqwc.png/revision/latest?cb=20140827133708",
@@ -391,10 +391,10 @@ object MockData {
                 firstName = "Randolph",
                 lastName = "Burrow",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 position = 1, // Chaser
                 favoriteSubject = "Advanced Arithmancy Studies",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/0/07/RandolphBurrow.png/revision/latest?cb=20130320231816",
@@ -405,10 +405,10 @@ object MockData {
                 firstName = "Jeremy",
                 lastName = "Stretton",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 position = CHASER,
                 favoriteSubject = "Alchemy",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/0/06/Jeremy_Stretton_Cleansweep_Seven.jpg/revision/latest?cb=20091020205540",
@@ -419,12 +419,12 @@ object MockData {
                 firstName = "Roger",
                 lastName = "Davies",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                        1995,
+                        1996,
+                    ),
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/e/e5/Roger_Davies.jpg/revision/latest?cb=20180322052136",
                 position = CHASER,
                 favoriteSubject = "Apparition",
@@ -439,10 +439,10 @@ object MockData {
                 firstName = "Cedric",
                 lastName = "Diggory",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 position = SEEKER,
                 favoriteSubject = "Charms",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/9/90/Cedric_Diggory_Profile.png/revision/latest/scale-to-width-down/1000?cb=20161123045136",
@@ -453,10 +453,10 @@ object MockData {
                 firstName = "Herbert",
                 lastName = "Fleet",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 position = KEEPER,
                 favoriteSubject = "History of Magic",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/0/04/Herbert_Fleet.png/revision/latest?cb=20170304124757",
@@ -467,10 +467,10 @@ object MockData {
                 firstName = "Anthony",
                 lastName = "Rickett",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 position = BEATER,
                 imageUrl = "https://static.wikia.nocookie.net/harryalbuspotter/images/e/ea/Anthony_Rickett.PNG/revision/latest?cb=20120107004734",
                 favoriteSubject = "Muggle Music",
@@ -481,10 +481,10 @@ object MockData {
                 firstName = "Maxine",
                 lastName = "O'Flaherty",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 position = BEATER,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/6/64/Maxine_O%27Flaherty.png/revision/latest?cb=20170304123914",
                 favoriteSubject = "Muggle Art",
@@ -495,10 +495,10 @@ object MockData {
                 firstName = "Tamsin",
                 lastName = "Applebee",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 position = CHASER,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/4/48/Tamsin_Applebee.png/revision/latest?cb=20170304124301",
                 favoriteSubject = "Advanced Arithmancy Studies",
@@ -509,10 +509,10 @@ object MockData {
                 firstName = "Heidi",
                 lastName = "Macavoy",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 favoriteSubject = "Muggle Art",
                 position = CHASER,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/a/af/Heidi_Macavoy.png/revision/latest?cb=20170304123437",
@@ -523,10 +523,10 @@ object MockData {
                 firstName = "Malcolm",
                 lastName = "Preece",
                 yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
+                    listOf(
+                        1993,
+                        1994,
+                    ),
                 favoriteSubject = "Ghoul Studies",
                 position = CHASER,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/9/92/Malcolm_Preece.png/revision/latest?cb=20170304122953",
@@ -602,6 +602,5 @@ object MockData {
             mockStatusResponseSuccess,
         )
 
-    fun getStatus(name: String) =
-        String.format("%s is breaking into the Ministry of Magic %s", name, "\uD83D\uDD2E")
+    fun getStatus(name: String) = String.format("%s is breaking into the Ministry of Magic %s", name, "\uD83D\uDD2E")
 }
