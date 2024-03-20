@@ -7,7 +7,6 @@ import java.util.concurrent.Executor
 import kotlin.coroutines.CoroutineContext
 
 object TestCoroutineDispatchers : CoroutineDispatchers {
-
     override val io: CoroutineContext = Dispatchers.Unconfined
 
     override val ioExecutor: Executor = Dispatchers.Unconfined.asExecutor()
