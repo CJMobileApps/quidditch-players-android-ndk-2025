@@ -91,7 +91,7 @@ object MockData {
                         1997,
                     ),
                 favoriteSubject = "Defense Against The Dark Arts",
-                position = 4, // Seeker
+                position = SEEKER,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/9/97/Harry_Potter.jpg/revision/latest?cb=20140603201724",
                 house = HouseName.GRYFFINDOR,
             ),
@@ -110,7 +110,7 @@ object MockData {
                         1997,
                     ),
                 favoriteSubject = "Transfiguration",
-                position = 1,
+                position = CHASER,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/3/32/Katie_Bell_infobox.jpg/revision/latest?cb=20170118053940",
                 house = HouseName.GRYFFINDOR,
             ),
@@ -129,7 +129,7 @@ object MockData {
                         1996,
                     ),
                 favoriteSubject = "Care of Magical Creatures",
-                position = 1,
+                position = CHASER,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/2/24/GOF_promo_Angelina_Johnson.jpg/revision/latest?cb=20100522214321",
                 house = HouseName.GRYFFINDOR,
             ),
@@ -148,7 +148,7 @@ object MockData {
                         1996,
                     ),
                 favoriteSubject = "Charms",
-                position = 2,
+                position = BEATER,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/9/90/Fred_HS_TDH_promo.jpg/revision/latest/scale-to-width-down/1000?cb=20230526122025",
                 house = HouseName.GRYFFINDOR,
             ),
@@ -167,7 +167,7 @@ object MockData {
                         1996,
                     ),
                 favoriteSubject = "Charms",
-                position = 2,
+                position = BEATER,
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/2/2a/DH_promo_front_closeup_George_Weasley.jpg/revision/latest?cb=20161119235305",
                 house = HouseName.GRYFFINDOR,
             ),
@@ -185,7 +185,7 @@ object MockData {
                         1995,
                         1996,
                     ),
-                position = 1,
+                position = CHASER,
                 favoriteSubject = "Charms",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/7/7a/Alicia_Spinnet.png/revision/latest?cb=20160720064800",
                 house = HouseName.GRYFFINDOR,
@@ -203,7 +203,7 @@ object MockData {
                         1993,
                         1994,
                     ),
-                position = 3, // Keeper
+                position = KEEPER,
                 favoriteSubject = "Potions",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/2/2f/Oliver_WoodDH2.jpg/revision/latest?cb=20110801072255",
                 house = HouseName.GRYFFINDOR,
@@ -225,7 +225,7 @@ object MockData {
                         1996,
                         1997,
                     ),
-                position = 4, // Seeker
+                position = SEEKER,
                 favoriteSubject = "Potions",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/7/7e/Draco_Malfoy_TDH.png/revision/latest/scale-to-width-down/1000?cb=20180116013508",
                 house = HouseName.SLYTHERIN,
@@ -273,7 +273,7 @@ object MockData {
                         1996,
                         1997,
                     ),
-                position = 2,
+                position = BEATER,
                 favoriteSubject = "Potions",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/b/ba/Vincent_Crabbe.jpg/revision/latest/scale-to-width-down/1000?cb=20091224183746",
                 house = HouseName.SLYTHERIN,
@@ -320,7 +320,7 @@ object MockData {
                         1996,
                     ),
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/c/c3/Graham_montague.jpg/revision/latest?cb=20140701101409&path-prefix=fr",
-                position = 1, // Chaser
+                position = CHASER,
                 favoriteSubject = "Transfiguration",
                 house = HouseName.SLYTHERIN,
             ),
@@ -354,7 +354,7 @@ object MockData {
                         1994,
                     ),
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/9/93/GrantPage.png/revision/latest?cb=20130320232028",
-                position = 3, // Keeper
+                position = KEEPER,
                 favoriteSubject = "Charms",
                 house = HouseName.RAVENCLAW,
             ),
@@ -368,7 +368,7 @@ object MockData {
                         1994,
                     ),
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/2/29/Dinglebee.png/revision/latest?cb=20140827133418",
-                position = 2, // Beater
+                position = BEATER,
                 favoriteSubject = "Astronomy",
                 house = HouseName.RAVENCLAW,
             ),
@@ -381,7 +381,7 @@ object MockData {
                         1993,
                         1994,
                     ),
-                position = 2, // Beater
+                position = BEATER,
                 favoriteSubject = "Transfiguration",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/1/1b/Jasonsamuelsqwc.png/revision/latest?cb=20140827133708",
                 house = HouseName.RAVENCLAW,
@@ -395,7 +395,7 @@ object MockData {
                         1993,
                         1994,
                     ),
-                position = 1, // Chaser
+                position = CHASER,
                 favoriteSubject = "Advanced Arithmancy Studies",
                 imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/0/07/RandolphBurrow.png/revision/latest?cb=20130320231816",
                 house = HouseName.RAVENCLAW,
@@ -536,10 +536,10 @@ object MockData {
 
     /*** positions ***/
 
-    const val CHASER = 1
-    const val BEATER = 2
-    const val KEEPER = 3
-    const val SEEKER = 4
+    private const val CHASER = 1
+    private const val BEATER = 2
+    private const val KEEPER = 3
+    private const val SEEKER = 4
 
     val mockPositions =
         mapOf(
