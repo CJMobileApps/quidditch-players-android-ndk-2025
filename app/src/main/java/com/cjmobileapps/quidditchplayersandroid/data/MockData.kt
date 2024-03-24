@@ -3,10 +3,12 @@ package com.cjmobileapps.quidditchplayersandroid.data
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.data.model.Player
+import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
 import com.cjmobileapps.quidditchplayersandroid.data.model.Position
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapper
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrappers
 import com.cjmobileapps.quidditchplayersandroid.data.model.Status
+import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersEntities
 import kotlinx.coroutines.CompletableDeferred
 import retrofit2.Response
 import java.net.HttpURLConnection
@@ -561,6 +563,10 @@ object MockData {
         CompletableDeferred(
             mockPositionsResponseSuccess,
         )
+
+    /*** players entity ***/
+
+    val mockPlayersEntities: List<PlayerEntity> = mockAllQuidditchTeam.toPlayersEntities(mockPositions)
 
     /*** players and positions ***/
 
