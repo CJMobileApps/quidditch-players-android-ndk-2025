@@ -53,17 +53,15 @@ object MockData {
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
-    val mockHousesGenericErrorResponseWrapper: ResponseWrapper<List<House>> = ResponseWrapperUtil.createResponseWrapperError(
-        Error(isError = true, message = "Some error"),
-    )
+    val mockHousesGenericErrorResponseWrapper: ResponseWrapper<List<House>> =
+        ResponseWrapperUtil.createResponseWrapperError(
+            Error(isError = true, message = "Some error"),
+        )
 
     val mockHousesResponseSuccess: Response<ResponseWrapper<List<House>>> =
         Response.success(mockHousesResponseWrapper)
 
-
     val mockHousesDeferredResponseSuccess = CompletableDeferred(mockHousesResponseSuccess)
-
-
 
     /*** players data ***/
 
@@ -73,9 +71,10 @@ object MockData {
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
-    val mockRavenclawPGenericErrorResponseWrapper: ResponseWrapper<List<Player>> = ResponseWrapperUtil.createResponseWrapperError(
-        Error(isError = true, message = "Some error"),
-    )
+    val mockRavenclawPGenericErrorResponseWrapper: ResponseWrapper<List<Player>> =
+        ResponseWrapperUtil.createResponseWrapperError(
+            Error(isError = true, message = "Some error"),
+        )
 
     val mockRavenclawPlayersResponseSuccess = Response.success(mockRavenclawPlayersResponseWrapper)
 
@@ -570,9 +569,10 @@ object MockData {
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
-    val mockPositionsGenericErrorResponseWrapper: ResponseWrapper<Map<Int, Position>> = ResponseWrapperUtil.createResponseWrapperError(
-        Error(isError = true, message = "Some error"),
-    )
+    val mockPositionsGenericErrorResponseWrapper: ResponseWrapper<Map<Int, Position>> =
+        ResponseWrapperUtil.createResponseWrapperError(
+            Error(isError = true, message = "Some error"),
+        )
 
     val mockPositionsResponseSuccess = Response.success(mockPositionsResponseWrapper)
 
@@ -589,12 +589,15 @@ object MockData {
 
     val mockRavenclawPlayersEntitiesResponseWrapper = ResponseWrapperUtil.createResponseWrapperSuccess(mockRavenclawPlayersEntities)
 
-    val mockRavenclawPlayersEntitiesResponseWrapperError = ResponseWrapperUtil.createResponseWrapperError<List<PlayerEntity>>(
-        error = Error(
-            isError = true,
-            message = "Some error"
+    val mockRavenclawPlayersEntitiesResponseWrapperError =
+        ResponseWrapperUtil.createResponseWrapperError<List<PlayerEntity>>(
+            error =
+                Error(
+                    isError = true,
+                    message = "Some error",
+                ),
         )
-    )
+
     /*** players and positions ***/
 
     val mockRavenclawPlayersAndPositionsResponseWrappers =
@@ -653,11 +656,12 @@ object MockData {
 
     val mockTrueResponseWrapper = ResponseWrapperUtil.createResponseWrapperSuccess(true)
 
-
-    val mockBooleanResponseWrapperGenericError = ResponseWrapperUtil.createResponseWrapperError<Boolean>(
-        error = Error(
-            isError = true,
-            message = "Some error"
+    val mockBooleanResponseWrapperGenericError =
+        ResponseWrapperUtil.createResponseWrapperError<Boolean>(
+            error =
+                Error(
+                    isError = true,
+                    message = "Some error",
+                ),
         )
-    )
 }
