@@ -4,6 +4,8 @@ import com.cjmobileapps.quidditchplayersandroid.data.MockData
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
+import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayerEntity
+import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayerState
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersEntities
 import com.cjmobileapps.quidditchplayersandroid.testutil.BaseTest
 import kotlinx.coroutines.flow.Flow
@@ -294,4 +296,24 @@ class QuidditchPlayersUseCaseTest : BaseTest() {
                 status,
             )
         }
+
+    @Test
+    fun `set currentPlayer`() {
+        val playerState =
+            MockData
+                .ravenclawTeam()
+                .first()
+                .toPlayerEntity(MockData.mockPositions)
+                .toPlayerState()
+
+        // then
+        setupQuidditchPlayersUseCase()
+        quidditchPlayersUseCase.currentPlayer = playerState
+
+        // verify
+        Assertions.assertEquals(
+            playerState,
+            quidditchPlayersUseCase.currentPlayer,
+        )
+    }
 }
