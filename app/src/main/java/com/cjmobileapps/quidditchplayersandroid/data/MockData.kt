@@ -1,11 +1,13 @@
 package com.cjmobileapps.quidditchplayersandroid.data
 
+import com.cjmobileapps.quidditchplayersandroid.data.model.Error
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.data.model.Player
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
 import com.cjmobileapps.quidditchplayersandroid.data.model.Position
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapper
+import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapperUtil
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrappers
 import com.cjmobileapps.quidditchplayersandroid.data.model.Status
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersEntities
@@ -51,6 +53,11 @@ object MockData {
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
+    val mockHousesGenericErrorResponseWrapper: ResponseWrapper<List<House>> =
+        ResponseWrapperUtil.createResponseWrapperError(
+            Error(isError = true, message = "Some error"),
+        )
+
     val mockHousesResponseSuccess: Response<ResponseWrapper<List<House>>> =
         Response.success(mockHousesResponseWrapper)
 
@@ -62,6 +69,11 @@ object MockData {
         ResponseWrapper(
             data = ravenclawTeam(),
             statusCode = HttpURLConnection.HTTP_OK,
+        )
+
+    val mockRavenclawPGenericErrorResponseWrapper: ResponseWrapper<List<Player>> =
+        ResponseWrapperUtil.createResponseWrapperError(
+            Error(isError = true, message = "Some error"),
         )
 
     val mockRavenclawPlayersResponseSuccess = Response.success(mockRavenclawPlayersResponseWrapper)
@@ -557,6 +569,11 @@ object MockData {
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
+    val mockPositionsGenericErrorResponseWrapper: ResponseWrapper<Map<Int, Position>> =
+        ResponseWrapperUtil.createResponseWrapperError(
+            Error(isError = true, message = "Some error"),
+        )
+
     val mockPositionsResponseSuccess = Response.success(mockPositionsResponseWrapper)
 
     val mockPositionsDeferredResponseSuccess =
@@ -568,12 +585,37 @@ object MockData {
 
     val mockPlayersEntities: List<PlayerEntity> = mockAllQuidditchTeam.toPlayersEntities(mockPositions)
 
+    val mockRavenclawPlayersEntities = ravenclawTeam().toPlayersEntities(mockPositions)
+
+    val mockRavenclawPlayersEntitiesResponseWrapper = ResponseWrapperUtil.createResponseWrapperSuccess(mockRavenclawPlayersEntities)
+
+    val mockRavenclawPlayersEntitiesResponseWrapperError =
+        ResponseWrapperUtil.createResponseWrapperError<List<PlayerEntity>>(
+            error =
+                Error(
+                    isError = true,
+                    message = "Some error",
+                ),
+        )
+
     /*** players and positions ***/
 
     val mockRavenclawPlayersAndPositionsResponseWrappers =
         ResponseWrappers(
             responseWrapper1 = mockRavenclawPlayersResponseWrapper,
             responseWrapper2 = mockPositionsResponseWrapper,
+        )
+
+    val mockRavenclawPlayersErrorAndPositionsResponseWrappers =
+        ResponseWrappers(
+            responseWrapper1 = mockRavenclawPGenericErrorResponseWrapper,
+            responseWrapper2 = mockPositionsResponseWrapper,
+        )
+
+    val mockRavenclawPlayersAndPositionsErrorResponseWrappers =
+        ResponseWrappers(
+            responseWrapper1 = mockRavenclawPlayersResponseWrapper,
+            responseWrapper2 = mockPositionsGenericErrorResponseWrapper,
         )
 
     val mockRavenclawPlayersAndPositionsResponseSuccess =
@@ -609,4 +651,17 @@ object MockData {
         )
 
     fun getStatus(name: String) = String.format("%s is breaking into the Ministry of Magic %s", name, "\uD83D\uDD2E")
+
+    /*** Response Wrapper Boolean ***/
+
+    val mockTrueResponseWrapper = ResponseWrapperUtil.createResponseWrapperSuccess(true)
+
+    val mockBooleanResponseWrapperGenericError =
+        ResponseWrapperUtil.createResponseWrapperError<Boolean>(
+            error =
+                Error(
+                    isError = true,
+                    message = "Some error",
+                ),
+        )
 }
