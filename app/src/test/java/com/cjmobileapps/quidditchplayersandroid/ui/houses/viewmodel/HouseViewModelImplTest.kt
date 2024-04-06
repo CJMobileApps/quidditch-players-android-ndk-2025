@@ -33,6 +33,33 @@ class HouseViewModelImplTest : BaseTest() {
     }
 
     @Test
+    fun `house viewmodel apis never init`() {
+
+        // then
+        setupHouseViewModel()
+        housesViewModel.goToPlayersListUi(HouseName.RAVENCLAW.name)
+        var state = housesViewModel.getState()
+
+        // verify
+        Assertions.assertTrue(state is HousesViewModelImpl.HousesState.LoadingState)
+
+        // then
+        var housesNavRouteUi = housesViewModel.getHousesNavRouteUiState()
+        state = housesViewModel.getState()
+
+        // verify
+        Assertions.assertTrue(state is HousesViewModelImpl.HousesState.LoadingState)
+        Assertions.assertTrue(housesNavRouteUi is HousesViewModelImpl.HousesNavRouteUi.Idle)
+
+        // then
+        housesViewModel.resetNavRouteUiToIdle()
+        housesNavRouteUi = housesViewModel.getHousesNavRouteUiState()
+        state = housesViewModel.getState()
+        Assertions.assertTrue(state is HousesViewModelImpl.HousesState.LoadingState)
+        Assertions.assertTrue(housesNavRouteUi is HousesViewModelImpl.HousesNavRouteUi.Idle)
+    }
+
+    @Test
     fun `fetch houses then go to player list happy flow`() =
         runTest {
             // then init setup
@@ -66,12 +93,21 @@ class HouseViewModelImplTest : BaseTest() {
 
             // verify
             Assertions.assertTrue(housesState.housesNavRouteUi.value is HousesViewModelImpl.HousesNavRouteUi.GoToPlayerListUi)
+            val playersListNavRouteUi = (housesState.housesNavRouteUi.value as HousesViewModelImpl.HousesNavRouteUi.GoToPlayerListUi)
+            Assertions.assertEquals(
+                HouseName.RAVENCLAW.name,
+                playersListNavRouteUi.houseName
+            )
+            Assertions.assertEquals(
+                "nav_players_list/RAVENCLAW",
+                playersListNavRouteUi.getNavRouteWithArguments()
+            )
 
             // then
             housesViewModel.resetNavRouteUiToIdle()
 
             // verify
-            Assertions.assertTrue(housesState.housesNavRouteUi.value is HousesViewModelImpl.HousesNavRouteUi.Idle)
+            Assertions.assertTrue(housesViewModel.getHousesNavRouteUiState() is HousesViewModelImpl.HousesNavRouteUi.Idle)
         }
 
     @Test
