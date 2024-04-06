@@ -55,6 +55,7 @@ class HousesViewModelImpl
                 quidditchPlayersUseCase
                     .fetchHousesApi()
                     .onError { _, _ ->
+                        housesState.value = HousesState.HousesLoadedState()
                         snackbarState.value = HousesSnackbarState.UnableToGetHousesListError()
                     }
             }
