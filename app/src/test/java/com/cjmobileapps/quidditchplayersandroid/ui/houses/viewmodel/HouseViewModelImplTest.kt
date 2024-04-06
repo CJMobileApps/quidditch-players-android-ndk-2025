@@ -34,7 +34,6 @@ class HouseViewModelImplTest : BaseTest() {
 
     @Test
     fun `house viewmodel apis never init`() {
-
         // then
         setupHouseViewModel()
         housesViewModel.goToPlayersListUi(HouseName.RAVENCLAW.name)
@@ -96,11 +95,11 @@ class HouseViewModelImplTest : BaseTest() {
             val playersListNavRouteUi = (housesState.housesNavRouteUi.value as HousesViewModelImpl.HousesNavRouteUi.GoToPlayerListUi)
             Assertions.assertEquals(
                 HouseName.RAVENCLAW.name,
-                playersListNavRouteUi.houseName
+                playersListNavRouteUi.houseName,
             )
             Assertions.assertEquals(
                 "nav_players_list/RAVENCLAW",
-                playersListNavRouteUi.getNavRouteWithArguments()
+                playersListNavRouteUi.getNavRouteWithArguments(),
             )
 
             // then
