@@ -66,7 +66,7 @@ class HouseViewModelImplTest : BaseTest() {
             var housesState = housesViewModel.getState()
 
             // verify
-            Assertions.assertTrue((housesState is HousesViewModelImpl.HousesState.LoadingState))
+            Assertions.assertTrue(housesState is HousesViewModelImpl.HousesState.LoadingState)
 
             // when
             Mockito.`when`(mockQuidditchPlayersUseCase.fetchHousesApi()).thenReturn(MockData.mockTrueResponseWrapper)
@@ -79,7 +79,7 @@ class HouseViewModelImplTest : BaseTest() {
 
             // verify
             Assertions.assertTrue((housesState is HousesViewModelImpl.HousesState.HousesLoadedState))
-            if ((housesState !is HousesViewModelImpl.HousesState.HousesLoadedState)) return@runTest
+            if (housesState !is HousesViewModelImpl.HousesState.HousesLoadedState) return@runTest
 
             Assertions.assertEquals(
                 MockData.mockHouses,
