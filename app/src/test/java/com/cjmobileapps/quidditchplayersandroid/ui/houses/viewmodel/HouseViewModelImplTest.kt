@@ -92,14 +92,14 @@ class HouseViewModelImplTest : BaseTest() {
 
             // verify
             Assertions.assertTrue(housesState.housesNavRouteUi.value is HousesViewModelImpl.HousesNavRouteUi.GoToPlayerListUi)
-            val playersListNavRouteUi = (housesState.housesNavRouteUi.value as HousesViewModelImpl.HousesNavRouteUi.GoToPlayerListUi)
+            val housesNavRouteUi = (housesState.housesNavRouteUi.value as HousesViewModelImpl.HousesNavRouteUi.GoToPlayerListUi)
             Assertions.assertEquals(
                 HouseName.RAVENCLAW.name,
-                playersListNavRouteUi.houseName,
+                housesNavRouteUi.houseName,
             )
             Assertions.assertEquals(
                 "nav_players_list/RAVENCLAW",
-                playersListNavRouteUi.getNavRouteWithArguments(),
+                housesNavRouteUi.getNavRouteWithArguments(),
             )
 
             // then

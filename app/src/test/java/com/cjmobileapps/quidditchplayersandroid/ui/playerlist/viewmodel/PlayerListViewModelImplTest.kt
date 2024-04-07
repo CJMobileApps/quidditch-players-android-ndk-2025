@@ -5,12 +5,14 @@ import com.cjmobileapps.quidditchplayersandroid.data.MockData
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapper
+import com.cjmobileapps.quidditchplayersandroid.data.model.Status
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
 import com.cjmobileapps.quidditchplayersandroid.testutil.BaseTest
 import com.cjmobileapps.quidditchplayersandroid.testutil.TestCoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModelImpl
+import com.cjmobileapps.quidditchplayersandroid.util.TimeUtil
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -27,8 +29,13 @@ class PlayerListViewModelImplTest : BaseTest() {
     @Mock
     private lateinit var mockQuidditchPlayersUseCase: QuidditchPlayersUseCase
 
+    @Mock
+    private lateinit var mockTimeUtil: TimeUtil
+
     private val playerEntityResponseWrapperArgumentCaptor =
         argumentCaptor<(ResponseWrapper<List<PlayerEntity>>) -> Unit>()
+
+    private val statusResponseWrapperArgumentCaptor = argumentCaptor<(ResponseWrapper<Status>) -> Unit>()
 
     private fun setupPlayerListViewModel() {
         playerLiveViewModel =
@@ -40,7 +47,7 @@ class PlayerListViewModelImplTest : BaseTest() {
     }
 
     @Test
-    fun `fetch players happy flow`() =
+    fun `fetch players happy then goToPlayerDetailUi flow`() =
         runTest {
             // given
             val mockRavenPlayers = MockData.mockRavenclawPlayersEntities.toPlayersState()
@@ -58,6 +65,7 @@ class PlayerListViewModelImplTest : BaseTest() {
             // when
             Mockito.`when`(mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockTrueResponseWrapper)
             Mockito.`when`(mockQuidditchPlayersUseCase.getAllPlayersToDB(playerEntityResponseWrapperArgumentCaptor.capture())).thenReturn(Unit)
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockStatusResponseWrapper)
 
             // then
             setupPlayerListViewModel()
@@ -97,6 +105,25 @@ class PlayerListViewModelImplTest : BaseTest() {
                 )
             }
 
-            // todo add more unit test getStatuesForPlayer()
+            // then
+            playerLiveViewModel.goToPlayerDetailUi(playerListState.players.first())
+
+            // verify
+            Assertions.assertTrue(playerListState.playersNavRouteUi.value is PlayersListViewModelImpl.PlayersListNavRouteUi.GoToPlayerDetailUi)
+            val playerListNavRouteUi = (playerListState.playersNavRouteUi.value as PlayersListViewModelImpl.PlayersListNavRouteUi.GoToPlayerDetailUi)
+            Assertions.assertEquals(
+                mockRavenPlayers.first().id.toString(),
+                playerListNavRouteUi.playerId,
+            )
+            Assertions.assertEquals(
+                "nav_player_detail/${mockRavenPlayers.first().id}",
+                playerListNavRouteUi.getNavRouteWithArguments(),
+            )
+
+            // then
+            playerLiveViewModel.resetNavRouteUiToIdle()
+
+            // verify
+            Assertions.assertTrue(playerLiveViewModel.getPlayersListNavRouteUiState() is PlayersListViewModelImpl.PlayersListNavRouteUi.Idle)
         }
 }
