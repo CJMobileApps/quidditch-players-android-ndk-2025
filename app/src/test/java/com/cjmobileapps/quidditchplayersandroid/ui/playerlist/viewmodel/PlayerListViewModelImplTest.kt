@@ -300,4 +300,27 @@ class PlayerListViewModelImplTest : BaseTest() {
                 name,
             )
         }
+
+    @Test
+    fun `house viewmodel apis never init`() =
+        runTest {
+            // given
+            val mockRavenPlayers = MockData.mockRavenclawPlayersEntities.toPlayersState()
+
+            // when
+            Mockito.`when`(mockSavedStateHandle.get<String>("houseName")).thenReturn("")
+
+            // then init setup
+            setupPlayerListViewModel()
+            playerLiveViewModel.goToPlayerDetailUi(mockRavenPlayers.first())
+            playerLiveViewModel.getPlayersListNavRouteUiState()
+            playerLiveViewModel.resetNavRouteUiToIdle()
+            val playerListState = playerLiveViewModel.getState()
+            playerLiveViewModel.resetSnackbarState()
+            val snackbarState = playerLiveViewModel.getSnackbarState()
+
+            // verify
+            Assertions.assertTrue(playerListState is PlayersListViewModelImpl.PlayersListState.LoadingState)
+            Assertions.assertTrue(snackbarState is PlayersListViewModelImpl.PlayersListSnackbarState.Idle)
+        }
 }
