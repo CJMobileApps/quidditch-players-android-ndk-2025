@@ -20,6 +20,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -96,18 +97,23 @@ class PlayersListViewModelImpl
             viewModelScope.launch(coroutineStatusContext) {
                 while (true) {
                     delay(TimeUtil.getRandomSeconds())
-                    quidditchPlayersUseCase.fetchStatusByHouseName(houseName)
-                        .onSuccess { status ->
-                            state.players
-                                .find { it.id == status.playerId }
-                                ?.status?.value = status.status
-                        }
-                        .onError { _, error ->
-                            Timber.tag(tag)
-                                .e("quidditchPlayersUseCase.fetchStatusByHouseName(houseName) error occurred: $error \\n ${error.message}")
-                        }
+                    fetchStatusByHouseName(state.players)
                 }
             }
+        }
+
+        @VisibleForTesting
+        override suspend fun fetchStatusByHouseName(players: List<PlayerState>) {
+            quidditchPlayersUseCase.fetchStatusByHouseName(houseName)
+                .onSuccess { status ->
+                    players
+                        .find { it.id == status.playerId }
+                        ?.status?.value = status.status
+                }
+                .onError { _, error ->
+                    Timber.tag(tag)
+                        .e("quidditchPlayersUseCase.fetchStatusByHouseName(houseName) error occurred: $error \\n ${error.message}")
+                }
         }
 
         override fun getTopBarTitle(): String {

@@ -110,7 +110,7 @@ class HouseViewModelImplTest : BaseTest() {
         }
 
     @Test
-    fun `fetch houses the throw error at fetchHousesApi() error response flow`() =
+    fun `fetch houses then throw error at fetchHousesApi() error response flow`() =
         runTest {
             // then init setup
             setupHouseViewModel()
@@ -150,7 +150,7 @@ class HouseViewModelImplTest : BaseTest() {
         }
 
     @Test
-    fun `fetch houses the throw error at getHousesFromDB() error response flow`() =
+    fun `fetch houses then throw error at getHousesFromDB() error response flow`() =
         runTest {
             // then init setup
             setupHouseViewModel()
@@ -190,7 +190,7 @@ class HouseViewModelImplTest : BaseTest() {
         }
 
     @Test
-    fun `fetch houses the throw exception at fetchHousesApi() error response flow`() =
+    fun `fetch houses then throw exception at fetchHousesApi() error response flow`() =
         runTest {
             // then init setup
             setupHouseViewModel()

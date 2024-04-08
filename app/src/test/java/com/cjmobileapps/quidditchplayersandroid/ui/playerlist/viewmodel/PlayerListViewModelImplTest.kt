@@ -65,7 +65,6 @@ class PlayerListViewModelImplTest : BaseTest() {
             // when
             Mockito.`when`(mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockTrueResponseWrapper)
             Mockito.`when`(mockQuidditchPlayersUseCase.getAllPlayersToDB(playerEntityResponseWrapperArgumentCaptor.capture())).thenReturn(Unit)
-            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockStatusResponseWrapper)
 
             // then
             setupPlayerListViewModel()
@@ -77,6 +76,7 @@ class PlayerListViewModelImplTest : BaseTest() {
             Assertions.assertTrue(snackbarState is PlayersListViewModelImpl.PlayersListSnackbarState.Idle)
             Assertions.assertTrue(playerListState is PlayersListViewModelImpl.PlayersListState.PlayerListLoadedState)
             if (playerListState !is PlayersListViewModelImpl.PlayersListState.PlayerListLoadedState) return@runTest
+            Assertions.assertTrue(playerListState.playersNavRouteUi.value is PlayersListViewModelImpl.PlayersListNavRouteUi.Idle)
 
             playerListState.players.forEachIndexed { index, playerState ->
                 Assertions.assertEquals(
@@ -125,5 +125,135 @@ class PlayerListViewModelImplTest : BaseTest() {
 
             // verify
             Assertions.assertTrue(playerLiveViewModel.getPlayersListNavRouteUiState() is PlayersListViewModelImpl.PlayersListNavRouteUi.Idle)
+        }
+
+    @Test
+    fun `fetch players happy then throw error at fetchPlayersAndPositionsApis error response flow`() =
+        runTest {
+            // given
+            val mockRavenPlayers = MockData.mockRavenclawPlayersEntities.toPlayersState()
+
+            // when
+            Mockito.`when`(mockSavedStateHandle.get<String>("houseName")).thenReturn(HouseName.RAVENCLAW.name)
+
+            // then init setup
+            setupPlayerListViewModel()
+            var playerListState = playerLiveViewModel.getState()
+
+            // verify
+            Assertions.assertTrue(playerListState is PlayersListViewModelImpl.PlayersListState.LoadingState)
+
+            // when
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockBooleanResponseWrapperGenericError)
+            Mockito.`when`(mockQuidditchPlayersUseCase.getAllPlayersToDB(playerEntityResponseWrapperArgumentCaptor.capture())).thenReturn(Unit)
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockStatusResponseWrapper)
+
+            // then
+            setupPlayerListViewModel()
+            playerEntityResponseWrapperArgumentCaptor.firstValue.invoke(MockData.mockRavenclawPlayersEntitiesResponseWrapper)
+            playerListState = playerLiveViewModel.getState()
+            val snackbarState = playerLiveViewModel.getSnackbarState()
+
+            // verify
+            Assertions.assertTrue(playerListState is PlayersListViewModelImpl.PlayersListState.PlayerListLoadedState)
+            if (playerListState !is PlayersListViewModelImpl.PlayersListState.PlayerListLoadedState) return@runTest
+            Assertions.assertTrue(snackbarState is PlayersListViewModelImpl.PlayersListSnackbarState.UnableToGetPlayersListError)
+            if (snackbarState !is PlayersListViewModelImpl.PlayersListSnackbarState.UnableToGetPlayersListError) return@runTest
+            Assertions.assertTrue(playerListState.playersNavRouteUi.value is PlayersListViewModelImpl.PlayersListNavRouteUi.Idle)
+            Assertions.assertNull(snackbarState.error)
+
+            playerListState.players.forEachIndexed { index, playerState ->
+                Assertions.assertEquals(
+                    mockRavenPlayers[index].id,
+                    playerState.id,
+                )
+                Assertions.assertEquals(
+                    mockRavenPlayers[index].favoriteSubject,
+                    playerState.favoriteSubject,
+                )
+                Assertions.assertEquals(
+                    mockRavenPlayers[index].firstName,
+                    playerState.firstName,
+                )
+                Assertions.assertEquals(
+                    mockRavenPlayers[index].lastName,
+                    playerState.lastName,
+                )
+                Assertions.assertEquals(
+                    mockRavenPlayers[index].yearsPlayed,
+                    playerState.yearsPlayed,
+                )
+                Assertions.assertEquals(
+                    mockRavenPlayers[index].status.value,
+                    playerState.status.value,
+                )
+            }
+
+            // then
+            playerLiveViewModel.resetNavRouteUiToIdle()
+
+            // verify
+            Assertions.assertTrue(playerLiveViewModel.getPlayersListNavRouteUiState() is PlayersListViewModelImpl.PlayersListNavRouteUi.Idle)
+        }
+
+    @Test
+    fun `fetch players happy then throw error at getHousesFromDB() error response flow`() =
+        runTest {
+            // when
+            Mockito.`when`(mockSavedStateHandle.get<String>("houseName")).thenReturn(HouseName.RAVENCLAW.name)
+
+            // then init setup
+            setupPlayerListViewModel()
+            var playerListState = playerLiveViewModel.getState()
+
+            // verify
+            Assertions.assertTrue(playerListState is PlayersListViewModelImpl.PlayersListState.LoadingState)
+
+            // when
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockTrueResponseWrapper)
+            Mockito.`when`(mockQuidditchPlayersUseCase.getAllPlayersToDB(playerEntityResponseWrapperArgumentCaptor.capture())).thenReturn(Unit)
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockStatusResponseWrapper)
+
+            // then
+            setupPlayerListViewModel()
+            playerEntityResponseWrapperArgumentCaptor.firstValue.invoke(MockData.mockRavenclawPlayersEntitiesResponseWrapperError)
+            playerListState = playerLiveViewModel.getState()
+            val snackbarState = playerLiveViewModel.getSnackbarState()
+
+            // verify
+            Assertions.assertTrue(playerListState is PlayersListViewModelImpl.PlayersListState.PlayerListLoadedState)
+            if (playerListState !is PlayersListViewModelImpl.PlayersListState.PlayerListLoadedState) return@runTest
+            Assertions.assertTrue(snackbarState is PlayersListViewModelImpl.PlayersListSnackbarState.UnableToGetPlayersListError)
+            if (snackbarState !is PlayersListViewModelImpl.PlayersListSnackbarState.UnableToGetPlayersListError) return@runTest
+            Assertions.assertTrue(playerListState.playersNavRouteUi.value is PlayersListViewModelImpl.PlayersListNavRouteUi.Idle)
+            Assertions.assertNull(snackbarState.error)
+            Assertions.assertTrue(playerListState.players.isEmpty())
+
+            // then
+            playerLiveViewModel.resetNavRouteUiToIdle()
+
+            // verify
+            Assertions.assertTrue(playerLiveViewModel.getPlayersListNavRouteUiState() is PlayersListViewModelImpl.PlayersListNavRouteUi.Idle)
+        }
+
+    @Test
+    fun `fetchStatusByHouseName() happy flow`() =
+        runTest {
+            // given
+            val mockRavenPlayers = MockData.mockRavenclawPlayersEntities.toPlayersState()
+
+            // when
+            Mockito.`when`(mockSavedStateHandle.get<String>("houseName")).thenReturn(HouseName.RAVENCLAW.name)
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockStatusResponseWrapper)
+
+            // then
+            setupPlayerListViewModel()
+            playerLiveViewModel.fetchStatusByHouseName(mockRavenPlayers)
+
+            // verify
+            Assertions.assertEquals(
+                MockData.mockStatus().status,
+                mockRavenPlayers.first().status.value,
+            )
         }
 }

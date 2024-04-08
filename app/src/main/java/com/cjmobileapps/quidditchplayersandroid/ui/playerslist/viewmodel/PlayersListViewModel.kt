@@ -16,4 +16,6 @@ interface PlayersListViewModel {
     fun getPlayersListNavRouteUiState(): PlayersListViewModelImpl.PlayersListNavRouteUi
 
     fun getTopBarTitle(): String
+
+    suspend fun fetchStatusByHouseName(players: List<PlayerState>)
 }
