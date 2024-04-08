@@ -66,7 +66,7 @@ class HouseViewModelImplTest : BaseTest() {
             var housesState = housesViewModel.getState()
 
             // verify
-            Assertions.assertTrue((housesState is HousesViewModelImpl.HousesState.LoadingState))
+            Assertions.assertTrue(housesState is HousesViewModelImpl.HousesState.LoadingState)
 
             // when
             Mockito.`when`(mockQuidditchPlayersUseCase.fetchHousesApi()).thenReturn(MockData.mockTrueResponseWrapper)
@@ -79,7 +79,7 @@ class HouseViewModelImplTest : BaseTest() {
 
             // verify
             Assertions.assertTrue((housesState is HousesViewModelImpl.HousesState.HousesLoadedState))
-            if ((housesState !is HousesViewModelImpl.HousesState.HousesLoadedState)) return@runTest
+            if (housesState !is HousesViewModelImpl.HousesState.HousesLoadedState) return@runTest
 
             Assertions.assertEquals(
                 MockData.mockHouses,
@@ -92,14 +92,14 @@ class HouseViewModelImplTest : BaseTest() {
 
             // verify
             Assertions.assertTrue(housesState.housesNavRouteUi.value is HousesViewModelImpl.HousesNavRouteUi.GoToPlayerListUi)
-            val playersListNavRouteUi = (housesState.housesNavRouteUi.value as HousesViewModelImpl.HousesNavRouteUi.GoToPlayerListUi)
+            val housesNavRouteUi = (housesState.housesNavRouteUi.value as HousesViewModelImpl.HousesNavRouteUi.GoToPlayerListUi)
             Assertions.assertEquals(
                 HouseName.RAVENCLAW.name,
-                playersListNavRouteUi.houseName,
+                housesNavRouteUi.houseName,
             )
             Assertions.assertEquals(
                 "nav_players_list/RAVENCLAW",
-                playersListNavRouteUi.getNavRouteWithArguments(),
+                housesNavRouteUi.getNavRouteWithArguments(),
             )
 
             // then
@@ -110,7 +110,7 @@ class HouseViewModelImplTest : BaseTest() {
         }
 
     @Test
-    fun `fetch houses the throw error at fetchHousesApi() error response flow`() =
+    fun `fetch houses then throw error at fetchHousesApi() error response flow`() =
         runTest {
             // then init setup
             setupHouseViewModel()
@@ -150,7 +150,7 @@ class HouseViewModelImplTest : BaseTest() {
         }
 
     @Test
-    fun `fetch houses the throw error at getHousesFromDB() error response flow`() =
+    fun `fetch houses then throw error at getHousesFromDB() error response flow`() =
         runTest {
             // then init setup
             setupHouseViewModel()
@@ -190,7 +190,7 @@ class HouseViewModelImplTest : BaseTest() {
         }
 
     @Test
-    fun `fetch houses the throw exception at fetchHousesApi() error response flow`() =
+    fun `fetch houses then throw exception at fetchHousesApi() error response flow`() =
         runTest {
             // then init setup
             setupHouseViewModel()

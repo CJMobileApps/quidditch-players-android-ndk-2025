@@ -630,7 +630,7 @@ object MockData {
 
     fun mockStatus(): Status {
         val player = ravenclawTeam().first()
-        val name = "$player.firstName $player.lastName"
+        val name = "${player.firstName} ${player.lastName}"
         return Status(
             playerId = player.id,
             status = getStatus(name),
@@ -644,6 +644,15 @@ object MockData {
         )
 
     val mockStatusResponseSuccess = Response.success(mockStatusResponseWrapper)
+
+    val mockStatusResponseWrapperGenericError =
+        ResponseWrapperUtil.createResponseWrapperError<Status>(
+            error =
+                Error(
+                    isError = true,
+                    message = "Some error",
+                ),
+        )
 
     val mockStatusDeferredResponseSuccess =
         CompletableDeferred(
