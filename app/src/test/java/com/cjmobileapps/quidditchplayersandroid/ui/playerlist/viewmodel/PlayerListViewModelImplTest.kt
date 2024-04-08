@@ -272,7 +272,8 @@ class PlayerListViewModelImplTest : BaseTest() {
             val mockRavenPlayers = MockData.mockRavenclawPlayersEntities.toPlayersState()
 
             val name = "Harry Potters"
-            val mockStatus = Status(
+            val mockStatus =
+                Status(
                     playerId = UUID.randomUUID(),
                     status = MockData.getStatus(name),
                 )
