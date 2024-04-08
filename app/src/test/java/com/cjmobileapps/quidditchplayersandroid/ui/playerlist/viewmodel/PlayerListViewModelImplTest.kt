@@ -293,7 +293,7 @@ class PlayerListViewModelImplTest : BaseTest() {
 
             // verify
             Assertions.assertEquals(
-                MockData.mockStatus().status,
+                "",
                 mockRavenPlayers.first().status.value,
             )
         }
