@@ -152,7 +152,7 @@ class PlayerListViewModelImplTest : BaseTest() {
             setupPlayerListViewModel()
             playerEntityResponseWrapperArgumentCaptor.firstValue.invoke(MockData.mockRavenclawPlayersEntitiesResponseWrapper)
             playerListState = playerLiveViewModel.getState()
-            val snackbarState = playerLiveViewModel.getSnackbarState()
+            var snackbarState = playerLiveViewModel.getSnackbarState()
 
             // verify
             Assertions.assertTrue(playerListState is PlayersListViewModelImpl.PlayersListState.PlayerListLoadedState)
@@ -191,8 +191,11 @@ class PlayerListViewModelImplTest : BaseTest() {
 
             // then
             playerLiveViewModel.resetNavRouteUiToIdle()
+            playerLiveViewModel.resetSnackbarState()
+            snackbarState = playerLiveViewModel.getSnackbarState()
 
             // verify
+            Assertions.assertTrue(snackbarState is PlayersListViewModelImpl.PlayersListSnackbarState.Idle)
             Assertions.assertTrue(playerLiveViewModel.getPlayersListNavRouteUiState() is PlayersListViewModelImpl.PlayersListNavRouteUi.Idle)
         }
 
@@ -218,7 +221,7 @@ class PlayerListViewModelImplTest : BaseTest() {
             setupPlayerListViewModel()
             playerEntityResponseWrapperArgumentCaptor.firstValue.invoke(MockData.mockRavenclawPlayersEntitiesResponseWrapperError)
             playerListState = playerLiveViewModel.getState()
-            val snackbarState = playerLiveViewModel.getSnackbarState()
+            var snackbarState = playerLiveViewModel.getSnackbarState()
 
             // verify
             Assertions.assertTrue(playerListState is PlayersListViewModelImpl.PlayersListState.PlayerListLoadedState)
@@ -231,8 +234,11 @@ class PlayerListViewModelImplTest : BaseTest() {
 
             // then
             playerLiveViewModel.resetNavRouteUiToIdle()
+            playerLiveViewModel.resetSnackbarState()
+            snackbarState = playerLiveViewModel.getSnackbarState()
 
             // verify
+            Assertions.assertTrue(snackbarState is PlayersListViewModelImpl.PlayersListSnackbarState.Idle)
             Assertions.assertTrue(playerLiveViewModel.getPlayersListNavRouteUiState() is PlayersListViewModelImpl.PlayersListNavRouteUi.Idle)
         }
 
@@ -254,6 +260,44 @@ class PlayerListViewModelImplTest : BaseTest() {
             Assertions.assertEquals(
                 MockData.mockStatus().status,
                 mockRavenPlayers.first().status.value,
+            )
+        }
+
+    @Test
+    fun `fetchStatusByHouseName() returns error flow`() =
+        runTest {
+            // given
+            val mockRavenPlayers = MockData.mockRavenclawPlayersEntities.toPlayersState()
+
+            // when
+            Mockito.`when`(mockSavedStateHandle.get<String>("houseName")).thenReturn(HouseName.RAVENCLAW.name)
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockStatusResponseWrapperGenericError)
+
+            // then
+            setupPlayerListViewModel()
+            playerLiveViewModel.fetchStatusByHouseName(mockRavenPlayers)
+
+            // verify
+            Assertions.assertEquals(
+                "",
+                mockRavenPlayers.first().status.value,
+            )
+        }
+
+    @Test
+    fun `getTopBarTitle() test`() =
+        runTest {
+            // when
+            Mockito.`when`(mockSavedStateHandle.get<String>("houseName")).thenReturn(HouseName.RAVENCLAW.name)
+
+            // then init setup
+            setupPlayerListViewModel()
+            val name = playerLiveViewModel.getTopBarTitle()
+
+            // verify
+            Assertions.assertEquals(
+                HouseName.RAVENCLAW.name,
+                name,
             )
         }
 }

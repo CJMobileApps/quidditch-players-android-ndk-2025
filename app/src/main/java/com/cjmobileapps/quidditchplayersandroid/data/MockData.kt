@@ -645,6 +645,15 @@ object MockData {
 
     val mockStatusResponseSuccess = Response.success(mockStatusResponseWrapper)
 
+    val mockStatusResponseWrapperGenericError =
+        ResponseWrapperUtil.createResponseWrapperError<Status>(
+            error =
+                Error(
+                    isError = true,
+                    message = "Some error",
+                ),
+        )
+
     val mockStatusDeferredResponseSuccess =
         CompletableDeferred(
             mockStatusResponseSuccess,
