@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.kotlin.argumentCaptor
+import java.net.HttpURLConnection
+import java.util.UUID
 
 class PlayerListViewModelImplTest : BaseTest() {
     private lateinit var playerLiveViewModel: PlayersListViewModel
@@ -251,6 +253,39 @@ class PlayerListViewModelImplTest : BaseTest() {
             // when
             Mockito.`when`(mockSavedStateHandle.get<String>("houseName")).thenReturn(HouseName.RAVENCLAW.name)
             Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockStatusResponseWrapper)
+
+            // then
+            setupPlayerListViewModel()
+            playerLiveViewModel.fetchStatusByHouseName(mockRavenPlayers)
+
+            // verify
+            Assertions.assertEquals(
+                MockData.mockStatus().status,
+                mockRavenPlayers.first().status.value,
+            )
+        }
+
+    @Test
+    fun `fetchStatusByHouseName() player not found flow`() =
+        runTest {
+            // given
+            val mockRavenPlayers = MockData.mockRavenclawPlayersEntities.toPlayersState()
+
+            val name = "Harry Potters"
+            val mockStatus = Status(
+                    playerId = UUID.randomUUID(),
+                    status = MockData.getStatus(name),
+                )
+
+            val mockStatusResponseWrapper =
+                ResponseWrapper(
+                    data = mockStatus,
+                    statusCode = HttpURLConnection.HTTP_OK,
+                )
+
+            // when
+            Mockito.`when`(mockSavedStateHandle.get<String>("houseName")).thenReturn(HouseName.RAVENCLAW.name)
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(mockStatusResponseWrapper)
 
             // then
             setupPlayerListViewModel()
