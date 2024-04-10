@@ -5,7 +5,7 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
 import com.cjmobileapps.quidditchplayersandroid.room.QuidditchPlayersDao
 import com.cjmobileapps.quidditchplayersandroid.testutil.BaseTest
-import com.cjmobileapps.quidditchplayersandroid.testutil.TestCoroutineDispatchers
+import com.cjmobileapps.quidditchplayersandroid.util.TestCoroutineDispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow

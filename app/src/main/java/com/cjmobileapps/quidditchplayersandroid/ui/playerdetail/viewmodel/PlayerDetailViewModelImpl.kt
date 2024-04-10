@@ -6,16 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
-import com.cjmobileapps.quidditchplayersandroid.util.TimeUtil
 import com.cjmobileapps.quidditchplayersandroid.util.coroutine.CoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.util.onError
 import com.cjmobileapps.quidditchplayersandroid.util.onSuccess
+import com.cjmobileapps.quidditchplayersandroid.util.time.TimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -26,6 +25,7 @@ class PlayerDetailViewModelImpl
     constructor(
         coroutineDispatchers: CoroutineDispatchers,
         savedStateHandle: SavedStateHandle,
+        private val timeUtil: TimeUtil,
         private val quidditchPlayersUseCase: QuidditchPlayersUseCase,
     ) : ViewModel(), PlayerDetailViewModel {
         private val playerId: String = checkNotNull(savedStateHandle["playerId"])
@@ -82,7 +82,7 @@ class PlayerDetailViewModelImpl
                 val playerId = player?.id.toString()
 
                 while (true) {
-                    delay(TimeUtil.getRandomSeconds())
+                    timeUtil.delayWithRandomTime()
                     quidditchPlayersUseCase.fetchStatusByPlayerId(playerId)
                         .onSuccess { status ->
                             player?.status?.value = status.status

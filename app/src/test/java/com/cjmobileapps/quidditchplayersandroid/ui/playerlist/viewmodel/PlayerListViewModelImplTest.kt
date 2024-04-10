@@ -9,10 +9,11 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.Status
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
 import com.cjmobileapps.quidditchplayersandroid.testutil.BaseTest
-import com.cjmobileapps.quidditchplayersandroid.testutil.TestCoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModelImpl
-import com.cjmobileapps.quidditchplayersandroid.util.TimeUtil
+import com.cjmobileapps.quidditchplayersandroid.util.TestCoroutineDispatchers
+import com.cjmobileapps.quidditchplayersandroid.util.TestTimeUtil
+import com.cjmobileapps.quidditchplayersandroid.util.time.TimeUtilImpl
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -31,12 +32,14 @@ class PlayerListViewModelImplTest : BaseTest() {
     @Mock
     private lateinit var mockQuidditchPlayersUseCase: QuidditchPlayersUseCase
 
+    // todo delete
     @Mock
-    private lateinit var mockTimeUtil: TimeUtil
+    private lateinit var mockTimeUtil: TimeUtilImpl
 
     private val playerEntityResponseWrapperArgumentCaptor =
         argumentCaptor<(ResponseWrapper<List<PlayerEntity>>) -> Unit>()
 
+    // todo delete
     private val statusResponseWrapperArgumentCaptor = argumentCaptor<(ResponseWrapper<Status>) -> Unit>()
 
     private fun setupPlayerListViewModel() {
@@ -44,6 +47,7 @@ class PlayerListViewModelImplTest : BaseTest() {
             PlayersListViewModelImpl(
                 savedStateHandle = mockSavedStateHandle,
                 quidditchPlayersUseCase = mockQuidditchPlayersUseCase,
+                timeUtil = TestTimeUtil,
                 coroutineDispatchers = TestCoroutineDispatchers,
             )
     }

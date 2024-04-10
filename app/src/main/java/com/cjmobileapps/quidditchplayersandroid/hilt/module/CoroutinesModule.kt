@@ -2,6 +2,8 @@ package com.cjmobileapps.quidditchplayersandroid.hilt.module
 
 import com.cjmobileapps.quidditchplayersandroid.util.coroutine.CoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.util.coroutine.CoroutineDispatchersImpl
+import com.cjmobileapps.quidditchplayersandroid.util.time.TimeUtil
+import com.cjmobileapps.quidditchplayersandroid.util.time.TimeUtilImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,4 +18,8 @@ class CoroutinesModule {
     fun coroutinesDispatchers(): CoroutineDispatchers {
         return CoroutineDispatchersImpl
     }
+
+    @Singleton
+    @Provides
+    fun timeUtil(): TimeUtil = TimeUtilImpl
 }
