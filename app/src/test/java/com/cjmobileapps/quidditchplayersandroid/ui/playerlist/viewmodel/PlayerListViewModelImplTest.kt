@@ -13,7 +13,6 @@ import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.Players
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModelImpl
 import com.cjmobileapps.quidditchplayersandroid.util.TestCoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.util.TestTimeUtil
-import com.cjmobileapps.quidditchplayersandroid.util.time.TimeUtilImpl
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -32,15 +31,8 @@ class PlayerListViewModelImplTest : BaseTest() {
     @Mock
     private lateinit var mockQuidditchPlayersUseCase: QuidditchPlayersUseCase
 
-    // todo delete
-    @Mock
-    private lateinit var mockTimeUtil: TimeUtilImpl
-
     private val playerEntityResponseWrapperArgumentCaptor =
         argumentCaptor<(ResponseWrapper<List<PlayerEntity>>) -> Unit>()
-
-    // todo delete
-    private val statusResponseWrapperArgumentCaptor = argumentCaptor<(ResponseWrapper<Status>) -> Unit>()
 
     private fun setupPlayerListViewModel() {
         playerLiveViewModel =
@@ -71,6 +63,7 @@ class PlayerListViewModelImplTest : BaseTest() {
             // when
             Mockito.`when`(mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockTrueResponseWrapper)
             Mockito.`when`(mockQuidditchPlayersUseCase.getAllPlayersToDB(playerEntityResponseWrapperArgumentCaptor.capture())).thenReturn(Unit)
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockStatusResponseWrapper)
 
             // then
             setupPlayerListViewModel()
@@ -105,10 +98,17 @@ class PlayerListViewModelImplTest : BaseTest() {
                     mockRavenPlayers[index].yearsPlayed,
                     playerState.yearsPlayed,
                 )
-                Assertions.assertEquals(
-                    mockRavenPlayers[index].status.value,
-                    playerState.status.value,
-                )
+                if(index != 0) {
+                    Assertions.assertEquals(
+                        mockRavenPlayers[index].status.value,
+                        playerState.status.value,
+                    )
+                } else {
+                    Assertions.assertEquals(
+                        MockData.mockStatus().status,
+                        playerState.status.value,
+                    )
+                }
             }
 
             // then

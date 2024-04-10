@@ -95,7 +95,7 @@ class PlayersListViewModelImpl
             if (state !is PlayersListState.PlayerListLoadedState) return
             coroutineStatusContext.cancelChildren()
             viewModelScope.launch(coroutineStatusContext) {
-                while (true) {
+                while (timeUtil.isDelayLoopRunning()) {
                     timeUtil.delayWithRandomTime()
                     fetchStatusByHouseName(state.players)
                 }
@@ -104,6 +104,7 @@ class PlayersListViewModelImpl
 
         @VisibleForTesting
         override suspend fun fetchStatusByHouseName(players: List<PlayerState>) {
+            println("HEY we get here")
             quidditchPlayersUseCase.fetchStatusByHouseName(houseName)
                 .onSuccess { status ->
                     players
