@@ -43,13 +43,15 @@ class PlayerDetailViewModelImplTest : BaseTest() {
 
             // when
             Mockito.`when`(mockSavedStateHandle.get<String>("playerId")).thenReturn(mockRavenPlayerId)
+            Mockito.`when`(mockQuidditchPlayersUseCase.currentPlayer).thenReturn(mockRavenPlayer)
 
             // then init setup
             setupPlayerDetailViewModel()
             val playerDetailState = playerDetailViewModel.getState()
 
             // verify
-            Assertions.assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.LoadingState)
+            Assertions.assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
+            if(playerDetailState !is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState) return@runTest
 
             // when
         }
