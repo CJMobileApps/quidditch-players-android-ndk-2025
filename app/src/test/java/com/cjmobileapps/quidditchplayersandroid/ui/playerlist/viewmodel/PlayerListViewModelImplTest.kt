@@ -34,12 +34,14 @@ class PlayerListViewModelImplTest : BaseTest() {
     private val playerEntityResponseWrapperArgumentCaptor =
         argumentCaptor<(ResponseWrapper<List<PlayerEntity>>) -> Unit>()
 
+    private val testTimeUtil = TestTimeUtil
+
     private fun setupPlayerListViewModel() {
         playerLiveViewModel =
             PlayersListViewModelImpl(
                 savedStateHandle = mockSavedStateHandle,
                 quidditchPlayersUseCase = mockQuidditchPlayersUseCase,
-                timeUtil = TestTimeUtil,
+                timeUtil = testTimeUtil,
                 coroutineDispatchers = TestCoroutineDispatchers,
             )
     }

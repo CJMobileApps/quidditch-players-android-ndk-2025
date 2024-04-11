@@ -25,12 +25,15 @@ class PlayerDetailViewModelImplTest : BaseTest() {
     @Mock
     private lateinit var mockQuidditchPlayersUseCase: QuidditchPlayersUseCase
 
+    private val testTimeUtil = TestTimeUtil
+
     private fun setupPlayerDetailViewModel() {
+        testTimeUtil.resetTestTimeUtil()
         playerDetailViewModel =
             PlayerDetailViewModelImpl(
                 quidditchPlayersUseCase = mockQuidditchPlayersUseCase,
                 savedStateHandle = mockSavedStateHandle,
-                timeUtil = TestTimeUtil,
+                timeUtil = testTimeUtil,
                 coroutineDispatchers = TestCoroutineDispatchers,
             )
     }
@@ -160,11 +163,11 @@ class PlayerDetailViewModelImplTest : BaseTest() {
             // then init setup
             setupPlayerDetailViewModel()
             val playerDetailState = playerDetailViewModel.getState()
-            // val snackbarState = playerDetailViewModel.getSnackbarState()
+             val snackbarState = playerDetailViewModel.getSnackbarState()
 
             // verify
             // this assertion doesn't work not sure why
-            // Assertions.assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.ShowGenericError)
+            Assertions.assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.ShowGenericError)
             Assertions.assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
             if (playerDetailState !is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState) return@runTest
             val player = playerDetailState.player
