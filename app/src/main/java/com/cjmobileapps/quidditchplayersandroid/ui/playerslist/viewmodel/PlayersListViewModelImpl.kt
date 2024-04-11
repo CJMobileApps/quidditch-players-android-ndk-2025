@@ -104,7 +104,6 @@ class PlayersListViewModelImpl
 
         @VisibleForTesting
         override suspend fun fetchStatusByHouseName(players: List<PlayerState>) {
-            println("HEY we get here")
             quidditchPlayersUseCase.fetchStatusByHouseName(houseName)
                 .onSuccess { status ->
                     players

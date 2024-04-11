@@ -108,13 +108,11 @@ class PlayerDetailViewModelImplTest : BaseTest() {
             // verify
             Assertions.assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
             if (playerDetailState !is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState) return@runTest
-            if (snackbarState !is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.Idle) return@runTest
             Assertions.assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.UnableToGetPlayerError)
 
             // then
             playerDetailViewModel.resetSnackbarState()
             snackbarState = playerDetailViewModel.getSnackbarState()
             Assertions.assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.Idle)
-
         }
 }
