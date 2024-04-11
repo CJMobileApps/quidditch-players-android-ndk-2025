@@ -89,7 +89,24 @@ class PlayerDetailViewModelImplTest : BaseTest() {
         }
 
     @Test
-    fun `fake test`() = runTest {
+    fun `throw error fetching player flow`() =
+        runTest {
+            // given
+            val mockRavenPlayer = MockData.mockRavenclawPlayersEntities.toPlayersState().first()
+            val mockRavenPlayerId = mockRavenPlayer.id.toString()
 
-    }
+            // when
+            Mockito.`when`(mockSavedStateHandle.get<String>("playerId")).thenReturn(mockRavenPlayerId)
+            Mockito.`when`(mockQuidditchPlayersUseCase.currentPlayer).thenReturn(mockRavenPlayer)
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId)).thenReturn(MockData.mockStatusResponseWrapper)
+
+            // then init setup
+            setupPlayerDetailViewModel()
+            val playerDetailState = playerDetailViewModel.getState()
+            val snackbarState = playerDetailViewModel.getSnackbarState()
+
+            // verify
+            Assertions.assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
+            if (playerDetailState !is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState) return@runTest
+        }
 }

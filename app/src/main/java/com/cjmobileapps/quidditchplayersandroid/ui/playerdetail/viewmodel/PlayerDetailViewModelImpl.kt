@@ -78,14 +78,14 @@ class PlayerDetailViewModelImpl
             if (state !is PlayerDetailState.PlayerDetailLoadedState) return
             coroutineContextHousesFlow.cancelChildren()
             viewModelScope.launch(coroutineContextHousesFlow) {
-                val player = state.player
-                val playerId = player?.id.toString()
+                val player = state.player ?: return@launch
+                val playerId = player.id.toString()
 
                 while (timeUtil.isDelayLoopRunning()) {
                     timeUtil.delayWithRandomTime()
                     quidditchPlayersUseCase.fetchStatusByPlayerId(playerId)
                         .onSuccess { status ->
-                            player?.status?.value = status.status
+                            player.status.value = status.status
                         }
                         .onError { _, error ->
                             Timber.tag(tag)
