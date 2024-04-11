@@ -163,7 +163,7 @@ class PlayerDetailViewModelImplTest : BaseTest() {
             // then init setup
             setupPlayerDetailViewModel()
             val playerDetailState = playerDetailViewModel.getState()
-             val snackbarState = playerDetailViewModel.getSnackbarState()
+            val snackbarState = playerDetailViewModel.getSnackbarState()
 
             // verify
             // this assertion doesn't work not sure why
