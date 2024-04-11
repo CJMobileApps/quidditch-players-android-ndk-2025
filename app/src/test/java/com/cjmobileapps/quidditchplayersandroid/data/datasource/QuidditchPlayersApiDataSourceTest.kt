@@ -4,7 +4,7 @@ import com.cjmobileapps.quidditchplayersandroid.data.MockData
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.network.QuidditchPlayersApi
 import com.cjmobileapps.quidditchplayersandroid.testutil.BaseTest
-import com.cjmobileapps.quidditchplayersandroid.testutil.TestCoroutineDispatchers
+import com.cjmobileapps.quidditchplayersandroid.util.TestCoroutineDispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

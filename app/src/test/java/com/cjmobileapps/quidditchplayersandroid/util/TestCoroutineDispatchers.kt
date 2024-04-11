@@ -1,4 +1,4 @@
-package com.cjmobileapps.quidditchplayersandroid.testutil
+package com.cjmobileapps.quidditchplayersandroid.util
 
 import com.cjmobileapps.quidditchplayersandroid.util.coroutine.CoroutineDispatchers
 import kotlinx.coroutines.Dispatchers

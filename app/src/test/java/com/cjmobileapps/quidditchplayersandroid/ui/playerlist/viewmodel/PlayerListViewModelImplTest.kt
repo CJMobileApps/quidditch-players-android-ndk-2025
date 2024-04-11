@@ -9,10 +9,10 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.Status
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
 import com.cjmobileapps.quidditchplayersandroid.testutil.BaseTest
-import com.cjmobileapps.quidditchplayersandroid.testutil.TestCoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModelImpl
-import com.cjmobileapps.quidditchplayersandroid.util.TimeUtil
+import com.cjmobileapps.quidditchplayersandroid.util.TestCoroutineDispatchers
+import com.cjmobileapps.quidditchplayersandroid.util.TestTimeUtil
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -31,19 +31,15 @@ class PlayerListViewModelImplTest : BaseTest() {
     @Mock
     private lateinit var mockQuidditchPlayersUseCase: QuidditchPlayersUseCase
 
-    @Mock
-    private lateinit var mockTimeUtil: TimeUtil
-
     private val playerEntityResponseWrapperArgumentCaptor =
         argumentCaptor<(ResponseWrapper<List<PlayerEntity>>) -> Unit>()
-
-    private val statusResponseWrapperArgumentCaptor = argumentCaptor<(ResponseWrapper<Status>) -> Unit>()
 
     private fun setupPlayerListViewModel() {
         playerLiveViewModel =
             PlayersListViewModelImpl(
                 savedStateHandle = mockSavedStateHandle,
                 quidditchPlayersUseCase = mockQuidditchPlayersUseCase,
+                timeUtil = TestTimeUtil,
                 coroutineDispatchers = TestCoroutineDispatchers,
             )
     }
@@ -67,6 +63,7 @@ class PlayerListViewModelImplTest : BaseTest() {
             // when
             Mockito.`when`(mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockTrueResponseWrapper)
             Mockito.`when`(mockQuidditchPlayersUseCase.getAllPlayersToDB(playerEntityResponseWrapperArgumentCaptor.capture())).thenReturn(Unit)
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockStatusResponseWrapper)
 
             // then
             setupPlayerListViewModel()
@@ -101,10 +98,17 @@ class PlayerListViewModelImplTest : BaseTest() {
                     mockRavenPlayers[index].yearsPlayed,
                     playerState.yearsPlayed,
                 )
-                Assertions.assertEquals(
-                    mockRavenPlayers[index].status.value,
-                    playerState.status.value,
-                )
+                if (index != 0) {
+                    Assertions.assertEquals(
+                        mockRavenPlayers[index].status.value,
+                        playerState.status.value,
+                    )
+                } else {
+                    Assertions.assertEquals(
+                        MockData.mockStatus().status,
+                        playerState.status.value,
+                    )
+                }
             }
 
             // then

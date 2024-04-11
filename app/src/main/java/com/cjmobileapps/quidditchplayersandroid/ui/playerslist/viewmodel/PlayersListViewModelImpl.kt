@@ -9,16 +9,15 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
 import com.cjmobileapps.quidditchplayersandroid.ui.NavItem
-import com.cjmobileapps.quidditchplayersandroid.util.TimeUtil
 import com.cjmobileapps.quidditchplayersandroid.util.coroutine.CoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.util.onError
 import com.cjmobileapps.quidditchplayersandroid.util.onSuccess
+import com.cjmobileapps.quidditchplayersandroid.util.time.TimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
@@ -30,6 +29,7 @@ class PlayersListViewModelImpl
     constructor(
         coroutineDispatchers: CoroutineDispatchers,
         savedStateHandle: SavedStateHandle,
+        private val timeUtil: TimeUtil,
         private val quidditchPlayersUseCase: QuidditchPlayersUseCase,
     ) : ViewModel(), PlayersListViewModel {
         private val houseName: String = checkNotNull(savedStateHandle["houseName"])
@@ -95,8 +95,8 @@ class PlayersListViewModelImpl
             if (state !is PlayersListState.PlayerListLoadedState) return
             coroutineStatusContext.cancelChildren()
             viewModelScope.launch(coroutineStatusContext) {
-                while (true) {
-                    delay(TimeUtil.getRandomSeconds())
+                while (timeUtil.isDelayLoopRunning()) {
+                    timeUtil.delayWithRandomTime()
                     fetchStatusByHouseName(state.players)
                 }
             }

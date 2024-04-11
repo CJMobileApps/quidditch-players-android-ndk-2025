@@ -6,16 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
-import com.cjmobileapps.quidditchplayersandroid.util.TimeUtil
 import com.cjmobileapps.quidditchplayersandroid.util.coroutine.CoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.util.onError
 import com.cjmobileapps.quidditchplayersandroid.util.onSuccess
+import com.cjmobileapps.quidditchplayersandroid.util.time.TimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -26,6 +25,7 @@ class PlayerDetailViewModelImpl
     constructor(
         coroutineDispatchers: CoroutineDispatchers,
         savedStateHandle: SavedStateHandle,
+        private val timeUtil: TimeUtil,
         private val quidditchPlayersUseCase: QuidditchPlayersUseCase,
     ) : ViewModel(), PlayerDetailViewModel {
         private val playerId: String = checkNotNull(savedStateHandle["playerId"])
@@ -66,26 +66,26 @@ class PlayerDetailViewModelImpl
             val player = quidditchPlayersUseCase.currentPlayer.takeIf { it?.id.toString() == playerId }
             if (player != null) {
                 playerDetailState.value = PlayerDetailState.PlayerDetailLoadedState(player = player)
-                getStatuesForPlayer()
+                val state = getState() as PlayerDetailState.PlayerDetailLoadedState
+                state.player?.let { playerState ->
+                    getStatuesForPlayer(playerState)
+                }
             } else {
                 playerDetailState.value = PlayerDetailState.PlayerDetailLoadedState()
                 snackbarState.value = PlayerDetailSnackbarState.UnableToGetPlayerError()
             }
         }
 
-        private fun getStatuesForPlayer() {
-            val state = getState()
-            if (state !is PlayerDetailState.PlayerDetailLoadedState) return
+        private fun getStatuesForPlayer(player: PlayerState) {
             coroutineContextHousesFlow.cancelChildren()
             viewModelScope.launch(coroutineContextHousesFlow) {
-                val player = state.player
-                val playerId = player?.id.toString()
+                val playerId = player.id.toString()
 
-                while (true) {
-                    delay(TimeUtil.getRandomSeconds())
+                while (timeUtil.isDelayLoopRunning()) {
+                    timeUtil.delayWithRandomTime()
                     quidditchPlayersUseCase.fetchStatusByPlayerId(playerId)
                         .onSuccess { status ->
-                            player?.status?.value = status.status
+                            player.status.value = status.status
                         }
                         .onError { _, error ->
                             Timber.tag(tag)
