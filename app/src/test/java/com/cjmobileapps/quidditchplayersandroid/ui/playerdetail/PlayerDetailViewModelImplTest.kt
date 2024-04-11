@@ -87,4 +87,9 @@ class PlayerDetailViewModelImplTest : BaseTest() {
                 topBarTitle,
             )
         }
+
+    @Test
+    fun `fake test`() = runTest {
+
+    }
 }
