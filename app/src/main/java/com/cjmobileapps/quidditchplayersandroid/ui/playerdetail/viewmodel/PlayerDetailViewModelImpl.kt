@@ -81,6 +81,7 @@ class PlayerDetailViewModelImpl
             viewModelScope.launch(coroutineContextHousesFlow) {
                 val playerId = player.id.toString()
 
+                println("HERE_ what up what up")
                 while (timeUtil.isDelayLoopRunning()) {
                     timeUtil.delayWithRandomTime()
                     quidditchPlayersUseCase.fetchStatusByPlayerId(playerId)
