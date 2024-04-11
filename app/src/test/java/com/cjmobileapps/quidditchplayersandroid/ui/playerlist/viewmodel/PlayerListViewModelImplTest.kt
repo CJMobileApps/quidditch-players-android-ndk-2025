@@ -98,7 +98,7 @@ class PlayerListViewModelImplTest : BaseTest() {
                     mockRavenPlayers[index].yearsPlayed,
                     playerState.yearsPlayed,
                 )
-                if(index != 0) {
+                if (index != 0) {
                     Assertions.assertEquals(
                         mockRavenPlayers[index].status.value,
                         playerState.status.value,
