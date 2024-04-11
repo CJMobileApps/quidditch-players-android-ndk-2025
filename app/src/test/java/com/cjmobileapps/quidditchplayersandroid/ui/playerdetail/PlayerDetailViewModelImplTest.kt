@@ -2,6 +2,7 @@ package com.cjmobileapps.quidditchplayersandroid.ui.playerdetail
 
 import androidx.lifecycle.SavedStateHandle
 import com.cjmobileapps.quidditchplayersandroid.data.MockData
+import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
 import com.cjmobileapps.quidditchplayersandroid.testutil.BaseTest
@@ -41,18 +42,51 @@ class PlayerDetailViewModelImplTest : BaseTest() {
             val mockRavenPlayer = MockData.mockRavenclawPlayersEntities.toPlayersState().first()
             val mockRavenPlayerId = mockRavenPlayer.id.toString()
 
+
             // when
             Mockito.`when`(mockSavedStateHandle.get<String>("playerId")).thenReturn(mockRavenPlayerId)
             Mockito.`when`(mockQuidditchPlayersUseCase.currentPlayer).thenReturn(mockRavenPlayer)
+            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId)).thenReturn(MockData.mockStatusResponseWrapper)
 
             // then init setup
             setupPlayerDetailViewModel()
             val playerDetailState = playerDetailViewModel.getState()
+            val snackbarState = playerDetailViewModel.getSnackbarState()
 
             // verify
+            Assertions.assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.Idle)
             Assertions.assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
             if(playerDetailState !is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState) return@runTest
+            val player = playerDetailState.player
+            val topBarTitle = playerDetailViewModel.getTopBarTitle()
 
-            // when
+            Assertions.assertEquals(
+                mockRavenPlayer.id,
+                player?.id,
+            )
+            Assertions.assertEquals(
+                mockRavenPlayer.favoriteSubject,
+                player?.favoriteSubject,
+            )
+            Assertions.assertEquals(
+                mockRavenPlayer.firstName,
+                player?.firstName,
+            )
+            Assertions.assertEquals(
+                mockRavenPlayer.lastName,
+                player?.lastName,
+            )
+            Assertions.assertEquals(
+                mockRavenPlayer.yearsPlayed,
+                player?.yearsPlayed,
+            )
+            Assertions.assertEquals(
+                mockRavenPlayer.status.value,
+                player?.status?.value,
+            )
+            Assertions.assertEquals(
+                mockRavenPlayer.getFullName(),
+                topBarTitle
+            )
         }
 }

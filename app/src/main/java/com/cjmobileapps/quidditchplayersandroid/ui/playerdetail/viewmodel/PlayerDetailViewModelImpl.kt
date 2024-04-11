@@ -81,7 +81,7 @@ class PlayerDetailViewModelImpl
                 val player = state.player
                 val playerId = player?.id.toString()
 
-                while (true) {
+                while (timeUtil.isDelayLoopRunning()) {
                     timeUtil.delayWithRandomTime()
                     quidditchPlayersUseCase.fetchStatusByPlayerId(playerId)
                         .onSuccess { status ->
