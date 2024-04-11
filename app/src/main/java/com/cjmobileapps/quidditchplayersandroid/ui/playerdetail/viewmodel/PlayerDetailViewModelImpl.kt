@@ -66,19 +66,19 @@ class PlayerDetailViewModelImpl
             val player = quidditchPlayersUseCase.currentPlayer.takeIf { it?.id.toString() == playerId }
             if (player != null) {
                 playerDetailState.value = PlayerDetailState.PlayerDetailLoadedState(player = player)
-                getStatuesForPlayer()
+                val state = getState() as PlayerDetailState.PlayerDetailLoadedState
+                state.player?.let { playerState ->
+                    getStatuesForPlayer(playerState)
+                }
             } else {
                 playerDetailState.value = PlayerDetailState.PlayerDetailLoadedState()
                 snackbarState.value = PlayerDetailSnackbarState.UnableToGetPlayerError()
             }
         }
 
-        private fun getStatuesForPlayer() {
-            val state = getState()
-            if (state !is PlayerDetailState.PlayerDetailLoadedState) return
+        private fun getStatuesForPlayer(player: PlayerState) {
             coroutineContextHousesFlow.cancelChildren()
             viewModelScope.launch(coroutineContextHousesFlow) {
-                val player = state.player ?: return@launch
                 val playerId = player.id.toString()
 
                 while (timeUtil.isDelayLoopRunning()) {
