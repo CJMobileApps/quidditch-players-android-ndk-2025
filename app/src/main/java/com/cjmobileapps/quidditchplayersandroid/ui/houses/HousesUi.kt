@@ -25,13 +25,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cjmobileapps.quidditchplayersandroid.R
+import com.cjmobileapps.quidditchplayersandroid.data.MockData
+import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.ui.QuidditchPlayersTopAppBar
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModelImpl
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModelImpl.HousesState
+import com.cjmobileapps.quidditchplayersandroid.ui.theme.QuidditchPlayersAndroid2023Theme
 import com.cjmobileapps.quidditchplayersandroid.ui.util.QuidditchPlayersImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -113,62 +117,13 @@ fun HousesLoadedUi(
 ) {
     val houses = housesLoadedState.houses
 
-    LazyVerticalGrid(
-        modifier = modifier.padding(16.dp),
-        columns = GridCells.Fixed(2),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        items(houses) { house ->
-            ElevatedCard(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .clickable { housesViewModel.goToPlayersListUi(house.name.name) },
-                colors =
-                    CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface,
-                    ),
-            ) {
-                Column(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    QuidditchPlayersImage(
-                        modifier =
-                            Modifier
-                                .size(160.dp)
-                                .fillMaxWidth(),
-                        imageUrl = house.imageUrl,
-                        contentDescription = house.name.name,
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                        Text(
-                            modifier = Modifier.wrapContentWidth(),
-                            textAlign = TextAlign.Center,
-                            text = house.name.name,
-                        )
-
-                        Text(
-                            modifier =
-                                Modifier
-                                    .wrapContentWidth()
-                                    .padding(start = 4.dp),
-                            textAlign = TextAlign.Center,
-                            text = house.emoji,
-                        )
-                    }
-                }
-            }
-        }
-    }
+    HousesGridUi(
+        houses = houses,
+        onCardClick = { houseName ->
+            housesViewModel.goToPlayersListUi(houseName)
+        },
+        modifier = modifier
+    )
 
     when (val navigateRouteUiValue = housesViewModel.getHousesNavRouteUiState()) {
         is HousesViewModelImpl.HousesNavRouteUi.Idle -> {}
@@ -177,4 +132,98 @@ fun HousesLoadedUi(
             housesViewModel.resetNavRouteUiToIdle()
         }
     }
+}
+
+@Composable
+fun HouseCardUi(
+    onCardClick: (houseName: String) -> Unit,
+    house: House
+) {
+    ElevatedCard(
+        modifier =
+        Modifier
+            .fillMaxWidth()
+            .clickable { onCardClick.invoke(house.name.name) },
+        colors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+        ),
+    ) {
+        Column(
+            modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(4.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            QuidditchPlayersImage(
+                modifier =
+                Modifier
+                    .size(160.dp)
+                    .fillMaxWidth(),
+                imageUrl = house.imageUrl,
+                contentDescription = house.name.name,
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Text(
+                    modifier = Modifier.wrapContentWidth(),
+                    textAlign = TextAlign.Center,
+                    text = house.name.name,
+                )
+
+                Text(
+                    modifier =
+                    Modifier
+                        .wrapContentWidth()
+                        .padding(start = 4.dp),
+                    textAlign = TextAlign.Center,
+                    text = house.emoji,
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HousesCardUiPreview() = QuidditchPlayersAndroid2023Theme {
+    HouseCardUi(
+        house = MockData.mockHouses.first(),
+        onCardClick = { },
+    )
+}
+
+@Composable
+fun HousesGridUi(
+    houses: List<House>,
+    onCardClick: (houseName: String) -> Unit,
+    modifier: Modifier
+) {
+    LazyVerticalGrid(
+        modifier = modifier.padding(16.dp),
+        columns = GridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        items(houses) { house ->
+            HouseCardUi(
+                house = house,
+                onCardClick = onCardClick
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HousesGridUiPreview() = QuidditchPlayersAndroid2023Theme {
+    HousesGridUi(
+        houses = MockData.mockHouses,
+        onCardClick = { },
+        modifier = Modifier
+    )
 }
