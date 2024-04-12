@@ -122,7 +122,7 @@ fun HousesLoadedUi(
         onCardClick = { houseName ->
             housesViewModel.goToPlayersListUi(houseName)
         },
-        modifier = modifier
+        modifier = modifier,
     )
 
     when (val navigateRouteUiValue = housesViewModel.getHousesNavRouteUiState()) {
@@ -137,30 +137,30 @@ fun HousesLoadedUi(
 @Composable
 fun HouseCardUi(
     onCardClick: (houseName: String) -> Unit,
-    house: House
+    house: House,
 ) {
     ElevatedCard(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .clickable { onCardClick.invoke(house.name.name) },
+            Modifier
+                .fillMaxWidth()
+                .clickable { onCardClick.invoke(house.name.name) },
         colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        ),
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             QuidditchPlayersImage(
                 modifier =
-                Modifier
-                    .size(160.dp)
-                    .fillMaxWidth(),
+                    Modifier
+                        .size(160.dp)
+                        .fillMaxWidth(),
                 imageUrl = house.imageUrl,
                 contentDescription = house.name.name,
             )
@@ -177,9 +177,9 @@ fun HouseCardUi(
 
                 Text(
                     modifier =
-                    Modifier
-                        .wrapContentWidth()
-                        .padding(start = 4.dp),
+                        Modifier
+                            .wrapContentWidth()
+                            .padding(start = 4.dp),
                     textAlign = TextAlign.Center,
                     text = house.emoji,
                 )
@@ -190,18 +190,19 @@ fun HouseCardUi(
 
 @Preview(showBackground = true)
 @Composable
-fun HousesCardUiPreview() = QuidditchPlayersAndroid2023Theme {
-    HouseCardUi(
-        house = MockData.mockHouses.first(),
-        onCardClick = { },
-    )
-}
+fun HousesCardUiPreview() =
+    QuidditchPlayersAndroid2023Theme {
+        HouseCardUi(
+            house = MockData.mockHouses.first(),
+            onCardClick = { },
+        )
+    }
 
 @Composable
 fun HousesGridUi(
     houses: List<House>,
     onCardClick: (houseName: String) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     LazyVerticalGrid(
         modifier = modifier.padding(16.dp),
@@ -212,7 +213,7 @@ fun HousesGridUi(
         items(houses) { house ->
             HouseCardUi(
                 house = house,
-                onCardClick = onCardClick
+                onCardClick = onCardClick,
             )
         }
     }
@@ -220,10 +221,11 @@ fun HousesGridUi(
 
 @Preview(showBackground = true)
 @Composable
-fun HousesGridUiPreview() = QuidditchPlayersAndroid2023Theme {
-    HousesGridUi(
-        houses = MockData.mockHouses,
-        onCardClick = { },
-        modifier = Modifier
-    )
-}
+fun HousesGridUiPreview() =
+    QuidditchPlayersAndroid2023Theme {
+        HousesGridUi(
+            houses = MockData.mockHouses,
+            onCardClick = { },
+            modifier = Modifier,
+        )
+    }
