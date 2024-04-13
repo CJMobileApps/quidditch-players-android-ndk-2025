@@ -25,13 +25,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cjmobileapps.quidditchplayersandroid.R
+import com.cjmobileapps.quidditchplayersandroid.data.MockData
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
+import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.ui.QuidditchPlayersTopAppBar
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModelImpl
+import com.cjmobileapps.quidditchplayersandroid.ui.theme.QuidditchPlayersAndroid2023Theme
 import com.cjmobileapps.quidditchplayersandroid.ui.util.QuidditchPlayersImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -247,3 +251,14 @@ fun PlayerDetail(
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun PlayerDetailPreview() =
+    QuidditchPlayersAndroid2023Theme {
+        val players = MockData.mockPlayersEntities.toPlayersState()
+        PlayerDetail(
+            modifier = Modifier,
+            player = players.first(),
+        )
+    }
