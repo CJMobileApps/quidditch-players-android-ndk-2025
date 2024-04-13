@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
@@ -114,7 +113,8 @@ fun PlayersListLoadedUi(
     val players = playersLoadedState.players
 
     PlayerListUi(
-        modifier = modifier, players = players
+        modifier = modifier,
+        players = players,
     ) { player ->
         playersListViewModel.goToPlayerDetailUi(player)
     }
@@ -143,15 +143,15 @@ fun PlayerListUi(
     }
 }
 
-//TODO this preview not working
+// TODO this preview not working
 @Preview(showBackground = true)
 @Composable
-fun PlayerListUiPreview() = QuidditchPlayersAndroid2023Theme {
-    val players = MockData.mockRavenclawPlayersEntities.toPlayersState()
-    PlayerListUi(modifier = Modifier, players = players) {
-        
+fun PlayerListUiPreview() =
+    QuidditchPlayersAndroid2023Theme {
+        val players = MockData.mockRavenclawPlayersEntities.toPlayersState()
+        PlayerListUi(modifier = Modifier, players = players) {
+        }
     }
-}
 
 @Composable
 fun PlayerCardUi(
@@ -160,25 +160,25 @@ fun PlayerCardUi(
 ) {
     ElevatedCard(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp)
-            .clickable { onCardClick.invoke(player) },
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+                .clickable { onCardClick.invoke(player) },
         colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        ),
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
     ) {
         PlayerDetail(player = player)
     }
 }
 
-//TODO this preview not working
+// TODO this preview not working
 @Preview(showBackground = true)
 @Composable
-fun PlayerCardUiPreview() = QuidditchPlayersAndroid2023Theme {
-    val players = MockData.mockRavenclawPlayersEntities.toPlayersState()
-    PlayerCardUi(player = players.first()) {
-
+fun PlayerCardUiPreview() =
+    QuidditchPlayersAndroid2023Theme {
+        val players = MockData.mockRavenclawPlayersEntities.toPlayersState()
+        PlayerCardUi(player = players.first()) {
+        }
     }
-}

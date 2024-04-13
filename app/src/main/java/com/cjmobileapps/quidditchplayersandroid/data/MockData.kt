@@ -16,7 +16,7 @@ import retrofit2.Response
 import java.net.HttpURLConnection
 import java.util.UUID
 
-//todo fix this file
+// todo fix this file
 object MockData {
     /*** houses data ***/
 

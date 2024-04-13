@@ -33,7 +33,6 @@ import com.cjmobileapps.quidditchplayersandroid.data.MockData
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.ui.QuidditchPlayersTopAppBar
-import com.cjmobileapps.quidditchplayersandroid.ui.houses.HousesGridUi
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModelImpl
 import com.cjmobileapps.quidditchplayersandroid.ui.theme.QuidditchPlayersAndroid2023Theme
@@ -258,7 +257,7 @@ fun PlayerDetail(
 fun PlayerDetailPreview() =
     QuidditchPlayersAndroid2023Theme {
         val players = MockData.mockPlayersEntities.toPlayersState()
-         PlayerDetail(
+        PlayerDetail(
             modifier = Modifier,
             player = players.first(),
         )
