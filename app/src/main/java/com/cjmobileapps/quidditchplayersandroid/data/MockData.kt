@@ -16,6 +16,7 @@ import retrofit2.Response
 import java.net.HttpURLConnection
 import java.util.UUID
 
+//todo fix this file
 object MockData {
     /*** houses data ***/
 
@@ -620,11 +621,6 @@ object MockData {
 
     val mockRavenclawPlayersAndPositionsResponseSuccess =
         Response.success(mockRavenclawPlayersAndPositionsResponseWrappers)
-
-    val mockRavenclawPlayersAndPositionsDeferredResponseSuccess =
-        CompletableDeferred(
-            mockRavenclawPlayersAndPositionsResponseSuccess,
-        )
 
     /*** status ***/
 
