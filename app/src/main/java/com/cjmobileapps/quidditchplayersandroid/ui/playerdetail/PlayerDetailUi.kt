@@ -159,7 +159,7 @@ fun PlayerDetail(
                         )
                         .clip(RoundedCornerShape(4.dp)),
                 imageUrl = player.imageUrl,
-                contentDescription = stringResource(R.string.player_image),
+                contentDescription = "${player.getFullName()} ${stringResource(R.string.player_image)}",
                 contentScale = ContentScale.FillBounds,
             )
 
@@ -167,7 +167,7 @@ fun PlayerDetail(
                 modifier = Modifier.padding(start = 12.dp),
             ) {
                 Text(
-                    text = player.firstName + " " + player.lastName,
+                    text = player.getFullName(),
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
                 )

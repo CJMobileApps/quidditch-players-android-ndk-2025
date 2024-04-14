@@ -46,7 +46,7 @@ fun QuidditchPlayersTopAppBar(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .testTag(""),
+                        .testTag("$titleText title"),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
