@@ -16,7 +16,6 @@ import retrofit2.Response
 import java.net.HttpURLConnection
 import java.util.UUID
 
-// todo fix this file
 object MockData {
     /*** houses data ***/
 
@@ -59,7 +58,7 @@ object MockData {
             Error(isError = true, message = "Some error"),
         )
 
-    val mockHousesResponseSuccess: Response<ResponseWrapper<List<House>>> =
+    private val mockHousesResponseSuccess: Response<ResponseWrapper<List<House>>> =
         Response.success(mockHousesResponseWrapper)
 
     val mockHousesDeferredResponseSuccess = CompletableDeferred(mockHousesResponseSuccess)
@@ -72,12 +71,12 @@ object MockData {
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
-    val mockRavenclawPGenericErrorResponseWrapper: ResponseWrapper<List<Player>> =
+    private val mockRavenclawPGenericErrorResponseWrapper: ResponseWrapper<List<Player>> =
         ResponseWrapperUtil.createResponseWrapperError(
             Error(isError = true, message = "Some error"),
         )
 
-    val mockRavenclawPlayersResponseSuccess = Response.success(mockRavenclawPlayersResponseWrapper)
+    private val mockRavenclawPlayersResponseSuccess = Response.success(mockRavenclawPlayersResponseWrapper)
 
     val mockRavenclawPlayersDeferredResponseSuccess =
         CompletableDeferred(
@@ -86,7 +85,7 @@ object MockData {
 
     /*** all players data ***/
 
-    val mockAllQuidditchTeam =
+    private val mockAllQuidditchTeam =
         gryffindorTeam() + slytherinTeam() + ravenclawTeam() + hufflepuffTeam()
 
     private fun gryffindorTeam() =
@@ -564,18 +563,18 @@ object MockData {
             4 to Position(positionName = "Seeker"),
         )
 
-    val mockPositionsResponseWrapper =
+    private val mockPositionsResponseWrapper =
         ResponseWrapper(
             data = mockPositions,
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
-    val mockPositionsGenericErrorResponseWrapper: ResponseWrapper<Map<Int, Position>> =
+    private val mockPositionsGenericErrorResponseWrapper: ResponseWrapper<Map<Int, Position>> =
         ResponseWrapperUtil.createResponseWrapperError(
             Error(isError = true, message = "Some error"),
         )
 
-    val mockPositionsResponseSuccess = Response.success(mockPositionsResponseWrapper)
+    private val mockPositionsResponseSuccess = Response.success(mockPositionsResponseWrapper)
 
     val mockPositionsDeferredResponseSuccess =
         CompletableDeferred(
@@ -619,9 +618,6 @@ object MockData {
             responseWrapper2 = mockPositionsGenericErrorResponseWrapper,
         )
 
-    val mockRavenclawPlayersAndPositionsResponseSuccess =
-        Response.success(mockRavenclawPlayersAndPositionsResponseWrappers)
-
     /*** status ***/
 
     fun mockStatus(): Status {
@@ -639,7 +635,7 @@ object MockData {
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
-    val mockStatusResponseSuccess = Response.success(mockStatusResponseWrapper)
+    private val mockStatusResponseSuccess = Response.success(mockStatusResponseWrapper)
 
     val mockStatusResponseWrapperGenericError =
         ResponseWrapperUtil.createResponseWrapperError<Status>(
