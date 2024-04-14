@@ -5,12 +5,6 @@ Quidditch Players for Hogwarts Houses Android 2023
 Build Tools & Versions Used
 ----
 
-TODO
-----
-
-- Add unit test
-- Add compose ui test
-
 Dependencies
 ---
 
