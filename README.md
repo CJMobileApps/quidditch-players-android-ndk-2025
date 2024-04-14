@@ -4,6 +4,9 @@ Quidditch Players for Hogwarts Houses Android 2023
 
 Build Tools & Versions Used
 ----
+AAndroid Studio Iguana | 2023.2.1 Patch 1
+Android Min SDK Version: 26
+Android Target SDK Version: 34
 
 Dependencies
 ---
