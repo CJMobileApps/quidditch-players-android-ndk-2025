@@ -25,5 +25,6 @@ Dependencies
 
 Screen shots and Video Walkthrough
 ----
-![Screenshot_20240224_004318](https://github.com/CJMobileApps/quidditch-players-android-2023/assets/18547470/d686d785-4ff8-4914-b2f6-a5cf6b3cad94)
-![Screenshot_20240224_001906](https://github.com/CJMobileApps/quidditch-players-android-2023/assets/18547470/2a0de3c4-8dbd-4eeb-bdf5-e734467df8eb)
+![houses](https://github.com/CJMobileApps/quidditch-players-android-2023/assets/18547470/0cdcebb5-99dc-41db-a4c0-dfede951da07)
+![list of houses](https://github.com/CJMobileApps/quidditch-players-android-2023/assets/18547470/f57517c6-abe2-45ad-860a-b65b218c9c6e)
+![detail harry potter](https://github.com/CJMobileApps/quidditch-players-android-2023/assets/18547470/3aa58232-3b1c-43c5-bafc-116bcbdbb154)
