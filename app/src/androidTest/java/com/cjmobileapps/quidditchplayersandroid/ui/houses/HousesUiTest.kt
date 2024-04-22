@@ -18,6 +18,7 @@ import com.cjmobileapps.quidditchplayersandroid.testutil.assertAreDisplayed
 import com.cjmobileapps.quidditchplayersandroid.testutil.launch
 import com.cjmobileapps.quidditchplayersandroid.testutil.waitUntilTimeout
 import com.cjmobileapps.quidditchplayersandroid.ui.QuidditchPlayersActivity
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -25,6 +26,7 @@ class HousesUiTest {
     @get:Rule
     val composeRule = createEmptyComposeRule()
 
+    @Ignore("You need a backend running to be able to test this")
     @Test
     fun housesToPlayerDetailScreenHappyFlow() =
         composeRule.launch<QuidditchPlayersActivity>(
