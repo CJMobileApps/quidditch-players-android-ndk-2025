@@ -29,7 +29,8 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         fileTree(baseDir = "$buildDir") {
             include(
                 "jacoco/testDevReleaseUnitTest.exec",
-                "outputs/code-coverage/connected/*coverage.ec",
+                "outputs/code_coverage/*coverage.ec",
+                "outputs/unit_test_code_coverage/*testDevDebugUnitTest.exec",
             )
         },
     )
