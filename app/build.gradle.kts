@@ -5,6 +5,41 @@ plugins {
     id("de.mannodermaus.android-junit5")
     id("com.google.devtools.ksp")
     id("org.jlleitschuh.gradle.ktlint")
+    id("jacoco")
+}
+
+// Possible solutions:
+// 1. Declare task ':app:testDevReleaseUnitTest' as an input of ':app:jacocoTestReport3'.
+// 2. Declare an explicit dependency on ':app:testDevReleaseUnitTest' from ':app:jacocoTestReport3' using Task#dependsOn.
+// 3. Declare an explicit dependency on ':app:testDevReleaseUnitTest' from ':app:jacocoTestReport3' using Task#mustRunAfter.
+// uses this output of task ':app:testDevReleaseUnitTest' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed
+// todo you need to ignore task
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDevDebugUnitTest", "testDevReleaseUnitTest", "createDevDebugCoverageReport")
+
+    reports {
+        xml.required = true
+        html.required = true
+    }
+
+    val fileFilter = listOf("**/R.class", "**/R\$*.class", "**/BuildConfig.*", "**/Manifest*.*", "**/*Test*.*", "android/**/*.*")
+    val debugTree =
+        fileTree(baseDir = "$buildDir/intermediates/classes/debug") {
+            exclude(fileFilter)
+        }
+    val mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files(listOf(mainSrc)))
+    classDirectories.setFrom(files(listOf(debugTree)))
+    executionData.setFrom(
+        fileTree(baseDir = "$buildDir") {
+            include(
+                "jacoco/testDevReleaseUnitTest.exec",
+                "outputs/code-coverage/connected/*coverage.ec",
+            )
+        },
+    )
 }
 
 android {
@@ -24,14 +59,25 @@ android {
         }
     }
 
+    testOptions {
+        unitTests.all {
+            jacoco {
+//                includeNoLocationClasses = true
+            }
+        }
+        unitTests.isReturnDefaultValues = true
+//        unitTests.returnDefaultValues = true
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
             isDebuggable = true
             isMinifyEnabled = false
             // IMPORTANT: If testCoverageEnabled and Unit test break you can not see errors
-//            isTestCoverageEnabled = true
-            enableUnitTestCoverage = true
+            // todo emnable android test if get working
+            isTestCoverageEnabled = true
+//            enableUnitTestCoverage = true
         }
         release {
             isMinifyEnabled = false
