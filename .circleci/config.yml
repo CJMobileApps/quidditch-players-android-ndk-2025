@@ -158,13 +158,10 @@ jobs:
       - store_test_results:
           path: ~/test-results/androidTest
       - codecov/upload:
-          name: Upload Code Cov for Android Ui Test
           file: report.xml
       - codecov/upload:
-          name: Upload Code Cov for DevDebug Unit Test
           file: jacocoTestReportDevDebug.xml
       - codecov/upload:
-          name: Upload Code Cov for DevRelease Unit Test
           file: jacocoTestReportDevRelease.xml
 workflows:
   test-and-build:
