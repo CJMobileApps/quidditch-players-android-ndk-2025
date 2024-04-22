@@ -148,12 +148,13 @@ fun PlayerListUi(
 @ExcludeFromJacocoGeneratedReport
 @Preview(showBackground = true)
 @Composable
-fun PlayerListUiPreview() =
+fun PlayerListUiPreview() {
     QuidditchPlayersAndroid2023Theme {
         val players = MockData.mockRavenclawPlayersEntities.toPlayersState()
         PlayerListUi(modifier = Modifier, players = players) {
         }
     }
+}
 
 @Composable
 fun PlayerCardUi(
@@ -179,9 +180,10 @@ fun PlayerCardUi(
 @ExcludeFromJacocoGeneratedReport
 @Preview(showBackground = true)
 @Composable
-fun PlayerCardUiPreview() =
+fun PlayerCardUiPreview() {
     QuidditchPlayersAndroid2023Theme {
         val players = MockData.mockRavenclawPlayersEntities.toPlayersState()
         PlayerCardUi(player = players.first()) {
         }
     }
+}

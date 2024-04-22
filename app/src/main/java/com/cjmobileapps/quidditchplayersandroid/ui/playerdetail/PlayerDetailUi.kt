@@ -136,7 +136,6 @@ fun PlayerDetailLoadedUi(
     }
 }
 
-@ExcludeFromJacocoGeneratedReport
 @Composable
 fun PlayerDetail(
     modifier: Modifier = Modifier,
@@ -257,7 +256,7 @@ fun PlayerDetail(
 @ExcludeFromJacocoGeneratedReport
 @Preview(showBackground = true)
 @Composable
-fun PlayerDetailPreview() =
+fun PlayerDetailPreview() {
     QuidditchPlayersAndroid2023Theme {
         val players = MockData.mockPlayersEntities.toPlayersState()
         PlayerDetail(
@@ -265,3 +264,4 @@ fun PlayerDetailPreview() =
             player = players.first(),
         )
     }
+}
