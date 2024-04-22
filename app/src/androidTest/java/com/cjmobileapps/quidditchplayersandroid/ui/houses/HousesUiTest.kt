@@ -50,7 +50,7 @@ class HousesUiTest {
 
     private fun ComposeTestRule.verifyHouseScreen() {
         // start houses screen
-        waitUntilTimeout(500)
+        waitUntilTimeout(1000)
 
         // GRYFFINDOR
         val gryffindor = MockData.mockHouses.first { it.name == HouseName.GRYFFINDOR }

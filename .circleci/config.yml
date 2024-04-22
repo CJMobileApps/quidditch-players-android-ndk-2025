@@ -1,12 +1,12 @@
 version: 2.1
 orbs:
-  android: circleci/android@2.4.0
+  android: circleci/android@2.5.0
   codecov: codecov/codecov@3.3.0
 jobs:
   ktlint-check:
     executor:
-      name: android/android-docker
-      tag: 2022.08.1
+      name: android/android-machine
+      tag: default
     steps:
       - checkout
       - run:
