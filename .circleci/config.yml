@@ -6,6 +6,7 @@ jobs:
   ktlint-check:
     executor:
       name: android/android-machine
+      tag: 2023.10.1
     steps:
       - checkout
       - run:
