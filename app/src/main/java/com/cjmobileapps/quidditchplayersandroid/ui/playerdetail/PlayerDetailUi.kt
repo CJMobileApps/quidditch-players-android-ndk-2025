@@ -37,6 +37,7 @@ import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.Player
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModelImpl
 import com.cjmobileapps.quidditchplayersandroid.ui.theme.QuidditchPlayersAndroid2023Theme
 import com.cjmobileapps.quidditchplayersandroid.ui.util.QuidditchPlayersImage
+import com.cjmobileapps.quidditchplayersandroid.util.ExcludeFromJacocoGeneratedReport
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -135,6 +136,7 @@ fun PlayerDetailLoadedUi(
     }
 }
 
+@ExcludeFromJacocoGeneratedReport
 @Composable
 fun PlayerDetail(
     modifier: Modifier = Modifier,
@@ -252,6 +254,7 @@ fun PlayerDetail(
     }
 }
 
+@ExcludeFromJacocoGeneratedReport
 @Preview(showBackground = true)
 @Composable
 fun PlayerDetailPreview() =

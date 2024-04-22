@@ -37,6 +37,7 @@ import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewMo
 import com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel.HousesViewModelImpl.HousesState
 import com.cjmobileapps.quidditchplayersandroid.ui.theme.QuidditchPlayersAndroid2023Theme
 import com.cjmobileapps.quidditchplayersandroid.ui.util.QuidditchPlayersImage
+import com.cjmobileapps.quidditchplayersandroid.util.ExcludeFromJacocoGeneratedReport
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -188,6 +189,7 @@ fun HouseCardUi(
     }
 }
 
+@ExcludeFromJacocoGeneratedReport
 @Preview(showBackground = true)
 @Composable
 fun HousesCardUiPreview() =
@@ -219,6 +221,7 @@ fun HousesGridUi(
     }
 }
 
+@ExcludeFromJacocoGeneratedReport
 @Preview(showBackground = true)
 @Composable
 fun HousesGridUiPreview() =
