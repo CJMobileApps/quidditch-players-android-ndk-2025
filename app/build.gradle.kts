@@ -25,6 +25,8 @@ tasks.register<JacocoReport>("jacocoTestReport") {
 
     sourceDirectories.setFrom(files(listOf(mainSrc)))
     classDirectories.setFrom(files(listOf(debugTree)))
+
+    // I don't think this works
     executionData.setFrom(
         fileTree(baseDir = "$buildDir") {
             include(
@@ -59,9 +61,8 @@ android {
             isDebuggable = true
             isMinifyEnabled = false
             // IMPORTANT: If testCoverageEnabled and Unit test break you can not see errors
-            // todo emnable android test if get working
-            isTestCoverageEnabled = true
-//            enableUnitTestCoverage = true
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
         }
         release {
             isMinifyEnabled = false
