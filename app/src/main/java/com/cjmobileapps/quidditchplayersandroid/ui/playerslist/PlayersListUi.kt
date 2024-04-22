@@ -28,7 +28,6 @@ import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.PlayerDetail
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerslist.viewmodel.PlayersListViewModelImpl
 import com.cjmobileapps.quidditchplayersandroid.ui.theme.QuidditchPlayersAndroid2023Theme
-import com.cjmobileapps.quidditchplayersandroid.util.ExcludeFromJacocoGeneratedReport
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -145,7 +144,6 @@ fun PlayerListUi(
 }
 
 // TODO this preview not working
-@ExcludeFromJacocoGeneratedReport
 @Preview(showBackground = true)
 @Composable
 fun PlayerListUiPreview() {
@@ -177,7 +175,6 @@ fun PlayerCardUi(
 }
 
 // TODO this preview not working
-@ExcludeFromJacocoGeneratedReport
 @Preview(showBackground = true)
 @Composable
 fun PlayerCardUiPreview() {
