@@ -56,8 +56,6 @@ jobs:
           when: always
       - store_test_results:
           path: ~/test-results/junit
-#      - codecov/upload:
-#          file: jacocoTestReportDevDebug.xml
   android-test:
     executor:
       name: android/android-machine

@@ -8,13 +8,6 @@ plugins {
     id("jacoco")
 }
 
-// Possible solutions:
-// 1. Declare task ':app:testDevReleaseUnitTest' as an input of ':app:jacocoTestReport3'.
-// 2. Declare an explicit dependency on ':app:testDevReleaseUnitTest' from ':app:jacocoTestReport3' using Task#dependsOn.
-// 3. Declare an explicit dependency on ':app:testDevReleaseUnitTest' from ':app:jacocoTestReport3' using Task#mustRunAfter.
-// uses this output of task ':app:testDevReleaseUnitTest' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed
-// todo you need to ignore task
-
 tasks.register<JacocoReport>("jacocoTestReport") {
     dependsOn("testDevDebugUnitTest", "testDevReleaseUnitTest", "createDevDebugCoverageReport")
 
@@ -57,16 +50,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-    }
-
-    testOptions {
-        unitTests.all {
-            jacoco {
-//                includeNoLocationClasses = true
-            }
-        }
-        unitTests.isReturnDefaultValues = true
-//        unitTests.returnDefaultValues = true
     }
 
     buildTypes {
