@@ -25,7 +25,6 @@ class HousesUiTest {
     @get:Rule
     val composeRule = createEmptyComposeRule()
 
-
     @Test
     fun housesToPlayerDetailScreenHappyFlow() =
         composeRule.launch<QuidditchPlayersActivity>(
