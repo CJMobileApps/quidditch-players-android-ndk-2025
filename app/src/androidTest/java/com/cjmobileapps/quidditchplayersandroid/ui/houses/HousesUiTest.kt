@@ -25,6 +25,7 @@ class HousesUiTest {
     @get:Rule
     val composeRule = createEmptyComposeRule()
 
+
     @Test
     fun housesToPlayerDetailScreenHappyFlow() =
         composeRule.launch<QuidditchPlayersActivity>(
@@ -50,7 +51,7 @@ class HousesUiTest {
 
     private fun ComposeTestRule.verifyHouseScreen() {
         // start houses screen
-        waitUntilTimeout(1000)
+        waitUntilTimeout(500)
 
         // GRYFFINDOR
         val gryffindor = MockData.mockHouses.first { it.name == HouseName.GRYFFINDOR }
