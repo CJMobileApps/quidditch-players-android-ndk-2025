@@ -4,6 +4,7 @@ buildscript {
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.48")
         classpath("de.mannodermaus.gradle.plugins:android-junit5:1.10.0.0")
         classpath("org.jlleitschuh.gradle:ktlint-gradle:12.1.0")
+        classpath("org.jacoco:org.jacoco.core:0.8.8")
     }
 }
 

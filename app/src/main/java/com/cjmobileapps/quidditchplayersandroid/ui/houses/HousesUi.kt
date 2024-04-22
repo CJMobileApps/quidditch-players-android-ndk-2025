@@ -190,13 +190,14 @@ fun HouseCardUi(
 
 @Preview(showBackground = true)
 @Composable
-fun HousesCardUiPreview() =
+fun HousesCardUiPreview() {
     QuidditchPlayersAndroid2023Theme {
         HouseCardUi(
             house = MockData.mockHouses.first(),
             onCardClick = { },
         )
     }
+}
 
 @Composable
 fun HousesGridUi(
@@ -221,7 +222,7 @@ fun HousesGridUi(
 
 @Preview(showBackground = true)
 @Composable
-fun HousesGridUiPreview() =
+fun HousesGridUiPreview() {
     QuidditchPlayersAndroid2023Theme {
         HousesGridUi(
             houses = MockData.mockHouses,
@@ -229,3 +230,4 @@ fun HousesGridUiPreview() =
             modifier = Modifier,
         )
     }
+}

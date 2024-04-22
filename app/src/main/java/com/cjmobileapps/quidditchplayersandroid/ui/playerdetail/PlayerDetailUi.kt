@@ -254,7 +254,7 @@ fun PlayerDetail(
 
 @Preview(showBackground = true)
 @Composable
-fun PlayerDetailPreview() =
+fun PlayerDetailPreview() {
     QuidditchPlayersAndroid2023Theme {
         val players = MockData.mockPlayersEntities.toPlayersState()
         PlayerDetail(
@@ -262,3 +262,4 @@ fun PlayerDetailPreview() =
             player = players.first(),
         )
     }
+}

@@ -5,6 +5,37 @@ plugins {
     id("de.mannodermaus.android-junit5")
     id("com.google.devtools.ksp")
     id("org.jlleitschuh.gradle.ktlint")
+    id("jacoco")
+}
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDevDebugUnitTest", "testDevReleaseUnitTest", "createDevDebugCoverageReport")
+
+    reports {
+        xml.required = true
+        html.required = true
+    }
+
+    val fileFilter = listOf("**/R.class", "**/R\$*.class", "**/BuildConfig.*", "**/Manifest*.*", "**/*Test*.*", "android/**/*.*")
+    val debugTree =
+        fileTree(baseDir = "$buildDir/intermediates/classes/debug") {
+            exclude(fileFilter)
+        }
+    val mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files(listOf(mainSrc)))
+    classDirectories.setFrom(files(listOf(debugTree)))
+
+    // I don't think this works
+    executionData.setFrom(
+        fileTree(baseDir = "$buildDir") {
+            include(
+                "jacoco/testDevReleaseUnitTest.exec",
+                "outputs/code_coverage/*coverage.ec",
+                "outputs/unit_test_code_coverage/*testDevDebugUnitTest.exec",
+            )
+        },
+    )
 }
 
 android {
@@ -30,8 +61,8 @@ android {
             isDebuggable = true
             isMinifyEnabled = false
             // IMPORTANT: If testCoverageEnabled and Unit test break you can not see errors
-//            isTestCoverageEnabled = true
             enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
         }
         release {
             isMinifyEnabled = false
