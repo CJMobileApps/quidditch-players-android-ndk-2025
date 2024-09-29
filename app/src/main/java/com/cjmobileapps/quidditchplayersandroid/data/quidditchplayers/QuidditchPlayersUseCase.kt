@@ -15,7 +15,7 @@ import timber.log.Timber
 class QuidditchPlayersUseCase(
     private val quidditchPlayersRepository: QuidditchPlayersRepository,
 ) {
-    private val tag = QuidditchPlayersRepositoryImpl::class.java.simpleName
+    private val tag = QuidditchPlayersUseCase::class.java.simpleName
 
     var currentPlayer: PlayerState? = null
 
