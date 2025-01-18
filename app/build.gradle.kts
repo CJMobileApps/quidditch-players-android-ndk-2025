@@ -6,6 +6,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("org.jlleitschuh.gradle.ktlint")
     id("jacoco")
+    alias(libs.plugins.compose.compiler)
 }
 
 tasks.register<JacocoReport>("jacocoTestReport") {
@@ -53,6 +54,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf("room.schemaLocation" to "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
@@ -93,14 +100,15 @@ android {
         compose = true
         buildConfig = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
 }
 
 dependencies {

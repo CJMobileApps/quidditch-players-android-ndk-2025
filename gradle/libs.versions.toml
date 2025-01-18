@@ -1,9 +1,9 @@
 [versions]
-agp = "8.2.0"
-kotlin = "1.9.0"
+agp = "8.2.2"
+kotlin = "2.0.0"
 hilt = "2.49"
 junit5 = "1.10.0.0"
-ksp = "1.9.21-1.0.15"
+ksp = "2.0.0-1.0.22"
 ktlint = "12.1.0"
 jacoco = "0.8.8"
 activity-compose = "1.8.2"
@@ -91,3 +91,4 @@ hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "junit5" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
