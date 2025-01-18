@@ -23,6 +23,7 @@ coroutines-test = "1.7.1"
 junit-jupiter = "5.10.1"
 mockito-kotlin = "5.0.0"
 junit4 = "4.13.2"
+ui-test-junit4 = "1.7.6"
 vintage-engine = "5.10.1"
 timber = "5.0.1"
 room = "2.5.2"
@@ -47,6 +48,9 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 # Android Compose Testing
 junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "ui-test-junit4" }
+ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "ui-test-junit4" }
+ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "ui-test-junit4" }
 
 # Hilt
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
