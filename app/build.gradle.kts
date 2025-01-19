@@ -9,6 +9,10 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
+jacoco {
+    toolVersion = "0.8.9"
+}
+
 tasks.register<JacocoReport>("jacocoTestReport") {
     dependsOn("testDevDebugUnitTest", "testDevReleaseUnitTest", "createDevDebugCoverageReport")
 
