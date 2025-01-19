@@ -10,7 +10,7 @@ plugins {
 }
 
 jacoco {
-    toolVersion = "0.8.9"
+    toolVersion = libs.versions.jacoco.get()
 }
 
 tasks.register<JacocoReport>("jacocoTestReport") {
