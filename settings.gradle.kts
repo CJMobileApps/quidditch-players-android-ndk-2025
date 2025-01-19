@@ -13,6 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "quidditch-players-android-2023"
+rootProject.name = "quidditch-players-android-ndk-2025"
 include(":app")
- 
