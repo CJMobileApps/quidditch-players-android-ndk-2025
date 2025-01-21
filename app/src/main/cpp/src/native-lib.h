@@ -15,6 +15,13 @@ void JNICALL Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_
 
 // Declaration of the 'blah' function
 void blah();
+
+JNIEXPORT jobject JNICALL Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_convertToKotlin(
+        JNIEnv *,
+        jobject,
+        jstring,
+        jstring
+);
 #ifdef __cplusplus
 }
 #endif
