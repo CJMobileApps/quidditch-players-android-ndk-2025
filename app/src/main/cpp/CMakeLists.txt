@@ -19,7 +19,9 @@ message(STATUS "C++ compiler: ${CMAKE_CXX_COMPILER}")
 
 # Add the shared library target, specifying the source files
 add_library(${CMAKE_PROJECT_NAME} SHARED
-        native-lib.cpp
+        src/native-lib.cpp
+        src/com/cjmobileapps/quidditchplayers/model/Status.cpp
+        src/com/cjmobileapps/quidditchplayers/model/Status.h
 )
 
 # Link the necessary libraries to the target
@@ -29,4 +31,9 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 )
 
 # Add the executable target (app) which includes both the main source and native-lib
-add_executable(app main.cpp native-lib.cpp)
+add_executable(app
+        main.cpp
+        src/native-lib.cpp
+        src/com/cjmobileapps/quidditchplayers/model/Status.cpp
+        src/com/cjmobileapps/quidditchplayers/model/Status.h
+)
