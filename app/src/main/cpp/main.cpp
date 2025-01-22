@@ -1,5 +1,6 @@
 #include <iostream>
-#include "src/native-lib.h"
+
+#include "src/com/cjmobileapps/quidditchplayers/native-lib.h"
 #include "src/com/cjmobileapps/quidditchplayers/model/Status.h"
 
 int main() {
@@ -10,8 +11,8 @@ int main() {
     std::cout << anotherMessage << std::endl;
 
     //Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2();
-    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2();
-    blah();
+    com::cjmobileapps::quidditchplayers::Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2();
+    com::cjmobileapps::quidditchplayers::blah();
 
     // // Create a Status object
     // com::cjmobileapps::quidditchplayers::model::Status status("Player123", "Online");
