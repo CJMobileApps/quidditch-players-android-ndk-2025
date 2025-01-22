@@ -27,6 +27,9 @@ namespace com::cjmobileapps::quidditchplayers {
         jstring playerId,
         jstring status
     );
+
+    jobject convertCppUuidStringToUuidObject(JNIEnv *env, const std::string& uuidCppString);
+
 } // namespace com::cjmobileapps::quidditchplayers
 
 #ifdef __cplusplus

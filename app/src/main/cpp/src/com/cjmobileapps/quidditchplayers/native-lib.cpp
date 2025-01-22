@@ -67,6 +67,21 @@ namespace com::cjmobileapps::quidditchplayers {
         // Get the constructor of the Kotlin Status class
         jmethodID constructor = env->GetMethodID(statusClass, "<init>", "(Ljava/util/UUID;Ljava/lang/String;)V");
 
+        jobject uuidObject = convertCppUuidStringToUuidObject(env, cppStatus.playerId);
+
+        // Create a new Kotlin Status object
+        jobject kotlinStatus = env->NewObject(
+                statusClass,
+                constructor,
+                uuidObject,
+                env->NewStringUTF(cppStatus.status.c_str())
+        );
+
+        return kotlinStatus;
+    }
+
+    //TODO move this to util package
+    jobject convertCppUuidStringToUuidObject(JNIEnv *env, const std::string& uuidCppString) {
         // Find the Java UUID class
         jclass uuidClass = env->FindClass("java/util/UUID");
         if (uuidClass == nullptr) {
@@ -82,7 +97,7 @@ namespace com::cjmobileapps::quidditchplayers {
         }
 
         // Convert the C++ string to a Java string
-        jstring uuidString = env->NewStringUTF(cppStatus.playerId.c_str());
+        jstring uuidString = env->NewStringUTF(uuidCppString.c_str());
         if (uuidString == nullptr) {
             // Handle error: String creation failed
             return nullptr;
@@ -95,14 +110,6 @@ namespace com::cjmobileapps::quidditchplayers {
             return nullptr;
         }
 
-        // Create a new Kotlin Status object
-        jobject kotlinStatus = env->NewObject(
-                statusClass,
-                constructor,
-                uuidObject,
-                env->NewStringUTF(cppStatus.status.c_str())
-        );
-
-        return kotlinStatus;
+        return uuidObject;
     }
 }
