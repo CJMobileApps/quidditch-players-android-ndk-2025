@@ -77,6 +77,8 @@ namespace com::cjmobileapps::quidditchplayers {
                 env->NewStringUTF(cppStatus.status.c_str())
         );
 
+        //todo return response wrapper status
+
         return kotlinStatus;
     }
 
