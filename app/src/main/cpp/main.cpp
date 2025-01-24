@@ -19,7 +19,7 @@ int main() {
 
     // // Create a Status object
     // com::cjmobileapps::quidditchplayers::model::Status status("Player123", "Online");
-    const auto status = com::cjmobileapps::quidditchplayers::data::MockData::getStatus();
+    const auto status = com::cjmobileapps::quidditchplayers::data::MockData::getMockStatus();
 
     // //
     // // Output the object's data
@@ -56,6 +56,9 @@ int main() {
 
     // Clean up dynamically allocated error
     delete error;
+
+    std::cout << "getStatus " << com::cjmobileapps::quidditchplayers::data::MockData::getStatus("Harry Potter") << std::endl;
+
 
     return 0;
 }

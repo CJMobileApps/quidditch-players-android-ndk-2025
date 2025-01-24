@@ -28,8 +28,16 @@ namespace com::cjmobileapps::quidditchplayers {
         jstring status
     );
 
-    jobject convertCppUuidStringToUuidObject(JNIEnv *env, const std::string& uuidCppString);
+    jobject convertCppUuidStringToUuidObject(JNIEnv *env, const std::string &uuidCppString);
 
+    //todo add getMockStatus
+
+    extern "C" JNIEXPORT jstring JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getStatus(
+        JNIEnv *env,
+        jobject /* this */,
+        jstring name
+    );
 } // namespace com::cjmobileapps::quidditchplayers
 
 #ifdef __cplusplus

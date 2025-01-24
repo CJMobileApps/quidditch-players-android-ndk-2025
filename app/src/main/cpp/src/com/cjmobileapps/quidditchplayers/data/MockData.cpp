@@ -4,12 +4,16 @@
 #include <iostream>
 
 namespace com::cjmobileapps::quidditchplayers::data {
-    const model::Status &MockData::getStatus() {
+    const model::Status &MockData::getMockStatus() {
         static const auto status = model::Status(
             "PlayerId: 1",
             "Player 1 Status online"
         );
         return status;
+    }
+
+    std::string MockData::getStatus(const std::string &name) {
+        return name + " is breaking into the Ministry of Magic 💎";
     }
 }
 

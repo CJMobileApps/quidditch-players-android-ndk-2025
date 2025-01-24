@@ -3,6 +3,7 @@
 #include <jni.h>
 #include <syslog.h>
 
+#include "MockData.h"
 #include "model/Status.h"
 
 namespace com::cjmobileapps::quidditchplayers {
@@ -80,6 +81,18 @@ namespace com::cjmobileapps::quidditchplayers {
         //todo return response wrapper status
 
         return kotlinStatus;
+    }
+
+    extern "C" JNIEXPORT jstring JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getStatus(
+                JNIEnv *env,
+               jobject /* this */,
+               jstring name
+    ) {
+        const char *nameStr = env->GetStringUTFChars(name, nullptr);
+        const auto status = data::MockData::getStatus(nameStr);
+        jstring statusJString = env->NewStringUTF(status.c_str());
+        return statusJString;
     }
 
     //TODO move this to util package

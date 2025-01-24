@@ -20,5 +20,6 @@ class QuidditchPlayersApplication : Application() {
 
         val blahStatus = MockDataFromCPP.convertToKotlin(UUID.randomUUID().toString(), "Player 1 is online")
         println("HERE_ blahStatus " + blahStatus)
+        println("HERE_ getStatus " + MockDataFromCPP.getStatus("Harry Potter"))
     }
 }
