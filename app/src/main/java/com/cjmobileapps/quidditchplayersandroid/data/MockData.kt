@@ -625,7 +625,7 @@ object MockData {
         val name = "${player.firstName} ${player.lastName}"
         return Status(
             playerId = player.id,
-            status = getStatus(name),
+            status = MockDataFromCPP.getStatus(name),
         )
     }
 
@@ -650,8 +650,6 @@ object MockData {
         CompletableDeferred(
             mockStatusResponseSuccess,
         )
-
-    fun getStatus(name: String) = String.format("%s is breaking into the Ministry of Magic %s", name, "\uD83D\uDD2E")
 
     /*** Response Wrapper Boolean ***/
 

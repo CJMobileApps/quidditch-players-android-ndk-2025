@@ -72,8 +72,8 @@ android {
             isDebuggable = true
             isMinifyEnabled = false
             // IMPORTANT: If testCoverageEnabled and Unit test break you can not see errors
-            enableUnitTestCoverage = true
-            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = false
+            enableAndroidTestCoverage = false
         }
         release {
             isMinifyEnabled = false
@@ -107,6 +107,12 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+            version = "3.22.1"
         }
     }
 }
@@ -151,6 +157,7 @@ dependencies {
     // Junit 5
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockito.kotlin)
+    androidTestImplementation(libs.mockk.android) // TODO replace all Mocks with Mockk For Android instrumentation tests
 
     // Junit 4
     implementation(libs.junit.ktx)

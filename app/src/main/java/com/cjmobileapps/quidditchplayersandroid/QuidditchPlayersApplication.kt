@@ -1,8 +1,10 @@
 package com.cjmobileapps.quidditchplayersandroid
 
 import android.app.Application
+import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import java.util.UUID
 
 @HiltAndroidApp
 class QuidditchPlayersApplication : Application() {
@@ -12,5 +14,12 @@ class QuidditchPlayersApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+        MockDataFromCPP.stringFromJNI2()
+        val blah = MockDataFromCPP.stringFromJNI()
+        println("HERE_ blah " + blah)
+
+        val blahStatus = MockDataFromCPP.convertToKotlin(UUID.randomUUID().toString(), "Player 1 is online")
+        println("HERE_ blahStatus " + blahStatus)
+        println("HERE_ getStatus " + MockDataFromCPP.getStatus("Harry Potter"))
     }
 }
