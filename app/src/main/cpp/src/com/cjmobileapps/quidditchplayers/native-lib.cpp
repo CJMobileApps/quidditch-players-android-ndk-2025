@@ -9,8 +9,8 @@
 namespace com::cjmobileapps::quidditchplayers {
     extern "C" JNIEXPORT jstring JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI(
-            JNIEnv *env,
-            jobject /*this*/
+        JNIEnv *env,
+        jobject /*this*/
     ) {
         // std::string message = "Hello, World!";
         std::string anotherMessage = "Hello Again from C++!";
@@ -19,6 +19,7 @@ namespace com::cjmobileapps::quidditchplayers {
         // std::string hello = "Hello from C++";
         return env->NewStringUTF(anotherMessage.c_str());
     }
+
     extern "C" JNIEXPORT void JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2() {
         std::string hello = "HERE_ Hello from C++ stringFromJNI2";
@@ -43,11 +44,10 @@ namespace com::cjmobileapps::quidditchplayers {
 
     extern "C" JNIEXPORT jobject JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_convertToKotlin(
-            JNIEnv *env,
-            jobject /* this */,
-            jstring playerId,
-            jstring status) {
-
+        JNIEnv *env,
+        jobject /* this */,
+        jstring playerId,
+        jstring status) {
         // Convert jstring to std::string
         const char *playerIdCStr = env->GetStringUTFChars(playerId, nullptr);
         const char *statusCStr = env->GetStringUTFChars(status, nullptr);
@@ -72,10 +72,10 @@ namespace com::cjmobileapps::quidditchplayers {
 
         // Create a new Kotlin Status object
         jobject kotlinStatus = env->NewObject(
-                statusClass,
-                constructor,
-                uuidObject,
-                env->NewStringUTF(cppStatus.status.c_str())
+            statusClass,
+            constructor,
+            uuidObject,
+            env->NewStringUTF(cppStatus.status.c_str())
         );
 
         //todo return response wrapper status
@@ -85,9 +85,9 @@ namespace com::cjmobileapps::quidditchplayers {
 
     extern "C" JNIEXPORT jstring JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getStatus(
-                JNIEnv *env,
-               jobject /* this */,
-               jstring name
+        JNIEnv *env,
+        jobject /* this */,
+        jstring name
     ) {
         const char *nameStr = env->GetStringUTFChars(name, nullptr);
         const auto status = data::MockData::getStatus(nameStr);
@@ -96,7 +96,7 @@ namespace com::cjmobileapps::quidditchplayers {
     }
 
     //TODO move this to util package
-    jobject convertCppUuidStringToUuidObject(JNIEnv *env, const std::string& uuidCppString) {
+    jobject convertCppUuidStringToUuidObject(JNIEnv *env, const std::string &uuidCppString) {
         // Find the Java UUID class
         jclass uuidClass = env->FindClass("java/util/UUID");
         if (uuidClass == nullptr) {
@@ -105,7 +105,8 @@ namespace com::cjmobileapps::quidditchplayers {
         }
 
         // Get the static method ID for UUID.fromString(String)
-        jmethodID fromStringMethod = env->GetStaticMethodID(uuidClass, "fromString", "(Ljava/lang/String;)Ljava/util/UUID;");
+        jmethodID fromStringMethod = env->GetStaticMethodID(uuidClass, "fromString",
+                                                            "(Ljava/lang/String;)Ljava/util/UUID;");
         if (fromStringMethod == nullptr) {
             // Handle error: Method not found
             return nullptr;
@@ -126,5 +127,72 @@ namespace com::cjmobileapps::quidditchplayers {
         }
 
         return uuidObject;
+    }
+
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getResponseWrapperMockStatus(
+        JNIEnv *env, jobject) {
+        // Create a Status object in C++
+        com::cjmobileapps::quidditchplayers::model::Status status =
+                com::cjmobileapps::quidditchplayers::data::MockData::getMockStatus();
+
+        // Convert C++ Status to Java/Kotlin equivalent
+        jclass statusClass = env->FindClass("com/cjmobileapps/quidditchplayersandroid/data/model/Status");
+        jmethodID statusConstructor = env->
+                GetMethodID(statusClass, "<init>", "(Ljava/util/UUID;Ljava/lang/String;)V");
+
+        jstring playerId = env->NewStringUTF("bcd59c9c-7c22-418c-81a8-4f2a722af352");
+        jstring statusStr = env->NewStringUTF(status.status.c_str());
+
+        jobject playerIdObject = convertCppUuidStringToUuidObject(env, "bcd59c9c-7c22-418c-81a8-4f2a722af352");
+
+
+        jobject statusObject = env->NewObject(statusClass, statusConstructor, playerIdObject, statusStr);
+
+        // Create an Error object for ResponseWrapper
+        jclass errorClass = env->FindClass("com/cjmobileapps/quidditchplayersandroid/data/model/Error");
+        jmethodID errorConstructor = env->GetMethodID(errorClass, "<init>", "(ZLjava/lang/String;)V");
+
+        jboolean isError = JNI_FALSE; // Example: No error
+        jstring errorMessage = env->NewStringUTF(""); // Empty error message
+
+        jobject errorObject = env->NewObject(errorClass, errorConstructor, isError, errorMessage);
+
+        // Create a ResponseWrapper object
+        jclass responseWrapperClass = env->FindClass(
+            "com/cjmobileapps/quidditchplayersandroid/data/model/ResponseWrapper");
+        jmethodID responseWrapperConstructor = env->GetMethodID(responseWrapperClass, "<init>",
+                                                                "(Ljava/lang/Object;Lcom/cjmobileapps/quidditchplayersandroid/data/model/Error;I)V");
+
+        jint statusCode = 200; // Example: HTTP 200 OK
+
+        jobject responseWrapperObject = env->NewObject(responseWrapperClass, responseWrapperConstructor, statusObject,
+                                                       errorObject, statusCode);
+
+        // Release local references
+        env->DeleteLocalRef(playerId);
+        env->DeleteLocalRef(statusStr);
+        env->DeleteLocalRef(errorMessage);
+
+        return responseWrapperObject;
+    }
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockStatus(
+        JNIEnv *env,
+        jobject /* this */
+    ) {
+        model::Status status = data::MockData::getMockStatus();
+
+        jclass statusClass = env->FindClass("com/cjmobileapps/quidditchplayersandroid/data/model/Status");
+        jmethodID statusConstructor = env->
+                GetMethodID(statusClass, "<init>", "(Ljava/util/UUID;Ljava/lang/String;)V");
+
+        jstring statusStr = env->NewStringUTF(status.status.c_str());
+        jobject playerIdObject = convertCppUuidStringToUuidObject(env, status.playerId);
+        jobject statusObject = env->NewObject(statusClass, statusConstructor, playerIdObject, statusStr);
+
+        return statusObject;
     }
 }

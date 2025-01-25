@@ -5,9 +5,11 @@
 
 namespace com::cjmobileapps::quidditchplayers::data {
     const model::Status &MockData::getMockStatus() {
+        const auto name = "Harry Potter";
+
         static const auto status = model::Status(
-            "PlayerId: 1",
-            "Player 1 Status online"
+            "e7d23c8f-8b80-4355-9d2d-580949cea13d",
+            MockData::getStatus(name)
         );
         return status;
     }
