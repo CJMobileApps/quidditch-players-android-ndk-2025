@@ -157,7 +157,7 @@ dependencies {
     // Junit 5
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockito.kotlin)
-    androidTestImplementation("io.mockk:mockk-android:1.13.12") // TODO replace all Mocks with Mockk For Android instrumentation tests
+    androidTestImplementation(libs.mockk.android) // TODO replace all Mocks with Mockk For Android instrumentation tests
 
     // Junit 4
     implementation(libs.junit.ktx)
