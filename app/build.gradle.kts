@@ -72,8 +72,8 @@ android {
             isDebuggable = true
             isMinifyEnabled = false
             // IMPORTANT: If testCoverageEnabled and Unit test break you can not see errors
-            enableUnitTestCoverage = true
-            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = false
+            enableAndroidTestCoverage = false
         }
         release {
             isMinifyEnabled = false
@@ -157,6 +157,7 @@ dependencies {
     // Junit 5
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockito.kotlin)
+    androidTestImplementation("io.mockk:mockk-android:1.13.12") // TODO replace all Mocks with Mockk For Android instrumentation tests
 
     // Junit 4
     implementation(libs.junit.ktx)
