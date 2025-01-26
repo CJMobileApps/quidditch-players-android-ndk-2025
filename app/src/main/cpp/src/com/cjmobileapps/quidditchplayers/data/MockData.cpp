@@ -71,9 +71,10 @@ namespace com::cjmobileapps::quidditchplayers::data {
     // }
 
     const model::ResponseWrapper<std::vector<model::House>> &MockData::getMockHousesResponseWrapper() {
+        //todo delete this
         model::Error* error = new model::Error(true, "Something went wrong!");
 
-        auto houses = MockData::getMockHouses();
+        auto houses = getMockHouses();
 
         static const model::ResponseWrapper responseWrapperHouses(
             houses,

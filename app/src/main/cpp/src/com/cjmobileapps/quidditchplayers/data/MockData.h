@@ -15,9 +15,6 @@ namespace com::cjmobileapps::quidditchplayers::data {
         static const model::ResponseWrapper<std::vector<model::House>> &getMockHousesResponseWrapper();
 
         static const std::vector<model::House> &getMockHouses();
-
-        // static model::ResponseWrapper<T>::ResponseWrapper(T data, Error* error, int statusCode)
-
     };
 }
 
