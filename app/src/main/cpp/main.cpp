@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "HttpStatus.h"
 #include "src/com/cjmobileapps/quidditchplayers/native-lib.h"
 #include "src/com/cjmobileapps/quidditchplayers/data/MockData.h"
 #include "src/com/cjmobileapps/quidditchplayers/model/Error.h"
@@ -14,7 +15,7 @@ int main() {
     std::cout << anotherMessage << std::endl;
 
     //Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2();
-    com::cjmobileapps::quidditchplayers::Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2();
+//    com::cjmobileapps::quidditchplayers::Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2();
     com::cjmobileapps::quidditchplayers::blah();
 
     // // Create a Status object
@@ -58,6 +59,18 @@ int main() {
     delete error;
 
     std::cout << "getStatus " << com::cjmobileapps::quidditchplayers::data::MockData::getStatus("Harry Potter") << std::endl;
+
+    std::cout << "HttpOk " << com::cjmobileapps::quidditchplayers::network::HttpStatus::HTTP_OK << std::endl;
+
+    auto mockHousesResponseWrapper = com::cjmobileapps::quidditchplayers::data::MockData::getMockHousesResponseWrapper();
+    for (const auto& house : mockHousesResponseWrapper.data) {
+        std::cout << "House ID: " << house.getHouseId() << std::endl;
+        // std::cout << "House Name: " << house.getName() << std::endl;
+        std::cout << "House Image URL: " << house.getImageUrl() << std::endl;
+        std::cout << "House Emoji: " << house.getEmoji() << std::endl;
+        std::cout << "---------------------------------------" << std::endl;
+    }
+    // std::cout << "getMockHousesResponseWrapper " << mockHousesResponseWrapper.data << std::endl;
 
 
     return 0;

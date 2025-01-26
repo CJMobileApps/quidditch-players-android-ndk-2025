@@ -18,6 +18,7 @@ add_library(quidditchplayers-cpp-data SHARED
 # Ensure the data library links to the model library
 target_link_libraries(quidditchplayers-cpp-data PUBLIC
         quidditchplayers-cpp-models
+        quidditchplayers-cpp-network
 )
 
 # Optionally include directories for this target (if needed)

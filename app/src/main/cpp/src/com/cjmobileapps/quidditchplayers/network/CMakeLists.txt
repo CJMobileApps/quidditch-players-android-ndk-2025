@@ -10,16 +10,10 @@ set(CMAKE_CXX_EXTENSIONS NO)
 message(STATUS "C++ compiler in model: ${CMAKE_CXX_COMPILER}")
 
 # Define the library target for the model module
-add_library(quidditchplayers-cpp-models SHARED
-        Status.cpp
-        Status.h
-        ResponseWrapper.cpp
-        ResponseWrapper.h
-        Error.cpp
-        Error.h
-        House.cpp
-        House.h
+add_library(quidditchplayers-cpp-network SHARED
+        HttpStatus.cpp
+        HttpStatus.h
 )
 
 # Optionally include directories for this target (if needed by parent)
-target_include_directories(quidditchplayers-cpp-models PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(quidditchplayers-cpp-network PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
