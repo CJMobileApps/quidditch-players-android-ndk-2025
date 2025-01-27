@@ -11,21 +11,24 @@ extern "C" {
 namespace com::cjmobileapps::quidditchplayers {
     extern "C" JNIEXPORT jstring JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI(
-        JNIEnv *env,
-        jobject /*this*/
+            JNIEnv *env,
+            jobject /*this*/
     );
 
     extern "C" JNIEXPORT void JNICALL
-    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2();
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2(
+            JNIEnv *env,
+            jobject /*this*/
+    );
 
     void blah();
 
     extern "C" JNIEXPORT jobject JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_convertToKotlin(
-        JNIEnv *env,
-        jobject /* this */,
-        jstring playerId,
-        jstring status
+            JNIEnv *env,
+            jobject /* this */,
+            jstring playerId,
+            jstring status
     );
 
     jobject convertCppUuidStringToUuidObject(JNIEnv *env, const std::string &uuidCppString);
@@ -34,9 +37,33 @@ namespace com::cjmobileapps::quidditchplayers {
 
     extern "C" JNIEXPORT jstring JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getStatus(
-        JNIEnv *env,
-        jobject /* this */,
-        jstring name
+            JNIEnv *env,
+            jobject /* this */,
+            jstring name
+    );
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockStatus(
+            JNIEnv *env,
+            jobject /* this */
+    );
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getResponseWrapperMockStatus(
+            JNIEnv *env,
+            jobject /* this */
+    );
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockHouses(
+            JNIEnv *env,
+            jobject /* this */
+    );
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockHousesResponseWrapper(
+            JNIEnv *env,
+            jobject /* this */
     );
 } // namespace com::cjmobileapps::quidditchplayers
 

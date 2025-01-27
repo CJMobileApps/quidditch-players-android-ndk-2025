@@ -1,5 +1,6 @@
 package com.cjmobileapps.quidditchplayersandroid.data.datasource
 
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cjmobileapps.quidditchplayersandroid.data.MockData
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
@@ -12,9 +13,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 
+@RunWith(AndroidJUnit4::class)
 class QuidditchPlayersLocalDataSourceTest : BaseTest() {
     private lateinit var quidditchPlayersLocalDataSource: QuidditchPlayersLocalDataSource
 

@@ -27,7 +27,8 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         android
         log
         quidditchplayers-cpp-data
-        quidditchplayers-cpp-models # Link the child library
+        quidditchplayers-cpp-models
+        quidditchplayers-cpp-network # Link the child library
 )
 
 # Add an executable target (optional, for testing)
@@ -46,3 +47,4 @@ target_link_libraries(app
 # Add the data and model subdirectories separately
 add_subdirectory(src/com/cjmobileapps/quidditchplayers/data)
 add_subdirectory(src/com/cjmobileapps/quidditchplayers/model)
+add_subdirectory(src/com/cjmobileapps/quidditchplayers/network)
