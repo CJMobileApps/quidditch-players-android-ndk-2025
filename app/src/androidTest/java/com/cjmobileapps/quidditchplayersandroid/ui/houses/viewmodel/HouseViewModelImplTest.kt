@@ -76,7 +76,7 @@ class HouseViewModelImplTest : BaseAndroidTest() {
 
             // then
             setupHouseViewModel()
-            housesResponseWrapperArgumentCaptor.invoke(MockData.mockHousesResponseWrapper)
+            housesResponseWrapperArgumentCaptor.invoke(MockDataFromCPP.getMockHousesResponseWrapper())
             housesState = housesViewModel.getState()
 
             // verify
@@ -127,7 +127,7 @@ class HouseViewModelImplTest : BaseAndroidTest() {
 
             // then
             setupHouseViewModel()
-            housesResponseWrapperArgumentCaptor.invoke(MockData.mockHousesResponseWrapper)
+            housesResponseWrapperArgumentCaptor.invoke(MockDataFromCPP.getMockHousesResponseWrapper())
             housesState = housesViewModel.getState()
             var snackbarState = housesViewModel.getSnackbarState()
 
@@ -207,7 +207,7 @@ class HouseViewModelImplTest : BaseAndroidTest() {
 
             // then
             setupHouseViewModel()
-            housesResponseWrapperArgumentCaptor.invoke(MockData.mockHousesResponseWrapper)
+            housesResponseWrapperArgumentCaptor.invoke(MockDataFromCPP.getMockHousesResponseWrapper())
             housesState = housesViewModel.getState()
             var snackbarState = housesViewModel.getSnackbarState()
 
