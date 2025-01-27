@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.cjmobileapps.quidditchplayersandroid.data.MockData
+import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayerEntity
@@ -55,24 +56,24 @@ class HousesUiTest {
         waitUntilTimeout(500)
 
         // GRYFFINDOR
-        val gryffindor = MockData.mockHouses.first { it.name == HouseName.GRYFFINDOR }
+        val gryffindor = MockDataFromCPP.getMockHouses().first { it.name == HouseName.GRYFFINDOR }
         onNodeWithContentDescription(gryffindor.name.name).assertIsDisplayed()
         onNodeWithText(gryffindor.name.name).assertIsDisplayed()
         onNodeWithText(gryffindor.emoji)
 
         // SLYTHERIN
-        val slytherin = MockData.mockHouses.first { it.name == HouseName.SLYTHERIN }
+        val slytherin = MockDataFromCPP.getMockHouses().first { it.name == HouseName.SLYTHERIN }
         onNodeWithText(slytherin.name.name).assertIsDisplayed()
         onNodeWithText(slytherin.emoji).assertIsDisplayed()
 
         // HUFFLEPUFF
-        val hufflepuff = MockData.mockHouses.first { it.name == HouseName.HUFFLEPUFF }
+        val hufflepuff = MockDataFromCPP.getMockHouses().first { it.name == HouseName.HUFFLEPUFF }
         onNodeWithContentDescription(hufflepuff.name.name).assertIsDisplayed()
         onNodeWithText(hufflepuff.name.name).assertIsDisplayed()
         onNodeWithText(hufflepuff.emoji).assertIsDisplayed()
 
         // RAVENCLAW
-        val ravenclaw = MockData.mockHouses.first { it.name == HouseName.RAVENCLAW }
+        val ravenclaw = MockDataFromCPP.getMockHouses().first { it.name == HouseName.RAVENCLAW }
         onNodeWithContentDescription(ravenclaw.name.name).assertIsDisplayed()
         onNodeWithText(ravenclaw.name.name).assertIsDisplayed()
         onNodeWithText(ravenclaw.emoji).assertIsDisplayed()
