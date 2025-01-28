@@ -332,7 +332,7 @@ namespace com::cjmobileapps::quidditchplayers {
     // #include <map>
 
     extern "C" JNIEXPORT jobject JNICALL
-    Java_com_example_Position_getAllPositions(JNIEnv *env, jobject) {
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockPositions(JNIEnv *env, jobject) {
         // Find Java HashMap class and its constructor
         jclass hashMapClass = env->FindClass("java/util/HashMap");
         if (!hashMapClass) return nullptr;
@@ -349,7 +349,7 @@ namespace com::cjmobileapps::quidditchplayers {
         if (!hashMapPut) return nullptr;
 
         // Find the Position class and its constructor
-        jclass positionClass = env->FindClass("com/example/Position");
+        jclass positionClass = env->FindClass("com/cjmobileapps/quidditchplayersandroid/data/model/Position");
         if (!positionClass) return nullptr;
 
         jmethodID positionConstructor = env->GetMethodID(positionClass, "<init>", "(Ljava/lang/String;)V");

@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 3.22.1)
 project("quidditchplayersandroid")
 
 # Find JNI and include its directories
-find_package(JNI REQUIRED)
-include_directories(${JNI_INCLUDE_DIRS})
+#find_package(JNI REQUIRED)
+#include_directories(${JNI_INCLUDE_DIRS})
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)

@@ -65,6 +65,9 @@ namespace com::cjmobileapps::quidditchplayers {
             JNIEnv *env,
             jobject /* this */
     );
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockPositions(JNIEnv *env, jobject);
 } // namespace com::cjmobileapps::quidditchplayers
 
 #ifdef __cplusplus
