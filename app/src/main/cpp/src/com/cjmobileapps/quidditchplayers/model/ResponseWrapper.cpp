@@ -2,7 +2,9 @@
 #include "Error.h"
 #include "Status.h"
 #include <iostream> // For debugging (if needed)
+#include <map>
 #include "House.h"
+#include "Positions.h"
 
 //TODO remove this move is
 // Defining the Error class here (simple example)
@@ -61,4 +63,5 @@ template class com::cjmobileapps::quidditchplayers::model::ResponseWrapper<
     com::cjmobileapps::quidditchplayers::model::Status>;
 template class com::cjmobileapps::quidditchplayers::model::ResponseWrapper<std::vector<
     com::cjmobileapps::quidditchplayers::model::House> >;
-// template class com::cjmobileapps::quidditchplayers::model::ResponseWrapper<std::string>;
+template class com::cjmobileapps::quidditchplayers::model::ResponseWrapper<
+        std::map<int, com::cjmobileapps::quidditchplayers::model::Position>>;

@@ -84,10 +84,10 @@ namespace com::cjmobileapps::quidditchplayers::data {
     // }
 
     const model::ResponseWrapper<std::vector<model::House> > &MockData::getMockHousesResponseWrapper() {
-        //todo delete this
+        //todo delete this use this some where else
         model::Error *error = new model::Error(true, "Something went wrong!");
 
-        auto houses = getMockHouses();
+        const auto houses = getMockHouses();
 
         static const model::ResponseWrapper responseWrapperHouses(
             houses,
@@ -97,18 +97,20 @@ namespace com::cjmobileapps::quidditchplayers::data {
 
         return responseWrapperHouses;
     }
+
+    const model::ResponseWrapper<std::map<int, model::Position> > &MockData::getMockPositionsResponseWrapper() {
+        const auto positions = getMockPositions();
+
+        static const model::ResponseWrapper responseWrapperPositions(
+            positions,
+            nullptr,
+            network::HttpStatus::HTTP_OK
+        );
+
+        return responseWrapperPositions;
+    }
 }
 
-
-//const std::vector<House>& MockData::getMockHouses() {
-//    static const std::vector<House> mockHouses = {
-//        House(0, HouseName::GRYFFINDOR, "https://static.wikia.nocookie.net/harrypotter/images/9/98/Gryffindor.jpg/revision/latest", "🦁"),
-//        House(1, HouseName::SLYTHERIN, "https://static.wikia.nocookie.net/harrypotter/images/6/6e/Slytherin.jpg/revision/latest", "🐍"),
-//        House(2, HouseName::RAVENCLAW, "https://static.wikia.nocookie.net/harrypotter/images/3/3c/RavenclawCrest.jpg/revision/latest", "🦅"),
-//        House(3, HouseName::HUFFLEPUFF, "https://static.wikia.nocookie.net/harrypotter/images/e/e4/Hufflepuff.jpg/revision/latest", "🦡")
-//    };
-//    return mockHouses;
-//}
 
 //// Access the singleton instance and call its method
 //Singleton& instance = Singleton::getInstance();

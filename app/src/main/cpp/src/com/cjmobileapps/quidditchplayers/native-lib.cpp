@@ -3,6 +3,7 @@
 #include <jni.h>
 #include <syslog.h>
 
+#include "HttpStatus.h"
 #include "MockData.h"
 #include "Positions.h"
 #include "model/Status.h"
@@ -377,4 +378,52 @@ namespace com::cjmobileapps::quidditchplayers {
 
         return hashMap;
     }
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockPositionsResponseWrapper(
+        JNIEnv *env,
+        jobject thisJobject
+    ) {
+        // Create a Status object in C++
+        //todo this is wrong delete
+
+        // Convert C++ Status to Java/Kotlin equivalent
+        const jobject positionsObject = Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockPositions(env, thisJobject);
+
+        //todo user this later to return error
+        // Create an Error object for ResponseWrapper
+        //        jclass errorClass = env->FindClass(
+        //                "com/cjmobileapps/quidditchplayersandroid/data/model/Error");
+        //        jmethodID errorConstructor = env->GetMethodID(errorClass, "<init>",
+        //                                                      "(ZLjava/lang/String;)V");
+        //
+        //        jboolean isError = JNI_FALSE; // Example: No error
+        //        jstring errorMessage = env->NewStringUTF(""); // Empty error message
+        //
+        //        jobject errorObject = env->NewObject(errorClass, errorConstructor, isError, errorMessage);
+
+        // Create a ResponseWrapper object
+        jclass responseWrapperClass = env->FindClass(
+            "com/cjmobileapps/quidditchplayersandroid/data/model/ResponseWrapper");
+        jmethodID responseWrapperConstructor = env->GetMethodID(
+            responseWrapperClass, "<init>",
+            "(Ljava/lang/Object;Lcom/cjmobileapps/quidditchplayersandroid/data/model/Error;I)V"
+        );
+
+        jint statusCode = network::HttpStatus::HTTP_OK;
+
+        jobject errorObject = nullptr;
+
+        jobject responseWrapperObject = env->NewObject(
+            responseWrapperClass,
+            responseWrapperConstructor,
+            positionsObject,
+            errorObject,
+            statusCode
+        );
+
+        return responseWrapperObject;
+    }
+
+    // static const model::ResponseWrapper<std::map<int, model::Position> > &mockPositionsResponseWrapper();
 }

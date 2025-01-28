@@ -30,4 +30,6 @@ object MockDataFromCPP {
     external fun getMockHousesResponseWrapper(): ResponseWrapper<List<House>>
 
     external fun getMockPositions(): Map<Int, Position>
+
+    external fun getMockPositionsResponseWrapper(): ResponseWrapper<Map<Int, Position>>
 }

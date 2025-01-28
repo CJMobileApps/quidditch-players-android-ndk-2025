@@ -20,6 +20,8 @@ namespace com::cjmobileapps::quidditchplayers::data {
         static const std::vector<model::House> &getMockHouses();
 
         static const std::map<int, model::Position> &getMockPositions();
+
+        static const model::ResponseWrapper<std::map<int, model::Position> > &getMockPositionsResponseWrapper();
     };
 }
 
