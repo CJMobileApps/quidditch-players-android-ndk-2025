@@ -4,6 +4,7 @@
 #include "House.h"
 #include <iostream>
 #include "HttpStatus.h"
+#include "Positions.h"
 //#include "../network/HttpStatus.h"
 
 
@@ -57,6 +58,18 @@ namespace com::cjmobileapps::quidditchplayers::data {
         return mockHouses;
     }
 
+
+    const std::map<int, model::Position> &MockData::getMockPositions() {
+        static std::map<int, model::Position> mockPositions = {
+            {model::CHASER, model::Position("Chaser")},
+            {model::BEATER, model::Position("Beater")},
+            {model::KEEPER, model::Position("Keeper")},
+            {model::SEEKER, model::Position("Seeker")}
+        };
+
+        return mockPositions;
+    }
+
     // static const model::ResponseWrapper<std::vector<model::House>> getMockHousesResponseWrapper() {
     //
     //     com::cjmobileapps::quidditchplayers::model::Error* error = new com::cjmobileapps::quidditchplayers::model::Error(true, "Something went wrong!");
@@ -70,9 +83,9 @@ namespace com::cjmobileapps::quidditchplayers::data {
     //     return responseWrapperHouses;
     // }
 
-    const model::ResponseWrapper<std::vector<model::House>> &MockData::getMockHousesResponseWrapper() {
+    const model::ResponseWrapper<std::vector<model::House> > &MockData::getMockHousesResponseWrapper() {
         //todo delete this
-        model::Error* error = new model::Error(true, "Something went wrong!");
+        model::Error *error = new model::Error(true, "Something went wrong!");
 
         auto houses = getMockHouses();
 
@@ -84,9 +97,6 @@ namespace com::cjmobileapps::quidditchplayers::data {
 
         return responseWrapperHouses;
     }
-
-
-
 }
 
 
