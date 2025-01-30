@@ -40,7 +40,7 @@ class HousesUiTest {
                 val player =
                     MockData.ravenclawTeam()
                         .first()
-                        .toPlayerEntity(MockData.mockPositions)
+                        .toPlayerEntity(MockDataFromCPP.getMockPositions())
                         .toPlayerState()
 
                 verifyHouseScreen()
