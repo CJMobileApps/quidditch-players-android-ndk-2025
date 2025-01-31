@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "HttpStatus.h"
+#include "Positions.h"
 #include "src/com/cjmobileapps/quidditchplayers/native-lib.h"
 #include "src/com/cjmobileapps/quidditchplayers/data/MockData.h"
 #include "src/com/cjmobileapps/quidditchplayers/model/Error.h"
@@ -73,5 +74,11 @@ int main() {
     // std::cout << "getMockHousesResponseWrapper " << mockHousesResponseWrapper.data << std::endl;
 
 
+    const auto& positions = com::cjmobileapps::quidditchplayers::data::MockData::getMockPositions();
+
+    for (const auto& [key, position] : positions) {
+        // Access key and position.positionName
+        std::cout << "Position Name: " << position.positionName << std::endl;
+    }
     return 0;
 }

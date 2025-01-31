@@ -1,20 +1,24 @@
 package com.cjmobileapps.quidditchplayersandroid.data.datasource
 
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cjmobileapps.quidditchplayersandroid.data.MockData
+import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.network.QuidditchPlayersApi
-import com.cjmobileapps.quidditchplayersandroid.testutil.BaseTest
+import com.cjmobileapps.quidditchplayersandroid.testutil.BaseAndroidTest
 import com.cjmobileapps.quidditchplayersandroid.util.TestCoroutineDispatchers
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
-import org.mockito.Mock
-import org.mockito.Mockito
+import org.junit.Test
+import org.junit.runner.RunWith
 
-class QuidditchPlayersApiDataSourceTest : BaseTest() {
+@RunWith(AndroidJUnit4::class)
+class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
     private lateinit var quidditchPlayersApiDataSource: QuidditchPlayersApiDataSource
 
-    @Mock
+    @MockK
     lateinit var mockQuidditchPlayersApi: QuidditchPlayersApi
 
     private fun setupQuidditchPlayersApiDataSource() {
@@ -26,99 +30,89 @@ class QuidditchPlayersApiDataSourceTest : BaseTest() {
     }
 
     @Test
-    fun `houses happy success flow`() =
+    fun housesHappySuccessFlow() =
         runTest {
             // when
-            Mockito.`when`(mockQuidditchPlayersApi.getAllHouses()).thenReturn(MockData.mockHousesDeferredResponseSuccess)
+            coEvery { mockQuidditchPlayersApi.getAllHouses() } returns MockData.mockHousesDeferredResponseSuccess
 
             // then
             setupQuidditchPlayersApiDataSource()
             val houses = quidditchPlayersApiDataSource.getAllHouses()
 
             // verify
-            Assertions.assertEquals(
-                MockData.mockHousesResponseWrapper,
+            assertEquals(
+                MockDataFromCPP.getMockHousesResponseWrapper(),
                 houses,
             )
         }
 
     @Test
-    fun `get players by house success flow`() =
+    fun getPlayersByHouseSuccessFlow() =
         runTest {
             // when
-            Mockito.`when`(mockQuidditchPlayersApi.getPlayersByHouse(houseName = HouseName.RAVENCLAW.name))
-                .thenReturn(
-                    MockData.mockRavenclawPlayersDeferredResponseSuccess,
-                )
+            coEvery { mockQuidditchPlayersApi.getPlayersByHouse(houseName = HouseName.RAVENCLAW.name) } returns MockData.mockRavenclawPlayersDeferredResponseSuccess
 
             // then
             setupQuidditchPlayersApiDataSource()
             val players = quidditchPlayersApiDataSource.getPlayersByHouse(HouseName.RAVENCLAW.name)
 
             // verify
-            Assertions.assertEquals(
+            assertEquals(
                 MockData.mockRavenclawPlayersResponseWrapper,
                 players,
             )
         }
 
     @Test
-    fun`fetch players and positions success flow`() =
+    fun fetchPlayersAndPositionsSuccessFlow() =
         runTest {
             // when
-            Mockito.`when`(mockQuidditchPlayersApi.getPlayersByHouse(houseName = HouseName.RAVENCLAW.name))
-                .thenReturn(
-                    MockData.mockRavenclawPlayersDeferredResponseSuccess,
-                )
-            Mockito.`when`(mockQuidditchPlayersApi.getPositions()).thenReturn(MockData.mockPositionsDeferredResponseSuccess)
+            coEvery { mockQuidditchPlayersApi.getPlayersByHouse(houseName = HouseName.RAVENCLAW.name) } returns MockData.mockRavenclawPlayersDeferredResponseSuccess
+            coEvery { mockQuidditchPlayersApi.getPositions() } returns MockData.mockPositionsDeferredResponseSuccess
 
             // then
             setupQuidditchPlayersApiDataSource()
             val playersAndPositions = quidditchPlayersApiDataSource.fetchPlayersAndPositions(HouseName.RAVENCLAW.name)
 
             // verify
-            Assertions.assertEquals(
+            assertEquals(
                 MockData.mockRavenclawPlayersAndPositionsResponseWrappers,
                 playersAndPositions,
             )
         }
 
     @Test
-    fun `fetch status by house name success flow`() =
+    fun fetchStatusByHouseNameSuccessFlow() =
         runTest {
             // when
-            Mockito.`when`(
-                mockQuidditchPlayersApi.getStatusByHouseName(houseName = HouseName.RAVENCLAW.name),
-            ).thenReturn(MockData.mockStatusDeferredResponseSuccess)
+            coEvery { mockQuidditchPlayersApi.getStatusByHouseName(houseName = HouseName.RAVENCLAW.name) } returns MockData.mockStatusDeferredResponseSuccess
 
             // then
             setupQuidditchPlayersApiDataSource()
             val status = quidditchPlayersApiDataSource.fetchStatusByHouseName(houseName = HouseName.RAVENCLAW.name)
 
             // verify
-            Assertions.assertEquals(
+            assertEquals(
                 MockData.mockStatusResponseWrapper,
                 status,
             )
         }
 
     @Test
-    fun `fetch status by player id success flow`() =
+    fun fetchStatusByPlayerIdSuccessFlow() =
         runTest {
             // given
             val playerId = MockData.ravenclawTeam().first().id.toString()
 
             // when
-            Mockito.`when`(
-                mockQuidditchPlayersApi.fetchStatusByPlayerId(playerId = playerId),
-            ).thenReturn(MockData.mockStatusDeferredResponseSuccess)
+            coEvery { mockQuidditchPlayersApi.fetchStatusByPlayerId(playerId = playerId) } returns MockData.mockStatusDeferredResponseSuccess
 
             // then
             setupQuidditchPlayersApiDataSource()
             val status = quidditchPlayersApiDataSource.fetchStatusByPlayerId(playerId = playerId)
 
             // verify
-            Assertions.assertEquals(
+            assertEquals(
                 MockData.mockStatusResponseWrapper,
                 status,
             )

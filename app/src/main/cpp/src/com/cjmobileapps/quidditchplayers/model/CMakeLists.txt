@@ -19,6 +19,8 @@ add_library(quidditchplayers-cpp-models SHARED
         Error.h
         House.cpp
         House.h
+        Positions.cpp
+        Positions.h
 )
 
 # Optionally include directories for this target (if needed by parent)
