@@ -240,35 +240,19 @@ namespace com::cjmobileapps::quidditchplayers {
 
         // Populate the ArrayList with House objects
         for (const auto &house: mockHouses) {
-            // Convert C++ HouseName to Kotlin's enum HouseName
-            const char *houseNameStr = nullptr;
-            switch (house.getName()) {
-                case model::HouseName::GRYFFINDOR:
-                    houseNameStr = "GRYFFINDOR";
-                    break;
-                case model::HouseName::SLYTHERIN:
-                    houseNameStr = "SLYTHERIN";
-                    break;
-                case model::HouseName::RAVENCLAW:
-                    houseNameStr = "RAVENCLAW";
-                    break;
-                case model::HouseName::HUFFLEPUFF:
-                    houseNameStr = "HUFFLEPUFF";
-                    break;
-                default:
-                    houseNameStr = "UNKNOWN";
-                    break;
-            }
+            auto houseNameStr = convertHouseNameToString(house.getName());
 
             jobject houseName = env->CallStaticObjectMethod(houseNameClass, houseNameValueOf,
-                                                            env->NewStringUTF(houseNameStr));
+                                                            env->NewStringUTF(houseNameStr.c_str()));
 
             // Create a House object
-            jobject kotlinHouse = env->NewObject(houseClass, houseConstructor,
-                                                 house.getHouseId(),
-                                                 houseName,
-                                                 env->NewStringUTF(house.getImageUrl().c_str()),
-                                                 env->NewStringUTF(house.getEmoji().c_str()));
+            jobject kotlinHouse = env->NewObject(
+                houseClass,
+                houseConstructor,
+                house.getHouseId(),
+                houseName,
+                env->NewStringUTF(house.getImageUrl().c_str()),
+                env->NewStringUTF(house.getEmoji().c_str()));
 
             // Add the House object to the ArrayList
             env->CallBooleanMethod(arrayList, arrayListAdd, kotlinHouse);
@@ -277,6 +261,28 @@ namespace com::cjmobileapps::quidditchplayers {
         return arrayList;
     }
     } /* end extern "C" */
+
+    std::string convertHouseNameToString(model::HouseName houseName) {
+        const char *houseNameStr = nullptr;
+        switch (houseName) {
+            case model::HouseName::GRYFFINDOR:
+                houseNameStr = "GRYFFINDOR";
+                break;
+            case model::HouseName::SLYTHERIN:
+                houseNameStr = "SLYTHERIN";
+                break;
+            case model::HouseName::RAVENCLAW:
+                houseNameStr = "RAVENCLAW";
+                break;
+            case model::HouseName::HUFFLEPUFF:
+                houseNameStr = "HUFFLEPUFF";
+                break;
+            default:
+                houseNameStr = "UNKNOWN";
+                break;
+        }
+        return houseNameStr;
+    }
 
 
     extern "C" JNIEXPORT jobject JNICALL
@@ -388,7 +394,8 @@ namespace com::cjmobileapps::quidditchplayers {
         //todo this is wrong delete
 
         // Convert C++ Status to Java/Kotlin equivalent
-        const jobject positionsObject = Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockPositions(env, thisJobject);
+        const jobject positionsObject =
+                Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockPositions(env, thisJobject);
 
         //todo user this later to return error
         // Create an Error object for ResponseWrapper
@@ -424,6 +431,197 @@ namespace com::cjmobileapps::quidditchplayers {
 
         return responseWrapperObject;
     }
+
+
+    //    jobject convertPlayerCppToKotlinObject(
+    //        JNIEnv *env,
+    //        model::Player player
+    //    ) {
+    //        // Convert the C++ Player object to a Kotlin Player object
+    //        jclass playerClass = env->FindClass("com/cjmobileapps/quidditchplayersandroid/data/model/Player");
+    //        jmethodID playerConstructor = env->GetMethodID(
+    //            playerClass,
+    //            "<init>",
+    //            "(Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ILjava/lang/String;Lcom/cjmobileapps/quidditchplayersandroid/data/model/HouseName;)V"
+    //        );
+    //
+    //        // Convert yearsPlayed to a Java List
+    //        jclass listClass = env->FindClass("java/util/ArrayList");
+    //        jmethodID listConstructor = env->GetMethodID(listClass, "<init>", "()V");
+    //        jmethodID listAddMethod = env->GetMethodID(listClass, "add", "(Ljava/lang/Object;)Z");
+    //        jobject yearsPlayedList = env->NewObject(listClass, listConstructor);
+    //
+    //        for (int year: player.getYearsPlayed()) {
+    //            jint yearInt = year;
+    //            env->CallBooleanMethod(yearsPlayedList, listAddMethod, year);
+    //        }
+    //
+    //        // Create the Kotlin Player object
+    //        jobject kotlinPlayer = env->NewObject(
+    //            playerClass,
+    //            playerConstructor,
+    //            env->NewStringUTF(player.getId().c_str()),
+    //            env->NewStringUTF(player.getFirstName().c_str()),
+    //            env->NewStringUTF(player.getLastName().c_str()),
+    //            yearsPlayedList,
+    //            env->NewStringUTF(player.getFavoriteSubject().c_str()),
+    //            player.getPosition(),
+    //            env->NewStringUTF(player.getImageUrl().c_str()),
+    //            player.getHouse()
+    //        );
+    //
+    //        return kotlinPlayer;
+    //    }
+
+    jobject convertPlayerCppToKotlinObject(JNIEnv *env, model::Player player) {
+        // Find the Kotlin Player class
+        jclass playerClass = env->FindClass("com/cjmobileapps/quidditchplayersandroid/data/model/Player");
+        if (playerClass == nullptr) {
+            return nullptr; // Class not found
+        }
+
+        // Get the Player constructor method ID
+        jmethodID playerConstructor = env->GetMethodID(
+            playerClass,
+            "<init>",
+            "(Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ILjava/lang/String;Lcom/cjmobileapps/quidditchplayersandroid/data/model/HouseName;)V"
+        );
+        if (playerConstructor == nullptr) {
+            return nullptr; // Constructor not found
+        }
+
+        // Convert UUID from std::string to java.util.UUID
+        jclass uuidClass = env->FindClass("java/util/UUID");
+        if (uuidClass == nullptr) {
+            return nullptr; // UUID class not found
+        }
+        jmethodID fromStringMethod = env->GetStaticMethodID(uuidClass, "fromString",
+                                                            "(Ljava/lang/String;)Ljava/util/UUID;");
+        if (fromStringMethod == nullptr) {
+            return nullptr; // Method not found
+        }
+        jstring uuidString = env->NewStringUTF(player.getId().c_str());
+        jobject uuidObject = env->CallStaticObjectMethod(uuidClass, fromStringMethod, uuidString);
+
+        // Convert yearsPlayed to a Java List
+        jclass listClass = env->FindClass("java/util/ArrayList");
+        if (listClass == nullptr) {
+            return nullptr; // ArrayList class not found
+        }
+        jmethodID listConstructor = env->GetMethodID(listClass, "<init>", "()V");
+        jmethodID listAddMethod = env->GetMethodID(listClass, "add", "(Ljava/lang/Object;)Z");
+        jobject yearsPlayedList = env->NewObject(listClass, listConstructor);
+
+        for (int year: player.getYearsPlayed()) {
+            jint yearInt = year;
+            // Find the java.lang.Integer class
+            jclass integerClass = env->FindClass("java/lang/Integer");
+            if (integerClass == nullptr) {
+                return nullptr; // Integer class not found
+            }
+
+            // Get the Integer constructor method ID
+            jmethodID integerConstructor = env->GetMethodID(integerClass, "<init>", "(I)V");
+            if (integerConstructor == nullptr) {
+                return nullptr; // Integer constructor not found
+            }
+
+            // Create a java.lang.Integer object
+            jobject yearInteger = env->NewObject(integerClass, integerConstructor, year);
+            if (yearInteger == nullptr) {
+                return nullptr; // Failed to create Integer object
+            }
+
+            // Add the Integer object to the list
+            env->CallBooleanMethod(yearsPlayedList, listAddMethod, yearInteger);
+            env->DeleteLocalRef(yearInteger);
+        }
+
+        // Convert HouseName from C++ to Kotlin
+        jclass houseNameClass = env->FindClass("com/cjmobileapps/quidditchplayersandroid/data/model/HouseName");
+        if (houseNameClass == nullptr) {
+            return nullptr; // HouseName class not found
+        }
+        jmethodID houseNameValueOfMethod = env->GetStaticMethodID(houseNameClass, "valueOf",
+                                                                  "(Ljava/lang/String;)Lcom/cjmobileapps/quidditchplayersandroid/data/model/HouseName;");
+        if (houseNameValueOfMethod == nullptr) {
+            return nullptr; // Method not found
+        }
+
+        auto houseNameStr = convertHouseNameToString(player.getHouse());
+
+        jstring houseNameString = env->NewStringUTF(houseNameStr.c_str());
+        jobject houseNameObject = env->CallStaticObjectMethod(houseNameClass, houseNameValueOfMethod, houseNameString);
+
+        // Create the Kotlin Player object
+        jobject kotlinPlayer = env->NewObject(
+            playerClass,
+            playerConstructor,
+            uuidObject, // UUID
+            env->NewStringUTF(player.getFirstName().c_str()), // firstName
+            env->NewStringUTF(player.getLastName().c_str()), // lastName
+            yearsPlayedList, // yearsPlayed
+            env->NewStringUTF(player.getFavoriteSubject().c_str()), // favoriteSubject
+            player.getPosition(), // position
+            env->NewStringUTF(player.getImageUrl().c_str()), // imageUrl
+            houseNameObject // houseName
+        );
+
+        return kotlinPlayer;
+    }
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockAllQuidditchTeams(
+        JNIEnv *env,
+        jobject /* this */
+    ) {
+        auto players = data::MockData::getMockAllQuidditchTeams();
+
+        // Get the size of the array
+        auto length = players.size();
+
+        // Create a Java List to hold the players
+        jclass listClass = env->FindClass("java/util/ArrayList");
+        jmethodID listConstructor = env->GetMethodID(listClass, "<init>", "()V");
+        jmethodID listAddMethod = env->GetMethodID(listClass, "add", "(Ljava/lang/Object;)Z");
+        jobject playerList = env->NewObject(listClass, listConstructor);
+
+        for (const auto &player: players) {
+            jobject playerObj = convertPlayerCppToKotlinObject(env, player);
+            env->CallBooleanMethod(playerList, listAddMethod, playerObj);
+        }
+
+        return playerList;
+    }
+
+
+    //
+    // todo undo this
+    //  extern "C"
+    //  JNIEXPORT jobject JNICALL
+    //  Java_com_cjmobileapps_quidditchplayers_model_PlayerNative_getPlayers(
+    //      JNIEnv *env,
+    //      jobject /* this */,
+    //      jobjectArray playersArray
+    //  ) {
+    //      // Get the size of the array
+    //      jsize length = env->GetArrayLength(playersArray);
+    //
+    //      // Create a Java List to hold the players
+    //      jclass listClass = env->FindClass("java/util/ArrayList");
+    //      jmethodID listConstructor = env->GetMethodID(listClass, "<init>", "()V");
+    //      jmethodID listAddMethod = env->GetMethodID(listClass, "add", "(Ljava/lang/Object;)Z");
+    //      jobject playerList = env->NewObject(listClass, listConstructor);
+    //
+    //      // Iterate over the array and add each player to the list
+    //      for (jsize i = 0; i < length; i++) {
+    //          jobject playerObj = env->GetObjectArrayElement(playersArray, i);
+    //          env->CallBooleanMethod(playerList, listAddMethod, playerObj);
+    //      }
+    //
+    //      return playerList;
+    //  }
+
 
     // static const model::ResponseWrapper<std::map<int, model::Position> > &mockPositionsResponseWrapper();
 }

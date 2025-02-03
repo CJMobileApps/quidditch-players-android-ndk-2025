@@ -1,6 +1,7 @@
 package com.cjmobileapps.quidditchplayersandroid.data
 
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
+import com.cjmobileapps.quidditchplayersandroid.data.model.Player
 import com.cjmobileapps.quidditchplayersandroid.data.model.Position
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapper
 import com.cjmobileapps.quidditchplayersandroid.data.model.Status
@@ -32,4 +33,6 @@ object MockDataFromCPP {
     external fun getMockPositions(): Map<Int, Position>
 
     external fun getMockPositionsResponseWrapper(): ResponseWrapper<Map<Int, Position>>
+
+    external fun getMockAllQuidditchTeams(): List<Player>
 }

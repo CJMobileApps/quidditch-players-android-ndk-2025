@@ -28,7 +28,7 @@ int main() {
     // std::cout << "Player ID: " << status.playerId << std::endl;
     // std::cout << "Status: " << status.status << std::endl;
     // Create an Error object
-    com::cjmobileapps::quidditchplayers::model::Error* error = new com::cjmobileapps::quidditchplayers::model::Error(true, "Something went wrong!");
+    com::cjmobileapps::quidditchplayers::model::Error *error = new com::cjmobileapps::quidditchplayers::model::Error(true, "Something went wrong!");
 
     //Create a ResponseWrapper with an integer and an error
     com::cjmobileapps::quidditchplayers::model::ResponseWrapper response(42, error, 400);  // Status code 400 (Bad Request)
@@ -64,7 +64,7 @@ int main() {
     std::cout << "HttpOk " << com::cjmobileapps::quidditchplayers::network::HttpStatus::HTTP_OK << std::endl;
 
     auto mockHousesResponseWrapper = com::cjmobileapps::quidditchplayers::data::MockData::getMockHousesResponseWrapper();
-    for (const auto& house : mockHousesResponseWrapper.data) {
+    for (const auto &house: mockHousesResponseWrapper.data) {
         std::cout << "House ID: " << house.getHouseId() << std::endl;
         // std::cout << "House Name: " << house.getName() << std::endl;
         std::cout << "House Image URL: " << house.getImageUrl() << std::endl;
@@ -74,11 +74,26 @@ int main() {
     // std::cout << "getMockHousesResponseWrapper " << mockHousesResponseWrapper.data << std::endl;
 
 
-    const auto& positions = com::cjmobileapps::quidditchplayers::data::MockData::getMockPositions();
+    const auto &positions = com::cjmobileapps::quidditchplayers::data::MockData::getMockPositions();
 
-    for (const auto& [key, position] : positions) {
+    for (const auto &[key, position]: positions) {
         // Access key and position.positionName
         std::cout << "Position Name: " << position.positionName << std::endl;
     }
+
+    std::vector<com::cjmobileapps::quidditchplayers::model::Player> allTeams = com::cjmobileapps::quidditchplayers::data::MockData::getMockAllQuidditchTeams();
+
+    std::cout << "Total number of players: " << allTeams.size() << std::endl;
+
+    // Print or process the players in allTeams
+    for (const auto &player: allTeams) {
+        std::cout << player.getFirstName() << " " << player.getLastName() << " - " << player.getPosition() << std::endl;
+    }
+
+    // com::cjmobileapps::quidditchplayers::Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockAllQuidditchTeams(
+    //     JNIEnv *env,
+    //     jobject /* this */
+    // );
+
     return 0;
 }
