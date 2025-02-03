@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.22.1)
 # Declare the project name
 project("quidditchplayersandroid")
 
+# TODO UNDO for testing with CLion
 # Find JNI and include its directories
 #find_package(JNI REQUIRED)
 #include_directories(${JNI_INCLUDE_DIRS})

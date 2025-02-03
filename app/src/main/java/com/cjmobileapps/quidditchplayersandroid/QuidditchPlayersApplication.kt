@@ -33,5 +33,7 @@ class QuidditchPlayersApplication : Application() {
         MockDataFromCPP.getMockAllQuidditchTeams().forEach {
             println("HERE_ " + it)
         }
+
+        println("HERE_  getMockAllQuidditchTeamsResponseWrapper(): " + MockDataFromCPP.getMockAllQuidditchTeamsResponseWrapper())
     }
 }

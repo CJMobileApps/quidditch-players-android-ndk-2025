@@ -35,4 +35,6 @@ object MockDataFromCPP {
     external fun getMockPositionsResponseWrapper(): ResponseWrapper<Map<Int, Position>>
 
     external fun getMockAllQuidditchTeams(): List<Player>
+
+    external fun getMockAllQuidditchTeamsResponseWrapper(): ResponseWrapper<List<Player>>
 }
