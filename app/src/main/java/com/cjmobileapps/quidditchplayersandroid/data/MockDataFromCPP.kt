@@ -187,8 +187,6 @@ object MockDataFromCPP {
             ),
         )
 
-
-
     /*** positions ***/
 
     private const val CHASER = 1
@@ -295,7 +293,7 @@ object MockDataFromCPP {
 
     /*** Response Wrapper Boolean ***/
 
-    val mockTrueResponseWrapper = ResponseWrapperUtil.createResponseWrapperSuccess(true)
+    external fun getMockTrueResponseWrapper(): ResponseWrapper<Boolean>
 
     val mockBooleanResponseWrapperGenericError =
         ResponseWrapperUtil.createResponseWrapperError<Boolean>(

@@ -92,7 +92,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
             // verify
             coVerify { mockQuidditchPlayersRepository.createAllHousesToDB(MockDataFromCPP.getMockHouses()) }
             assertEquals(
-                MockDataFromCPP.mockTrueResponseWrapper,
+                MockDataFromCPP.getMockTrueResponseWrapper(),
                 housesApiResponse,
             )
         }
@@ -147,7 +147,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
             // verify
             coVerify { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
             assertEquals(
-                MockDataFromCPP.mockTrueResponseWrapper,
+                MockDataFromCPP.getMockTrueResponseWrapper(),
                 playersAndPositionsApisResponse,
             )
         }
