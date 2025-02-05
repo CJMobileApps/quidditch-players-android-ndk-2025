@@ -21,10 +21,12 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.invoke
 import io.mockk.justRun
 import io.mockk.slot
+import io.mockk.unmockkAll
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.net.HttpURLConnection
@@ -45,7 +47,7 @@ class PlayerListViewModelImplTest : BaseAndroidTest() {
     private val testTimeUtil = TestTimeUtil
 
     private fun setupPlayerListViewModel() {
-        // todo go through unit test and reset testTimeUtil
+        testTimeUtil.resetTestTimeUtil()
         playerLiveViewModel =
             PlayersListViewModelImpl(
                 savedStateHandle = mockSavedStateHandle,
@@ -53,6 +55,11 @@ class PlayerListViewModelImplTest : BaseAndroidTest() {
                 timeUtil = testTimeUtil,
                 coroutineDispatchers = TestCoroutineDispatchers,
             )
+    }
+
+    @After
+    fun after() {
+        unmockkAll()
     }
 
     @Test
