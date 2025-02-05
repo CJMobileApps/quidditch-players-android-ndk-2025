@@ -29,5 +29,11 @@ class QuidditchPlayersApplication : Application() {
         println("HERE_ " + MockDataFromCPP.getMockPositions())
         println("HERE_ " + MockDataFromCPP.getMockPositionsResponseWrapper())
 
+        println("HERE_ MockDataFromCPP.getMockAllQuidditchTeams().size " + MockDataFromCPP.getMockAllQuidditchTeams().size)
+        MockDataFromCPP.getMockAllQuidditchTeams().forEach {
+            println("HERE_ " + it)
+        }
+
+        println("HERE_  getMockAllQuidditchTeamsResponseWrapper(): " + MockDataFromCPP.getMockAllQuidditchTeamsResponseWrapper())
     }
 }

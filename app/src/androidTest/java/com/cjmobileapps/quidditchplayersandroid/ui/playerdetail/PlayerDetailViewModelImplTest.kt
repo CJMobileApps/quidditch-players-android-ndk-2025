@@ -1,28 +1,29 @@
 package com.cjmobileapps.quidditchplayersandroid.ui.playerdetail
 
 import androidx.lifecycle.SavedStateHandle
-import com.cjmobileapps.quidditchplayersandroid.data.MockData
+import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
-import com.cjmobileapps.quidditchplayersandroid.testutil.BaseTest
+import com.cjmobileapps.quidditchplayersandroid.testutil.BaseAndroidTest
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModel
 import com.cjmobileapps.quidditchplayersandroid.ui.playerdetail.viewmodel.PlayerDetailViewModelImpl
 import com.cjmobileapps.quidditchplayersandroid.util.TestCoroutineDispatchers
 import com.cjmobileapps.quidditchplayersandroid.util.TestTimeUtil
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.kotlin.given
+import org.junit.Test
 
-class PlayerDetailViewModelImplTest : BaseTest() {
+class PlayerDetailViewModelImplTest : BaseAndroidTest() {
     private lateinit var playerDetailViewModel: PlayerDetailViewModel
 
-    @Mock
+    @MockK
     private lateinit var mockSavedStateHandle: SavedStateHandle
 
-    @Mock
+    @MockK
     private lateinit var mockQuidditchPlayersUseCase: QuidditchPlayersUseCase
 
     private val testTimeUtil = TestTimeUtil
@@ -39,16 +40,16 @@ class PlayerDetailViewModelImplTest : BaseTest() {
     }
 
     @Test
-    fun `fetch player happy flow`() =
+    fun fetch_player_happy_flow() =
         runTest {
             // given
-            val mockRavenPlayer = MockData.mockRavenclawPlayersEntities.toPlayersState().first()
+            val mockRavenPlayer = MockDataFromCPP.mockRavenclawPlayersEntities.toPlayersState().first()
             val mockRavenPlayerId = mockRavenPlayer.id.toString()
 
             // when
-            Mockito.`when`(mockSavedStateHandle.get<String>("playerId")).thenReturn(mockRavenPlayerId)
-            Mockito.`when`(mockQuidditchPlayersUseCase.currentPlayer).thenReturn(mockRavenPlayer)
-            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId)).thenReturn(MockData.mockStatusResponseWrapper)
+            every { mockSavedStateHandle.get<String>("playerId") } returns mockRavenPlayerId
+            every { mockQuidditchPlayersUseCase.currentPlayer } returns mockRavenPlayer
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockDataFromCPP.mockStatusResponseWrapper
 
             // then init setup
             setupPlayerDetailViewModel()
@@ -56,53 +57,53 @@ class PlayerDetailViewModelImplTest : BaseTest() {
             val snackbarState = playerDetailViewModel.getSnackbarState()
 
             // verify
-            Assertions.assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.Idle)
-            Assertions.assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
+            assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.Idle)
+            assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
             if (playerDetailState !is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState) return@runTest
             val player = playerDetailState.player
             val topBarTitle = playerDetailViewModel.getTopBarTitle()
 
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.id,
                 player?.id,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.favoriteSubject,
                 player?.favoriteSubject,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.firstName,
                 player?.firstName,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.lastName,
                 player?.lastName,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.yearsPlayed,
                 player?.yearsPlayed,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.status.value,
                 player?.status?.value,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.getFullName(),
                 topBarTitle,
             )
         }
 
     @Test
-    fun `fetch player then return status error flow`() =
+    fun fetch_player_then_return_status_error_flow() =
         runTest {
             // given
-            val mockRavenPlayer = MockData.mockRavenclawPlayersEntities.toPlayersState().first()
+            val mockRavenPlayer = MockDataFromCPP.mockRavenclawPlayersEntities.toPlayersState().first()
             val mockRavenPlayerId = mockRavenPlayer.id.toString()
 
             // when
-            Mockito.`when`(mockSavedStateHandle.get<String>("playerId")).thenReturn(mockRavenPlayerId)
-            Mockito.`when`(mockQuidditchPlayersUseCase.currentPlayer).thenReturn(mockRavenPlayer)
-            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId)).thenReturn(MockData.mockStatusResponseWrapperGenericError)
+            every { mockSavedStateHandle.get<String>("playerId") } returns mockRavenPlayerId
+            every { mockQuidditchPlayersUseCase.currentPlayer } returns mockRavenPlayer
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockDataFromCPP.mockStatusResponseWrapperGenericError
 
             // then init setup
             setupPlayerDetailViewModel()
@@ -110,55 +111,53 @@ class PlayerDetailViewModelImplTest : BaseTest() {
             val snackbarState = playerDetailViewModel.getSnackbarState()
 
             // verify
-            Assertions.assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.Idle)
-            Assertions.assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
+            assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.Idle)
+            assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
             if (playerDetailState !is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState) return@runTest
             val player = playerDetailState.player
             val topBarTitle = playerDetailViewModel.getTopBarTitle()
 
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.id,
                 player?.id,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.favoriteSubject,
                 player?.favoriteSubject,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.firstName,
                 player?.firstName,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.lastName,
                 player?.lastName,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.yearsPlayed,
                 player?.yearsPlayed,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.status.value,
                 player?.status?.value,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.getFullName(),
                 topBarTitle,
             )
         }
 
     @Test
-    fun `fetch player then throw status error flow`() =
+    fun fetch_player_then_throw_status_error_flow() =
         runTest {
             // given
-            val mockRavenPlayer = MockData.mockRavenclawPlayersEntities.toPlayersState().first()
+            val mockRavenPlayer = MockDataFromCPP.mockRavenclawPlayersEntities.toPlayersState().first()
             val mockRavenPlayerId = mockRavenPlayer.id.toString()
 
             // when
-            Mockito.`when`(mockSavedStateHandle.get<String>("playerId")).thenReturn(mockRavenPlayerId)
-            Mockito.`when`(mockQuidditchPlayersUseCase.currentPlayer).thenReturn(mockRavenPlayer)
-            given(mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId)).willAnswer {
-                throw Exception("Some error")
-            }
+            every { mockSavedStateHandle.get<String>("playerId") } returns mockRavenPlayerId
+            every { mockQuidditchPlayersUseCase.currentPlayer } returns mockRavenPlayer
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } throws RuntimeException("Some error")
 
             // then init setup
             setupPlayerDetailViewModel()
@@ -167,53 +166,53 @@ class PlayerDetailViewModelImplTest : BaseTest() {
 
             // verify
             // this assertion doesn't work not sure why
-            Assertions.assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.ShowGenericError)
-            Assertions.assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
+            assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.ShowGenericError)
+            assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
             if (playerDetailState !is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState) return@runTest
             val player = playerDetailState.player
             val topBarTitle = playerDetailViewModel.getTopBarTitle()
 
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.id,
                 player?.id,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.favoriteSubject,
                 player?.favoriteSubject,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.firstName,
                 player?.firstName,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.lastName,
                 player?.lastName,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.yearsPlayed,
                 player?.yearsPlayed,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.status.value,
                 player?.status?.value,
             )
-            Assertions.assertEquals(
+            assertEquals(
                 mockRavenPlayer.getFullName(),
                 topBarTitle,
             )
         }
 
     @Test
-    fun `throw fetching player is null flow`() =
+    fun throw_fetching_player_is_null_flow() =
         runTest {
             // given
-            val mockRavenPlayer = MockData.mockRavenclawPlayersEntities.toPlayersState().first()
+            val mockRavenPlayer = MockDataFromCPP.mockRavenclawPlayersEntities.toPlayersState().first()
             val mockRavenPlayerId = mockRavenPlayer.id.toString()
 
             // when
-            Mockito.`when`(mockSavedStateHandle.get<String>("playerId")).thenReturn(mockRavenPlayerId)
-            Mockito.`when`(mockQuidditchPlayersUseCase.currentPlayer).thenReturn(null)
-            Mockito.`when`(mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId)).thenReturn(MockData.mockStatusResponseWrapper)
+            every { mockSavedStateHandle.get<String>("playerId") } returns mockRavenPlayerId
+            every { mockQuidditchPlayersUseCase.currentPlayer } returns null
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockDataFromCPP.mockStatusResponseWrapper
 
             // then init setup
             setupPlayerDetailViewModel()
@@ -221,13 +220,13 @@ class PlayerDetailViewModelImplTest : BaseTest() {
             var snackbarState = playerDetailViewModel.getSnackbarState()
 
             // verify
-            Assertions.assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
+            assertTrue(playerDetailState is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState)
             if (playerDetailState !is PlayerDetailViewModelImpl.PlayerDetailState.PlayerDetailLoadedState) return@runTest
-            Assertions.assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.UnableToGetPlayerError)
+            assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.UnableToGetPlayerError)
 
             // then
             playerDetailViewModel.resetSnackbarState()
             snackbarState = playerDetailViewModel.getSnackbarState()
-            Assertions.assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.Idle)
+            assertTrue(snackbarState is PlayerDetailViewModelImpl.PlayerDetailSnackbarState.Idle)
         }
 }

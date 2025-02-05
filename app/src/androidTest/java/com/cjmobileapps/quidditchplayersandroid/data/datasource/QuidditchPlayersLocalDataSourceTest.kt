@@ -77,7 +77,7 @@ class QuidditchPlayersLocalDataSourceTest : BaseAndroidTest() {
             // given
             val mockGetAllPlayersEntitiesFlow: Flow<List<PlayerEntity>> =
                 flow {
-                    emit(MockData.mockPlayersEntities)
+                    emit(MockDataFromCPP.mockPlayersEntities)
                 }
             every { mockQuidditchPlayersDao.getAllPlayers() } returns mockGetAllPlayersEntitiesFlow
 
@@ -87,7 +87,7 @@ class QuidditchPlayersLocalDataSourceTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockData.mockPlayersEntities,
+                MockDataFromCPP.mockPlayersEntities,
                 players,
             )
         }
@@ -96,15 +96,15 @@ class QuidditchPlayersLocalDataSourceTest : BaseAndroidTest() {
     fun createPlayersByHouseToDbHappySuccessFlow() =
         runTest {
             // given
-            every { mockQuidditchPlayersDao.insertAllPlayers(MockData.mockPlayersEntities) } returns Unit
+            every { mockQuidditchPlayersDao.insertAllPlayers(MockDataFromCPP.mockPlayersEntities) } returns Unit
             every { mockQuidditchPlayersDao.deleteAllPlayers() } returns Unit
 
             // then
             setupQuidditchPlayersLocalDataSource()
-            quidditchPlayersLocalDataSource.createPlayersByHouseToDB(MockData.mockPlayersEntities)
+            quidditchPlayersLocalDataSource.createPlayersByHouseToDB(MockDataFromCPP.mockPlayersEntities)
 
             // verify
             verify { mockQuidditchPlayersDao.deleteAllPlayers() }
-            verify { mockQuidditchPlayersDao.insertAllPlayers(MockData.mockPlayersEntities) }
+            verify { mockQuidditchPlayersDao.insertAllPlayers(MockDataFromCPP.mockPlayersEntities) }
         }
 }

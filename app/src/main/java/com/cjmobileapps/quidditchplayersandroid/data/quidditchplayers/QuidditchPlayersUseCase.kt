@@ -74,19 +74,24 @@ class QuidditchPlayersUseCase(
         val getPlayersByHouseResponse = responseWrappers.responseWrapper1
         val getPositionsResponse = responseWrappers.responseWrapper2
 
+        println("HERE_ 0 did we get here ? ")
         getPositionsResponse
             .onSuccess { positions ->
                 getPlayersByHouseResponse
                     .onSuccess { players ->
                         responseWrapper =
                             try {
+                                println("HERE_ 1 did we get here ? ")
                                 quidditchPlayersRepository.createPlayersByHouseToDB(
                                     players.toPlayersEntities(positions),
                                 )
+                                println("HERE_ 2 did we get here ? ")
+
                                 ResponseWrapperUtil.createResponseWrapperSuccess(true)
                             } catch (e: Exception) {
                                 Timber.tag(tag)
                                     .e("quidditchPlayersRepository.createPlayersByHouseToDB() error occurred: $e \\n ${e.message}")
+                                println("HERE_ message is " + e.message)
                                 ResponseWrapperUtil.createResponseWrapperError(
                                     Error(
                                         isError = true,
