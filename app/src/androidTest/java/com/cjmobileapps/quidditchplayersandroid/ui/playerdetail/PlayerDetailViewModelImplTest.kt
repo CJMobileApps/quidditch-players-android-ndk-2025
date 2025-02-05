@@ -1,7 +1,7 @@
 package com.cjmobileapps.quidditchplayersandroid.ui.playerdetail
 
 import androidx.lifecycle.SavedStateHandle
-import com.cjmobileapps.quidditchplayersandroid.data.MockData
+import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers.QuidditchPlayersUseCase
 import com.cjmobileapps.quidditchplayersandroid.testutil.BaseAndroidTest
@@ -43,13 +43,13 @@ class PlayerDetailViewModelImplTest : BaseAndroidTest() {
     fun fetch_player_happy_flow() =
         runTest {
             // given
-            val mockRavenPlayer = MockData.mockRavenclawPlayersEntities.toPlayersState().first()
+            val mockRavenPlayer = MockDataFromCPP.mockRavenclawPlayersEntities.toPlayersState().first()
             val mockRavenPlayerId = mockRavenPlayer.id.toString()
 
             // when
             every { mockSavedStateHandle.get<String>("playerId") } returns mockRavenPlayerId
             every { mockQuidditchPlayersUseCase.currentPlayer } returns mockRavenPlayer
-            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockData.mockStatusResponseWrapper
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockDataFromCPP.mockStatusResponseWrapper
 
             // then init setup
             setupPlayerDetailViewModel()
@@ -97,13 +97,13 @@ class PlayerDetailViewModelImplTest : BaseAndroidTest() {
     fun fetch_player_then_return_status_error_flow() =
         runTest {
             // given
-            val mockRavenPlayer = MockData.mockRavenclawPlayersEntities.toPlayersState().first()
+            val mockRavenPlayer = MockDataFromCPP.mockRavenclawPlayersEntities.toPlayersState().first()
             val mockRavenPlayerId = mockRavenPlayer.id.toString()
 
             // when
             every { mockSavedStateHandle.get<String>("playerId") } returns mockRavenPlayerId
             every { mockQuidditchPlayersUseCase.currentPlayer } returns mockRavenPlayer
-            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockData.mockStatusResponseWrapperGenericError
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockDataFromCPP.mockStatusResponseWrapperGenericError
 
             // then init setup
             setupPlayerDetailViewModel()
@@ -151,7 +151,7 @@ class PlayerDetailViewModelImplTest : BaseAndroidTest() {
     fun fetch_player_then_throw_status_error_flow() =
         runTest {
             // given
-            val mockRavenPlayer = MockData.mockRavenclawPlayersEntities.toPlayersState().first()
+            val mockRavenPlayer = MockDataFromCPP.mockRavenclawPlayersEntities.toPlayersState().first()
             val mockRavenPlayerId = mockRavenPlayer.id.toString()
 
             // when
@@ -206,13 +206,13 @@ class PlayerDetailViewModelImplTest : BaseAndroidTest() {
     fun throw_fetching_player_is_null_flow() =
         runTest {
             // given
-            val mockRavenPlayer = MockData.mockRavenclawPlayersEntities.toPlayersState().first()
+            val mockRavenPlayer = MockDataFromCPP.mockRavenclawPlayersEntities.toPlayersState().first()
             val mockRavenPlayerId = mockRavenPlayer.id.toString()
 
             // when
             every { mockSavedStateHandle.get<String>("playerId") } returns mockRavenPlayerId
             every { mockQuidditchPlayersUseCase.currentPlayer } returns null
-            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockData.mockStatusResponseWrapper
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockDataFromCPP.mockStatusResponseWrapper
 
             // then init setup
             setupPlayerDetailViewModel()

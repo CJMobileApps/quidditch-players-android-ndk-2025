@@ -1,6 +1,5 @@
 package com.cjmobileapps.quidditchplayersandroid.ui.houses.viewmodel
 
-import com.cjmobileapps.quidditchplayersandroid.data.MockData
 import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
@@ -71,7 +70,7 @@ class HouseViewModelImplTest : BaseAndroidTest() {
             assertTrue(housesState is HousesViewModelImpl.HousesState.LoadingState)
 
             // when
-            coEvery { mockQuidditchPlayersUseCase.fetchHousesApi() } returns MockData.mockTrueResponseWrapper
+            coEvery { mockQuidditchPlayersUseCase.fetchHousesApi() } returns MockDataFromCPP.mockTrueResponseWrapper
             coEvery { mockQuidditchPlayersUseCase.getHousesFromDB(capture(housesResponseWrapperArgumentCaptor)) }
 
             // then
@@ -122,7 +121,7 @@ class HouseViewModelImplTest : BaseAndroidTest() {
             assertTrue((housesState is HousesViewModelImpl.HousesState.LoadingState))
 
             // when
-            coEvery { mockQuidditchPlayersUseCase.fetchHousesApi() } returns MockData.mockBooleanResponseWrapperGenericError
+            coEvery { mockQuidditchPlayersUseCase.fetchHousesApi() } returns MockDataFromCPP.mockBooleanResponseWrapperGenericError
             coEvery { mockQuidditchPlayersUseCase.getHousesFromDB(capture(housesResponseWrapperArgumentCaptor)) } returns Unit
 
             // then
@@ -162,12 +161,12 @@ class HouseViewModelImplTest : BaseAndroidTest() {
             assertTrue((housesState is HousesViewModelImpl.HousesState.LoadingState))
 
             // when
-            coEvery { mockQuidditchPlayersUseCase.fetchHousesApi() } returns MockData.mockTrueResponseWrapper
+            coEvery { mockQuidditchPlayersUseCase.fetchHousesApi() } returns MockDataFromCPP.mockTrueResponseWrapper
             coEvery { mockQuidditchPlayersUseCase.getHousesFromDB(capture(housesResponseWrapperArgumentCaptor)) } returns Unit
 
             // then
             setupHouseViewModel()
-            housesResponseWrapperArgumentCaptor.invoke(MockData.mockHousesGenericErrorResponseWrapper)
+            housesResponseWrapperArgumentCaptor.invoke(MockDataFromCPP.mockHousesGenericErrorResponseWrapper)
             housesState = housesViewModel.getState()
             var snackbarState = housesViewModel.getSnackbarState()
 

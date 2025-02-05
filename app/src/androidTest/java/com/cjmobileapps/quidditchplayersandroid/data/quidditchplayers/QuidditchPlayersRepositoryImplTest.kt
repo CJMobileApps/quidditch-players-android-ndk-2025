@@ -1,6 +1,5 @@
 package com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers
 
-import com.cjmobileapps.quidditchplayersandroid.data.MockData
 import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import com.cjmobileapps.quidditchplayersandroid.data.datasource.QuidditchPlayersApiDataSource
 import com.cjmobileapps.quidditchplayersandroid.data.datasource.QuidditchPlayersLocalDataSource
@@ -91,7 +90,7 @@ class QuidditchPlayersRepositoryImplTest : BaseAndroidTest() {
     fun getPlayersByHouseHappySuccessFlow() =
         runTest {
             // given
-            coEvery { mockQuidditchPlayersApiDataSource.getPlayersByHouse(HouseName.RAVENCLAW.name) } returns MockData.mockRavenclawPlayersResponseWrapper
+            coEvery { mockQuidditchPlayersApiDataSource.getPlayersByHouse(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockRavenclawPlayersResponseWrapper
 
             // then
             setupQuidditchPlayersRepositoryImpl()
@@ -99,7 +98,7 @@ class QuidditchPlayersRepositoryImplTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockData.mockRavenclawPlayersResponseWrapper,
+                MockDataFromCPP.mockRavenclawPlayersResponseWrapper,
                 players,
             )
         }
@@ -160,7 +159,7 @@ class QuidditchPlayersRepositoryImplTest : BaseAndroidTest() {
     fun fetchStatusByPlayerId_happy_success_flow() =
         runTest {
             // given
-            val playerId = MockData.ravenclawTeam().first().id.toString()
+            val playerId = MockDataFromCPP.ravenclawTeam().first().id.toString()
 
             // when
             coEvery { mockQuidditchPlayersApiDataSource.fetchStatusByPlayerId(playerId) } returns MockDataFromCPP.getResponseWrapperMockStatus()

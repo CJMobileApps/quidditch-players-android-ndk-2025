@@ -38,7 +38,7 @@ class HousesUiTest {
                 // given
                 // Ravenclaw player
                 val player =
-                    MockData.ravenclawTeam()
+                    MockDataFromCPP.ravenclawTeam()
                         .first()
                         .toPlayerEntity(MockDataFromCPP.getMockPositions())
                         .toPlayerState()

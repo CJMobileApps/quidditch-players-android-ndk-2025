@@ -1,7 +1,6 @@
 package com.cjmobileapps.quidditchplayersandroid.data.datasource
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.cjmobileapps.quidditchplayersandroid.data.MockData
 import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.network.QuidditchPlayersApi
@@ -33,7 +32,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
     fun housesHappySuccessFlow() =
         runTest {
             // when
-            coEvery { mockQuidditchPlayersApi.getAllHouses() } returns MockData.mockHousesDeferredResponseSuccess
+            coEvery { mockQuidditchPlayersApi.getAllHouses() } returns MockDataFromCPP.mockHousesDeferredResponseSuccess
 
             // then
             setupQuidditchPlayersApiDataSource()
@@ -50,7 +49,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
     fun getPlayersByHouseSuccessFlow() =
         runTest {
             // when
-            coEvery { mockQuidditchPlayersApi.getPlayersByHouse(houseName = HouseName.RAVENCLAW.name) } returns MockData.mockRavenclawPlayersDeferredResponseSuccess
+            coEvery { mockQuidditchPlayersApi.getPlayersByHouse(houseName = HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockRavenclawPlayersDeferredResponseSuccess
 
             // then
             setupQuidditchPlayersApiDataSource()
@@ -58,7 +57,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockData.mockRavenclawPlayersResponseWrapper,
+                MockDataFromCPP.mockRavenclawPlayersResponseWrapper,
                 players,
             )
         }
@@ -67,8 +66,8 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
     fun fetchPlayersAndPositionsSuccessFlow() =
         runTest {
             // when
-            coEvery { mockQuidditchPlayersApi.getPlayersByHouse(houseName = HouseName.RAVENCLAW.name) } returns MockData.mockRavenclawPlayersDeferredResponseSuccess
-            coEvery { mockQuidditchPlayersApi.getPositions() } returns MockData.mockPositionsDeferredResponseSuccess
+            coEvery { mockQuidditchPlayersApi.getPlayersByHouse(houseName = HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockRavenclawPlayersDeferredResponseSuccess
+            coEvery { mockQuidditchPlayersApi.getPositions() } returns MockDataFromCPP.mockPositionsDeferredResponseSuccess
 
             // then
             setupQuidditchPlayersApiDataSource()
@@ -76,7 +75,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockData.mockRavenclawPlayersAndPositionsResponseWrappers,
+                MockDataFromCPP.mockRavenclawPlayersAndPositionsResponseWrappers,
                 playersAndPositions,
             )
         }
@@ -85,7 +84,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
     fun fetchStatusByHouseNameSuccessFlow() =
         runTest {
             // when
-            coEvery { mockQuidditchPlayersApi.getStatusByHouseName(houseName = HouseName.RAVENCLAW.name) } returns MockData.mockStatusDeferredResponseSuccess
+            coEvery { mockQuidditchPlayersApi.getStatusByHouseName(houseName = HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockStatusDeferredResponseSuccess
 
             // then
             setupQuidditchPlayersApiDataSource()
@@ -93,7 +92,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockData.mockStatusResponseWrapper,
+                MockDataFromCPP.mockStatusResponseWrapper,
                 status,
             )
         }
@@ -102,10 +101,10 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
     fun fetchStatusByPlayerIdSuccessFlow() =
         runTest {
             // given
-            val playerId = MockData.ravenclawTeam().first().id.toString()
+            val playerId = MockDataFromCPP.ravenclawTeam().first().id.toString()
 
             // when
-            coEvery { mockQuidditchPlayersApi.fetchStatusByPlayerId(playerId = playerId) } returns MockData.mockStatusDeferredResponseSuccess
+            coEvery { mockQuidditchPlayersApi.fetchStatusByPlayerId(playerId = playerId) } returns MockDataFromCPP.mockStatusDeferredResponseSuccess
 
             // then
             setupQuidditchPlayersApiDataSource()
@@ -113,7 +112,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockData.mockStatusResponseWrapper,
+                MockDataFromCPP.mockStatusResponseWrapper,
                 status,
             )
         }
