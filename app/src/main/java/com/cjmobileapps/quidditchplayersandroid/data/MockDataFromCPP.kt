@@ -1,10 +1,13 @@
 package com.cjmobileapps.quidditchplayersandroid.data
 
+import com.cjmobileapps.quidditchplayersandroid.data.MockData.mockPositions
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.data.model.Player
+import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
 import com.cjmobileapps.quidditchplayersandroid.data.model.Position
 import com.cjmobileapps.quidditchplayersandroid.data.model.ResponseWrapper
 import com.cjmobileapps.quidditchplayersandroid.data.model.Status
+import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersEntities
 
 object MockDataFromCPP {
     init {
@@ -37,4 +40,9 @@ object MockDataFromCPP {
     external fun getMockAllQuidditchTeams(): List<Player>
 
     external fun getMockAllQuidditchTeamsResponseWrapper(): ResponseWrapper<List<Player>>
+
+    /*** players entity ***/
+
+    val mockPlayersEntities: List<PlayerEntity> = getMockAllQuidditchTeams().toPlayersEntities(mockPositions)
+
 }

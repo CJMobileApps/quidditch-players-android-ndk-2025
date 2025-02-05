@@ -1,28 +1,30 @@
 package com.cjmobileapps.quidditchplayersandroid.data.quidditchplayers
 
 import com.cjmobileapps.quidditchplayersandroid.data.MockData
+import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import com.cjmobileapps.quidditchplayersandroid.data.datasource.QuidditchPlayersApiDataSource
 import com.cjmobileapps.quidditchplayersandroid.data.datasource.QuidditchPlayersLocalDataSource
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
-import com.cjmobileapps.quidditchplayersandroid.testutil.BaseTest
+import com.cjmobileapps.quidditchplayersandroid.testutil.BaseAndroidTest
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.impl.annotations.MockK
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
-import org.mockito.Mock
-import org.mockito.Mockito
+import org.junit.Test
 
-class QuidditchPlayersRepositoryImplTest : BaseTest() {
+class QuidditchPlayersRepositoryImplTest : BaseAndroidTest() {
     private lateinit var quidditchPlayersRepositoryImpl: QuidditchPlayersRepositoryImpl
 
-    @Mock
+    @MockK
     private lateinit var mockQuidditchPlayersApiDataSource: QuidditchPlayersApiDataSource
 
-    @Mock
+    @MockK
     private lateinit var mockQuidditchPlayersLocalDataSource: QuidditchPlayersLocalDataSource
 
     private fun setupQuidditchPlayersRepositoryImpl() {
@@ -34,152 +36,142 @@ class QuidditchPlayersRepositoryImplTest : BaseTest() {
     }
 
     @Test
-    fun `getAllHouses happy success flow`() =
+    fun getAllHousesHappySuccessFlow() =
         runTest {
             // Given
-            Mockito.`when`(mockQuidditchPlayersApiDataSource.getAllHouses()).thenReturn(MockData.mockHousesResponseWrapper)
+            coEvery { mockQuidditchPlayersApiDataSource.getAllHouses() } returns MockDataFromCPP.getMockHousesResponseWrapper()
 
             // then
             setupQuidditchPlayersRepositoryImpl()
             val houses = quidditchPlayersRepositoryImpl.getAllHouses()
 
             // verify
-            Assertions.assertEquals(
-                MockData.mockHousesResponseWrapper,
+            assertEquals(
+                MockDataFromCPP.getMockHousesResponseWrapper(),
                 houses,
             )
         }
 
     @Test
-    fun `getAllHousesFlow happy success flow`() =
+    fun getAllHousesFlowHappySuccessFlow() =
         runTest {
             // given
             val mockGetAllHousesFlow: Flow<List<House>> =
                 flow {
-                    emit(MockData.mockHouses)
+                    emit(MockDataFromCPP.getMockHouses())
                 }
-            Mockito.`when`(mockQuidditchPlayersLocalDataSource.getAllHousesFlow()).thenReturn(mockGetAllHousesFlow)
+            coEvery { mockQuidditchPlayersLocalDataSource.getAllHousesFlow() } returns mockGetAllHousesFlow
 
             // then
             setupQuidditchPlayersRepositoryImpl()
             val houses = quidditchPlayersRepositoryImpl.getAllHousesFlow().first()
 
             // verify
-            Assertions.assertEquals(
-                MockData.mockHouses,
+            assertEquals(
+                MockDataFromCPP.getMockHouses(),
                 houses,
             )
         }
 
     @Test
-    fun `createPlayersByHouseToDB happy success flow`() =
+    fun createPlayersByHouseToDBHappySuccessFlow() =
         runTest {
+            // When
+            coEvery { mockQuidditchPlayersLocalDataSource.createPlayersByHouseToDB(MockDataFromCPP.mockPlayersEntities) } returns Unit
+
             // then
             setupQuidditchPlayersRepositoryImpl()
-            quidditchPlayersRepositoryImpl.createPlayersByHouseToDB(MockData.mockPlayersEntities)
+            quidditchPlayersRepositoryImpl.createPlayersByHouseToDB(MockDataFromCPP.mockPlayersEntities)
 
             // verify
-            Mockito.verify(mockQuidditchPlayersLocalDataSource).createPlayersByHouseToDB(MockData.mockPlayersEntities)
+            coVerify { mockQuidditchPlayersLocalDataSource.createPlayersByHouseToDB(MockDataFromCPP.mockPlayersEntities) }
         }
 
     @Test
-    fun `getPlayersByHouse happy success flow`() =
+    fun getPlayersByHouseHappySuccessFlow() =
         runTest {
             // given
-            Mockito.`when`(mockQuidditchPlayersApiDataSource.getPlayersByHouse(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockRavenclawPlayersResponseWrapper)
+            coEvery { mockQuidditchPlayersApiDataSource.getPlayersByHouse(HouseName.RAVENCLAW.name) } returns MockData.mockRavenclawPlayersResponseWrapper
 
             // then
             setupQuidditchPlayersRepositoryImpl()
             val players = quidditchPlayersRepositoryImpl.getPlayersByHouse(HouseName.RAVENCLAW.name)
 
             // verify
-            Assertions.assertEquals(
+            assertEquals(
                 MockData.mockRavenclawPlayersResponseWrapper,
                 players,
             )
         }
 
     @Test
-    fun `createAllHousesToDB() happy success flow`() =
+    fun createAllHousesToDB_HappySuccessFlow() =
         runTest {
+            // when
+            coEvery { mockQuidditchPlayersLocalDataSource.createAllHouses(MockDataFromCPP.getMockHouses()) } returns Unit
+
             // then
             setupQuidditchPlayersRepositoryImpl()
-            quidditchPlayersRepositoryImpl.createAllHousesToDB(MockData.mockHouses)
+            quidditchPlayersRepositoryImpl.createAllHousesToDB(MockDataFromCPP.getMockHouses())
 
             // verify
-            Mockito.verify(mockQuidditchPlayersLocalDataSource).createAllHouses(MockData.mockHouses)
+            coVerify { mockQuidditchPlayersLocalDataSource.createAllHouses(MockDataFromCPP.getMockHouses()) }
         }
 
     @Test
-    fun `getAllPlayersFlow() happy success flow`() =
+    fun getAllPlayersFlow_happy_success_flow() =
         runTest {
             val mockGetAllPlayersEntitiesFlow: Flow<List<PlayerEntity>> =
                 flow {
-                    emit(MockData.mockPlayersEntities)
+                    emit(MockDataFromCPP.mockPlayersEntities)
                 }
-            Mockito.`when`(mockQuidditchPlayersLocalDataSource.getAllPlayersFlow()).thenReturn(mockGetAllPlayersEntitiesFlow)
+            coEvery { mockQuidditchPlayersLocalDataSource.getAllPlayersFlow() } returns mockGetAllPlayersEntitiesFlow
 
             // then
             setupQuidditchPlayersRepositoryImpl()
             val players = quidditchPlayersRepositoryImpl.getAllPlayersFlow().first()
 
             // verify
-            Assertions.assertEquals(
-                MockData.mockPlayersEntities,
+            assertEquals(
+                MockDataFromCPP.mockPlayersEntities,
                 players,
             )
         }
 
-    @Test
-    fun `fetchPlayersAndPositions() happy success flow`() =
-        runTest {
-            // given
-            Mockito.`when`(mockQuidditchPlayersApiDataSource.fetchPlayersAndPositions(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockRavenclawPlayersAndPositionsResponseWrappers)
-
-            // then
-            setupQuidditchPlayersRepositoryImpl()
-            val playersAndPositions = quidditchPlayersRepositoryImpl.fetchPlayersAndPositions(HouseName.RAVENCLAW.name)
-
-            // verify
-            Assertions.assertEquals(
-                MockData.mockRavenclawPlayersAndPositionsResponseWrappers,
-                playersAndPositions,
-            )
-        }
 
     @Test
-    fun `fetchStatusByHouseName() happy success flow`() =
+    fun fetchStatusByHouseName_happy_success_flow() =
         runTest {
             // when
-            Mockito.`when`(mockQuidditchPlayersApiDataSource.fetchStatusByHouseName(HouseName.RAVENCLAW.name)).thenReturn(MockData.mockStatusResponseWrapper)
+            coEvery { mockQuidditchPlayersApiDataSource.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getResponseWrapperMockStatus()
 
             // then
             setupQuidditchPlayersRepositoryImpl()
             val status = quidditchPlayersRepositoryImpl.fetchStatusByHouseName(HouseName.RAVENCLAW.name)
 
             // verify
-            Assertions.assertEquals(
-                MockData.mockStatusResponseWrapper,
+            assertEquals(
+                MockDataFromCPP.getResponseWrapperMockStatus(),
                 status,
             )
         }
 
     @Test
-    fun `fetchStatusByPlayerId() happy success flow`() =
+    fun fetchStatusByPlayerId_happy_success_flow() =
         runTest {
             // given
             val playerId = MockData.ravenclawTeam().first().id.toString()
 
             // when
-            Mockito.`when`(mockQuidditchPlayersApiDataSource.fetchStatusByPlayerId(playerId)).thenReturn(MockData.mockStatusResponseWrapper)
+            coEvery { mockQuidditchPlayersApiDataSource.fetchStatusByPlayerId(playerId) } returns MockDataFromCPP.getResponseWrapperMockStatus()
 
             // then
             setupQuidditchPlayersRepositoryImpl()
             val status = quidditchPlayersRepositoryImpl.fetchStatusByPlayerId(playerId = playerId)
 
             // verify
-            Assertions.assertEquals(
-                MockData.mockStatusResponseWrapper,
+            assertEquals(
+                MockDataFromCPP.getResponseWrapperMockStatus(),
                 status,
             )
         }

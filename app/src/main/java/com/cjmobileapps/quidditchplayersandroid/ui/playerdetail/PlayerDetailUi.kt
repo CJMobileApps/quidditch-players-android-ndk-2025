@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cjmobileapps.quidditchplayersandroid.R
-import com.cjmobileapps.quidditchplayersandroid.data.MockData
+import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersState
 import com.cjmobileapps.quidditchplayersandroid.ui.QuidditchPlayersTopAppBar
@@ -256,7 +256,7 @@ fun PlayerDetail(
 @Composable
 fun PlayerDetailPreview() {
     QuidditchPlayersAndroid2023Theme {
-        val players = MockData.mockPlayersEntities.toPlayersState()
+        val players = MockDataFromCPP.mockPlayersEntities.toPlayersState()
         PlayerDetail(
             modifier = Modifier,
             player = players.first(),

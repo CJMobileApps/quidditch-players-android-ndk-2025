@@ -583,8 +583,6 @@ object MockData {
 
     /*** players entity ***/
 
-    val mockPlayersEntities: List<PlayerEntity> = mockAllQuidditchTeam.toPlayersEntities(mockPositions)
-
     val mockRavenclawPlayersEntities = ravenclawTeam().toPlayersEntities(mockPositions)
 
     val mockRavenclawPlayersEntitiesResponseWrapper = ResponseWrapperUtil.createResponseWrapperSuccess(mockRavenclawPlayersEntities)
