@@ -58,6 +58,8 @@ object MockDataFromCPP {
 
     external fun getMockAllQuidditchTeamsResponseWrapper(): ResponseWrapper<List<Player>>
 
+    external fun getRavenclawTeam(): List<Player>
+
     val mockRavenclawPlayersResponseWrapper =
         ResponseWrapper(
             data = getRavenclawTeam(),
@@ -76,28 +78,18 @@ object MockDataFromCPP {
             mockRavenclawPlayersResponseSuccess,
         )
 
-    /*** all players data ***/
-
-    external fun getRavenclawTeam(): List<Player>
-
     /*** positions ***/
 
     external fun getMockPositions(): Map<Int, Position>
 
     external fun getMockPositionsResponseWrapper(): ResponseWrapper<Map<Int, Position>>
 
-    private val mockPositionsResponseWrapper =
-        ResponseWrapper(
-            data = mockPositions,
-            statusCode = HttpURLConnection.HTTP_OK,
-        )
-
     private val mockPositionsGenericErrorResponseWrapper: ResponseWrapper<Map<Int, Position>> =
         ResponseWrapperUtil.createResponseWrapperError(
             Error(isError = true, message = "Some error"),
         )
 
-    private val mockPositionsResponseSuccess = Response.success(mockPositionsResponseWrapper)
+    private val mockPositionsResponseSuccess = Response.success(getMockPositionsResponseWrapper())
 
     val mockPositionsDeferredResponseSuccess =
         CompletableDeferred(
@@ -124,13 +116,13 @@ object MockDataFromCPP {
     val mockRavenclawPlayersAndPositionsResponseWrappers =
         ResponseWrappers(
             responseWrapper1 = mockRavenclawPlayersResponseWrapper,
-            responseWrapper2 = mockPositionsResponseWrapper,
+            responseWrapper2 = getMockPositionsResponseWrapper(),
         )
 
     val mockRavenclawPlayersErrorAndPositionsResponseWrappers =
         ResponseWrappers(
             responseWrapper1 = mockRavenclawPGenericErrorResponseWrapper,
-            responseWrapper2 = mockPositionsResponseWrapper,
+            responseWrapper2 = getMockPositionsResponseWrapper(),
         )
 
     val mockRavenclawPlayersAndPositionsErrorResponseWrappers =
