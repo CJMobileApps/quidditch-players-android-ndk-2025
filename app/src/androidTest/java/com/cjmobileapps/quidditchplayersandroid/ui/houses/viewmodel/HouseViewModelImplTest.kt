@@ -166,7 +166,7 @@ class HouseViewModelImplTest : BaseAndroidTest() {
 
             // then
             setupHouseViewModel()
-            housesResponseWrapperArgumentCaptor.invoke(MockDataFromCPP.mockHousesGenericErrorResponseWrapper)
+            housesResponseWrapperArgumentCaptor.invoke(MockDataFromCPP.getMockHousesGenericErrorResponseWrapper())
             housesState = housesViewModel.getState()
             var snackbarState = housesViewModel.getSnackbarState()
 

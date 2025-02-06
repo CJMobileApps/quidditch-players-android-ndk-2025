@@ -42,10 +42,7 @@ object MockDataFromCPP {
 
     external fun getMockHousesResponseWrapper(): ResponseWrapper<List<House>>
 
-    val mockHousesGenericErrorResponseWrapper: ResponseWrapper<List<House>> =
-        ResponseWrapperUtil.createResponseWrapperError(
-            Error(isError = true, message = "Some error"),
-        )
+    external fun getMockHousesGenericErrorResponseWrapper(): ResponseWrapper<List<House>>
 
     private val mockHousesResponseSuccess: Response<ResponseWrapper<List<House>>> =
         Response.success(getMockHousesResponseWrapper())
@@ -104,8 +101,7 @@ object MockDataFromCPP {
 
     val mockRavenclawPlayersEntitiesResponseWrapperError =
         ResponseWrapperUtil.createResponseWrapperError<List<PlayerEntity>>(
-            error =
-            Error(
+            error = Error(
                 isError = true,
                 message = "Some error",
             ),
