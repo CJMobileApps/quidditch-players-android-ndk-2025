@@ -165,7 +165,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
             // verify
             coVerify(exactly = 0) { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
             assertEquals(
-                MockDataFromCPP.mockBooleanResponseWrapperGenericError,
+                MockDataFromCPP.getMockBooleanResponseWrapperGenericError(),
                 playersAndPositionsApisResponse,
             )
         }
@@ -183,7 +183,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
             // verify
             coVerify(exactly = 0) { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
             assertEquals(
-                MockDataFromCPP.mockBooleanResponseWrapperGenericError,
+                MockDataFromCPP.getMockBooleanResponseWrapperGenericError(),
                 playersAndPositionsApisResponse,
             )
         }
@@ -202,7 +202,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
             // verify
             coVerify(exactly = 1) { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
             assertEquals(
-                MockDataFromCPP.mockBooleanResponseWrapperGenericError,
+                MockDataFromCPP.getMockBooleanResponseWrapperGenericError(),
                 playersAndPositionsApisResponse,
             )
         }

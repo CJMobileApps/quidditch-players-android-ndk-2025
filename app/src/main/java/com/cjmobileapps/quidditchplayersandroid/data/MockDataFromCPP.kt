@@ -275,16 +275,9 @@ object MockDataFromCPP {
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
-    private val mockStatusResponseSuccess = Response.success(mockStatusResponseWrapper)
+    external fun getMockStatusResponseWrapperGenericError(): ResponseWrapper<Status>
 
-    val mockStatusResponseWrapperGenericError =
-        ResponseWrapperUtil.createResponseWrapperError<Status>(
-            error =
-            Error(
-                isError = true,
-                message = "Some error",
-            ),
-        )
+    private val mockStatusResponseSuccess = Response.success(mockStatusResponseWrapper)
 
     val mockStatusDeferredResponseSuccess =
         CompletableDeferred(
@@ -295,13 +288,6 @@ object MockDataFromCPP {
 
     external fun getMockTrueResponseWrapper(): ResponseWrapper<Boolean>
 
-    val mockBooleanResponseWrapperGenericError =
-        ResponseWrapperUtil.createResponseWrapperError<Boolean>(
-            error =
-            Error(
-                isError = true,
-                message = "Some error",
-            ),
-        )
+    external fun getMockBooleanResponseWrapperGenericError(): ResponseWrapper<Boolean>
 }
 

@@ -56,6 +56,12 @@ namespace com::cjmobileapps::quidditchplayers {
     );
 
     extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockStatusResponseWrapperGenericError(
+        JNIEnv *env,
+        jobject /* this */
+    );
+
+    extern "C" JNIEXPORT jobject JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockHouses(
         JNIEnv *env,
         jobject /* this */
@@ -97,6 +103,12 @@ namespace com::cjmobileapps::quidditchplayers {
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockTrueResponseWrapper(
         JNIEnv *env,
         jobject /* this */
+    );
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockBooleanResponseWrapperGenericError(
+        JNIEnv *env,
+        jobject thisJObject /* this */
     );
 } // namespace com::cjmobileapps::quidditchplayers
 

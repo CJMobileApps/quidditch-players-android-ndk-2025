@@ -169,7 +169,7 @@ class PlayerListViewModelImplTest : BaseAndroidTest() {
             assertTrue(playerListState is PlayersListViewModelImpl.PlayersListState.LoadingState)
 
             // when
-            coEvery { mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockBooleanResponseWrapperGenericError
+            coEvery { mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getMockBooleanResponseWrapperGenericError()
             coEvery { mockQuidditchPlayersUseCase.getAllPlayersToDB(capture(playerEntityResponseWrapperArgumentCaptor)) } returns Unit
             coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockStatusResponseWrapper
 
@@ -333,7 +333,7 @@ class PlayerListViewModelImplTest : BaseAndroidTest() {
 
             // when
             every { mockSavedStateHandle.get<String>("houseName") } returns HouseName.RAVENCLAW.name
-            coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockStatusResponseWrapperGenericError
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getMockStatusResponseWrapperGenericError()
 
             // then
             setupPlayerListViewModel()

@@ -121,7 +121,7 @@ class HouseViewModelImplTest : BaseAndroidTest() {
             assertTrue((housesState is HousesViewModelImpl.HousesState.LoadingState))
 
             // when
-            coEvery { mockQuidditchPlayersUseCase.fetchHousesApi() } returns MockDataFromCPP.mockBooleanResponseWrapperGenericError
+            coEvery { mockQuidditchPlayersUseCase.fetchHousesApi() } returns MockDataFromCPP.getMockBooleanResponseWrapperGenericError()
             coEvery { mockQuidditchPlayersUseCase.getHousesFromDB(capture(housesResponseWrapperArgumentCaptor)) } returns Unit
 
             // then
