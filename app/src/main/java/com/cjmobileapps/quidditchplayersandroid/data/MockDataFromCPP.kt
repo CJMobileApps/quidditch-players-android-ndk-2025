@@ -3,7 +3,6 @@ package com.cjmobileapps.quidditchplayersandroid.data
 import com.cjmobileapps.quidditchplayersandroid.data.MockData.mockPositions
 import com.cjmobileapps.quidditchplayersandroid.data.model.Error
 import com.cjmobileapps.quidditchplayersandroid.data.model.House
-import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.data.model.Player
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerEntity
 import com.cjmobileapps.quidditchplayersandroid.data.model.Position
@@ -15,7 +14,6 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersEntities
 import kotlinx.coroutines.CompletableDeferred
 import retrofit2.Response
 import java.net.HttpURLConnection
-import java.util.UUID
 
 object MockDataFromCPP {
     init {
@@ -60,9 +58,11 @@ object MockDataFromCPP {
 
     external fun getMockAllQuidditchTeamsResponseWrapper(): ResponseWrapper<List<Player>>
 
+    external fun getRavenclawTeam(): List<Player>
+
     val mockRavenclawPlayersResponseWrapper =
         ResponseWrapper(
-            data = ravenclawTeam(),
+            data = getRavenclawTeam(),
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
@@ -78,140 +78,18 @@ object MockDataFromCPP {
             mockRavenclawPlayersResponseSuccess,
         )
 
-    /*** all players data ***/
-
-
-    fun ravenclawTeam() =
-        listOf(
-            Player(
-                id = UUID.fromString("aa7fb66e-827f-42db-9aac-974c87b35504"),
-                firstName = "Cho",
-                lastName = "Chang",
-                yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
-                imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/1/1e/Cho_Chang.jpg/revision/latest?cb=20180322164130",
-                position = SEEKER,
-                house = HouseName.RAVENCLAW,
-                favoriteSubject = "Apparition",
-            ),
-            Player(
-                id = UUID.fromString("ef968277-e996-4eca-8f94-1928dde4a979"),
-                firstName = "Grant",
-                lastName = "Page",
-                yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
-                imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/9/93/GrantPage.png/revision/latest?cb=20130320232028",
-                position = KEEPER,
-                favoriteSubject = "Charms",
-                house = HouseName.RAVENCLAW,
-            ),
-            Player(
-                id = UUID.fromString("cdf95045-8df9-4609-bb26-5d4752823022"),
-                firstName = "Duncan",
-                lastName = "Inglebee",
-                yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
-                imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/2/29/Dinglebee.png/revision/latest?cb=20140827133418",
-                position = BEATER,
-                favoriteSubject = "Astronomy",
-                house = HouseName.RAVENCLAW,
-            ),
-            Player(
-                id = UUID.fromString("870d5078-584d-4d34-9ff9-303db6c03992"),
-                firstName = "Jason",
-                lastName = "Samuels",
-                yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
-                position = BEATER,
-                favoriteSubject = "Transfiguration",
-                imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/1/1b/Jasonsamuelsqwc.png/revision/latest?cb=20140827133708",
-                house = HouseName.RAVENCLAW,
-            ),
-            Player(
-                id = UUID.fromString("8726e642-65a9-4dd7-b8eb-08f2a5850f4d"),
-                firstName = "Randolph",
-                lastName = "Burrow",
-                yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
-                position = CHASER,
-                favoriteSubject = "Advanced Arithmancy Studies",
-                imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/0/07/RandolphBurrow.png/revision/latest?cb=20130320231816",
-                house = HouseName.RAVENCLAW,
-            ),
-            Player(
-                id = UUID.fromString("f8f11664-a932-4e93-b93f-1d8ca4c0cf48"),
-                firstName = "Jeremy",
-                lastName = "Stretton",
-                yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                ),
-                position = CHASER,
-                favoriteSubject = "Alchemy",
-                imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/0/06/Jeremy_Stretton_Cleansweep_Seven.jpg/revision/latest?cb=20091020205540",
-                house = HouseName.RAVENCLAW,
-            ),
-            Player(
-                id = UUID.fromString("c2fe9d3a-140d-439d-9f15-2f48475eee51"),
-                firstName = "Roger",
-                lastName = "Davies",
-                yearsPlayed =
-                listOf(
-                    1993,
-                    1994,
-                    1995,
-                    1996,
-                ),
-                imageUrl = "https://static.wikia.nocookie.net/harrypotter/images/e/e5/Roger_Davies.jpg/revision/latest?cb=20180322052136",
-                position = CHASER,
-                favoriteSubject = "Apparition",
-                house = HouseName.RAVENCLAW,
-            ),
-        )
-
-
-
     /*** positions ***/
-
-    private const val CHASER = 1
-    private const val BEATER = 2
-    private const val KEEPER = 3
-    private const val SEEKER = 4
 
     external fun getMockPositions(): Map<Int, Position>
 
     external fun getMockPositionsResponseWrapper(): ResponseWrapper<Map<Int, Position>>
-
-    private val mockPositionsResponseWrapper =
-        ResponseWrapper(
-            data = mockPositions,
-            statusCode = HttpURLConnection.HTTP_OK,
-        )
 
     private val mockPositionsGenericErrorResponseWrapper: ResponseWrapper<Map<Int, Position>> =
         ResponseWrapperUtil.createResponseWrapperError(
             Error(isError = true, message = "Some error"),
         )
 
-    private val mockPositionsResponseSuccess = Response.success(mockPositionsResponseWrapper)
+    private val mockPositionsResponseSuccess = Response.success(getMockPositionsResponseWrapper())
 
     val mockPositionsDeferredResponseSuccess =
         CompletableDeferred(
@@ -220,7 +98,7 @@ object MockDataFromCPP {
 
     /*** players entity ***/
 
-    val mockRavenclawPlayersEntities = ravenclawTeam().toPlayersEntities(mockPositions)
+    val mockRavenclawPlayersEntities = getRavenclawTeam().toPlayersEntities(mockPositions)
 
     val mockRavenclawPlayersEntitiesResponseWrapper = ResponseWrapperUtil.createResponseWrapperSuccess(mockRavenclawPlayersEntities)
 
@@ -238,13 +116,13 @@ object MockDataFromCPP {
     val mockRavenclawPlayersAndPositionsResponseWrappers =
         ResponseWrappers(
             responseWrapper1 = mockRavenclawPlayersResponseWrapper,
-            responseWrapper2 = mockPositionsResponseWrapper,
+            responseWrapper2 = getMockPositionsResponseWrapper(),
         )
 
     val mockRavenclawPlayersErrorAndPositionsResponseWrappers =
         ResponseWrappers(
             responseWrapper1 = mockRavenclawPGenericErrorResponseWrapper,
-            responseWrapper2 = mockPositionsResponseWrapper,
+            responseWrapper2 = getMockPositionsResponseWrapper(),
         )
 
     val mockRavenclawPlayersAndPositionsErrorResponseWrappers =
@@ -263,7 +141,7 @@ object MockDataFromCPP {
 
     //todo update in cpp
     fun mockStatus(): Status {
-        val player = ravenclawTeam().first()
+        val player = getRavenclawTeam().first()
         val name = "${player.firstName} ${player.lastName}"
         return Status(
             playerId = player.id,
@@ -277,16 +155,9 @@ object MockDataFromCPP {
             statusCode = HttpURLConnection.HTTP_OK,
         )
 
-    private val mockStatusResponseSuccess = Response.success(mockStatusResponseWrapper)
+    external fun getMockStatusResponseWrapperGenericError(): ResponseWrapper<Status>
 
-    val mockStatusResponseWrapperGenericError =
-        ResponseWrapperUtil.createResponseWrapperError<Status>(
-            error =
-            Error(
-                isError = true,
-                message = "Some error",
-            ),
-        )
+    private val mockStatusResponseSuccess = Response.success(mockStatusResponseWrapper)
 
     val mockStatusDeferredResponseSuccess =
         CompletableDeferred(
@@ -295,15 +166,8 @@ object MockDataFromCPP {
 
     /*** Response Wrapper Boolean ***/
 
-    val mockTrueResponseWrapper = ResponseWrapperUtil.createResponseWrapperSuccess(true)
+    external fun getMockTrueResponseWrapper(): ResponseWrapper<Boolean>
 
-    val mockBooleanResponseWrapperGenericError =
-        ResponseWrapperUtil.createResponseWrapperError<Boolean>(
-            error =
-            Error(
-                isError = true,
-                message = "Some error",
-            ),
-        )
+    external fun getMockBooleanResponseWrapperGenericError(): ResponseWrapper<Boolean>
 }
 

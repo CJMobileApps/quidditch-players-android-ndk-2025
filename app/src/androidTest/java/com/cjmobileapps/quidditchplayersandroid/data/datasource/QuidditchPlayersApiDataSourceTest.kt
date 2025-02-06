@@ -101,7 +101,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
     fun fetchStatusByPlayerIdSuccessFlow() =
         runTest {
             // given
-            val playerId = MockDataFromCPP.ravenclawTeam().first().id.toString()
+            val playerId = MockDataFromCPP.getRavenclawTeam().first().id.toString()
 
             // when
             coEvery { mockQuidditchPlayersApi.fetchStatusByPlayerId(playerId = playerId) } returns MockDataFromCPP.mockStatusDeferredResponseSuccess

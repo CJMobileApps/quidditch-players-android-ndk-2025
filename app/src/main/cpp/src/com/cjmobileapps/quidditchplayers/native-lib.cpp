@@ -212,6 +212,68 @@ namespace com::cjmobileapps::quidditchplayers {
         return statusObject;
     }
 
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockStatusResponseWrapperGenericError(
+        JNIEnv *env,
+        jobject /* this */
+    ) {
+        // Create a Status object in C++
+        model::Status status = data::MockData::getMockStatus();
+
+        // Convert C++ Status to Java/Kotlin equivalent
+        jclass statusClass = env->FindClass(
+            "com/cjmobileapps/quidditchplayersandroid/data/model/Status");
+        jmethodID statusConstructor = env->
+                GetMethodID(statusClass, "<init>", "(Ljava/util/UUID;Ljava/lang/String;)V");
+
+        jstring playerId = env->NewStringUTF("bcd59c9c-7c22-418c-81a8-4f2a722af352");
+        jstring statusStr = env->NewStringUTF(status.status.c_str());
+
+        jobject playerIdObject = convertCppUuidStringToUuidObject(env,
+                                                                  "bcd59c9c-7c22-418c-81a8-4f2a722af352");
+
+
+        jobject statusObject = env->NewObject(statusClass, statusConstructor, playerIdObject,
+                                              statusStr);
+
+        // Create an Error object for ResponseWrapper
+        jclass errorClass = env->FindClass(
+            "com/cjmobileapps/quidditchplayersandroid/data/model/Error");
+        jmethodID errorConstructor = env->GetMethodID(errorClass, "<init>",
+                                                      "(ZLjava/lang/String;)V");
+
+        jboolean isError = true; // Example: No error
+        jstring errorMessage = env->NewStringUTF("Some error"); // Empty error message
+
+        jobject errorObject = env->NewObject(errorClass, errorConstructor, isError, errorMessage);
+
+        // Create a ResponseWrapper object
+        jclass responseWrapperClass = env->FindClass(
+            "com/cjmobileapps/quidditchplayersandroid/data/model/ResponseWrapper");
+        jmethodID responseWrapperConstructor = env->GetMethodID(
+            responseWrapperClass,
+            "<init>",
+            "(Ljava/lang/Object;Lcom/cjmobileapps/quidditchplayersandroid/data/model/Error;I)V"
+        );
+
+        jint statusCode = network::HttpStatus::HTTP_BAD_REQUEST;
+
+        jobject responseWrapperObject = env->NewObject(
+            responseWrapperClass,
+            responseWrapperConstructor,
+            statusObject,
+            errorObject,
+            statusCode
+        );
+
+        // Release local references
+        env->DeleteLocalRef(playerId);
+        env->DeleteLocalRef(statusStr);
+        env->DeleteLocalRef(errorMessage);
+
+        return responseWrapperObject;
+    }
+
     extern "C" {
     JNIEXPORT jobject JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockHouses(
@@ -595,16 +657,17 @@ namespace com::cjmobileapps::quidditchplayers {
     }
 
     extern "C" JNIEXPORT jobject JNICALL
-   Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockAllQuidditchTeamsResponseWrapper(
-       JNIEnv *env,
-       jobject thisJObject/* this */
-   ) {
-
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockAllQuidditchTeamsResponseWrapper(
+        JNIEnv *env,
+        jobject thisJObject /* this */
+    ) {
         // Create a Status object in C++
         //todo this is wrong delete
 
         // Convert C++ Status to Java/Kotlin equivalent
-        const jobject allQuidditchTeamsObject = Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockAllQuidditchTeams(env, thisJObject);
+        const jobject allQuidditchTeamsObject =
+                Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockAllQuidditchTeams(
+                    env, thisJObject);
 
         //todo user this later to return error
         // Create an Error object for ResponseWrapper
@@ -640,6 +703,137 @@ namespace com::cjmobileapps::quidditchplayers {
 
         return responseWrapperObject;
     }
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getRavenclawTeam(
+        JNIEnv *env,
+        jobject /* this */
+    ) {
+        auto players = data::MockData::getRavenclawTeam();
+
+        // Create a Java List to hold the players
+        jclass listClass = env->FindClass("java/util/ArrayList");
+        jmethodID listConstructor = env->GetMethodID(listClass, "<init>", "()V");
+        jmethodID listAddMethod = env->GetMethodID(listClass, "add", "(Ljava/lang/Object;)Z");
+        jobject playerList = env->NewObject(listClass, listConstructor);
+
+        for (const auto &player: players) {
+            jobject playerObj = convertPlayerCppToKotlinObject(env, player);
+            env->CallBooleanMethod(playerList, listAddMethod, playerObj);
+        }
+
+        return playerList;
+    }
+
+    jobject createJavaBoolean(JNIEnv *env, bool value) {
+        jclass booleanClass = env->FindClass("java/lang/Boolean");
+        jmethodID constructor = env->GetMethodID(booleanClass, "<init>", "(Z)V");
+        return env->NewObject(booleanClass, constructor, static_cast<jboolean>(value));
+    }
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockTrueResponseWrapper(
+        JNIEnv *env,
+        jobject thisJObject /* this */
+    ) {
+        // Create a Status object in C++
+        //todo this is wrong delete
+
+        // Convert C++ Status to Java/Kotlin equivalent
+        // const jobject allQuidditchTeamsObject = Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockAllQuidditchTeams(env, thisJObject);
+        jobject jbooleanTrueObject = createJavaBoolean(env, true);
+
+        //todo user this later to return error
+        // Create an Error object for ResponseWrapper
+        //        jclass errorClass = env->FindClass(
+        //                "com/cjmobileapps/quidditchplayersandroid/data/model/Error");
+        //        jmethodID errorConstructor = env->GetMethodID(errorClass, "<init>",
+        //                                                      "(ZLjava/lang/String;)V");
+        //
+        //        jboolean isError = JNI_FALSE; // Example: No error
+        //        jstring errorMessage = env->NewStringUTF(""); // Empty error message
+        //
+        //        jobject errorObject = env->NewObject(errorClass, errorConstructor, isError, errorMessage);
+
+        // Create a ResponseWrapper object
+        jclass responseWrapperClass = env->FindClass(
+            "com/cjmobileapps/quidditchplayersandroid/data/model/ResponseWrapper");
+        jmethodID responseWrapperConstructor = env->GetMethodID(
+            responseWrapperClass, "<init>",
+            "(Ljava/lang/Object;Lcom/cjmobileapps/quidditchplayersandroid/data/model/Error;I)V"
+        );
+
+        jint statusCode = network::HttpStatus::HTTP_OK;
+
+        jobject errorObject = nullptr;
+
+
+        jobject responseWrapperObject = env->NewObject(
+            responseWrapperClass,
+            responseWrapperConstructor,
+            jbooleanTrueObject,
+            errorObject,
+            statusCode
+        );
+
+        return responseWrapperObject;
+    }
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockBooleanResponseWrapperGenericError(
+        JNIEnv *env,
+        jobject thisJObject /* this */
+    ) {
+        // Create a Status object in C++
+        //todo this is wrong delete
+
+        // Convert C++ Status to Java/Kotlin equivalent
+        // const jobject allQuidditchTeamsObject = Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockAllQuidditchTeams(env, thisJObject);
+        jobject jbooleanTrueObject = nullptr;
+
+        //todo user this later to return error
+        // Create an Error object for ResponseWrapper
+        jclass errorClass = env->FindClass(
+            "com/cjmobileapps/quidditchplayersandroid/data/model/Error");
+        jmethodID errorConstructor = env->GetMethodID(errorClass, "<init>",
+                                                      "(ZLjava/lang/String;)V");
+
+        jboolean isError = true; // Example: No error
+        jstring errorMessage = env->NewStringUTF("Some error"); // Empty error message
+
+        jobject errorObject = env->NewObject(errorClass, errorConstructor, isError, errorMessage);
+
+        // Create a ResponseWrapper object
+        jclass responseWrapperClass = env->FindClass(
+            "com/cjmobileapps/quidditchplayersandroid/data/model/ResponseWrapper");
+        jmethodID responseWrapperConstructor = env->GetMethodID(
+            responseWrapperClass, "<init>",
+            "(Ljava/lang/Object;Lcom/cjmobileapps/quidditchplayersandroid/data/model/Error;I)V"
+        );
+
+        jint statusCode = network::HttpStatus::HTTP_BAD_REQUEST;
+
+        jobject responseWrapperObject = env->NewObject(
+            responseWrapperClass,
+            responseWrapperConstructor,
+            jbooleanTrueObject,
+            errorObject,
+            statusCode
+        );
+
+        return responseWrapperObject;
+    }
+
+    // val mockTrueResponseWrapper = ResponseWrapperUtil.createResponseWrapperSuccess(true)
+    //
+    // val mockBooleanResponseWrapperGenericError =
+    //     ResponseWrapperUtil.createResponseWrapperError<Boolean>(
+    //         error =
+    //         Error(
+    //             isError = true,
+    //             message = "Some error",
+    //         ),
+    //     )
 
 
     //

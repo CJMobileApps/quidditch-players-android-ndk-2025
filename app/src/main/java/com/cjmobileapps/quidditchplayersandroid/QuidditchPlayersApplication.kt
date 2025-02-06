@@ -35,5 +35,7 @@ class QuidditchPlayersApplication : Application() {
         }
 
         println("HERE_  getMockAllQuidditchTeamsResponseWrapper(): " + MockDataFromCPP.getMockAllQuidditchTeamsResponseWrapper())
+        println("HERE_  MockDataFromCPP.getMockTrueResponseWrapper(): " + MockDataFromCPP.getMockTrueResponseWrapper())
+        println("HERE_  MockDataFromCPP.getMockBooleanResponseWrapperGenericError() " + MockDataFromCPP.getMockBooleanResponseWrapperGenericError())
     }
 }

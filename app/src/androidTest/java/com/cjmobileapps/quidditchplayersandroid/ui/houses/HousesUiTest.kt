@@ -9,7 +9,6 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.cjmobileapps.quidditchplayersandroid.data.MockData
 import com.cjmobileapps.quidditchplayersandroid.data.MockDataFromCPP
 import com.cjmobileapps.quidditchplayersandroid.data.model.HouseName
 import com.cjmobileapps.quidditchplayersandroid.data.model.PlayerState
@@ -38,7 +37,7 @@ class HousesUiTest {
                 // given
                 // Ravenclaw player
                 val player =
-                    MockDataFromCPP.ravenclawTeam()
+                    MockDataFromCPP.getRavenclawTeam()
                         .first()
                         .toPlayerEntity(MockDataFromCPP.getMockPositions())
                         .toPlayerState()
