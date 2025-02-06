@@ -259,7 +259,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
     fun fetchStatusByHouseName_happy_success_flow() =
         runTest {
             // when
-            coEvery { mockQuidditchPlayersRepository.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockStatusResponseWrapper
+            coEvery { mockQuidditchPlayersRepository.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getResponseWrapperMockStatus()
 
             // then
             setupQuidditchPlayersUseCase()
@@ -267,7 +267,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockDataFromCPP.mockStatusResponseWrapper,
+                MockDataFromCPP.getResponseWrapperMockStatus(),
                 status,
             )
         }
@@ -279,7 +279,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
             val playerId = MockDataFromCPP.getRavenclawTeam().first().id.toString()
 
             // when
-            coEvery { mockQuidditchPlayersRepository.fetchStatusByPlayerId(playerId) } returns MockDataFromCPP.mockStatusResponseWrapper
+            coEvery { mockQuidditchPlayersRepository.fetchStatusByPlayerId(playerId) } returns MockDataFromCPP.getResponseWrapperMockStatus()
 
             // then
             setupQuidditchPlayersUseCase()
@@ -287,7 +287,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockDataFromCPP.mockStatusResponseWrapper,
+                MockDataFromCPP.getResponseWrapperMockStatus(),
                 status,
             )
         }

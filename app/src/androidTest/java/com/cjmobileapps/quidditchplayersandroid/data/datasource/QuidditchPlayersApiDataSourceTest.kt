@@ -92,7 +92,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockDataFromCPP.mockStatusResponseWrapper,
+                MockDataFromCPP.getResponseWrapperMockStatus(),
                 status,
             )
         }
@@ -112,7 +112,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockDataFromCPP.mockStatusResponseWrapper,
+                MockDataFromCPP.getResponseWrapperMockStatus(),
                 status,
             )
         }

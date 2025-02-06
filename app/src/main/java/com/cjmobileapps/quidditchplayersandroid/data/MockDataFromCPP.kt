@@ -139,25 +139,9 @@ object MockDataFromCPP {
 
     fun getStatus(name: String) = String.format("%s is breaking into the Ministry of Magic %s", name, "\uD83D\uDD2E")
 
-    //todo update in cpp
-    fun mockStatus(): Status {
-        val player = getRavenclawTeam().first()
-        val name = "${player.firstName} ${player.lastName}"
-        return Status(
-            playerId = player.id,
-            status = getStatus(name),
-        )
-    }
-
-    val mockStatusResponseWrapper =
-        ResponseWrapper(
-            data = mockStatus(),
-            statusCode = HttpURLConnection.HTTP_OK,
-        )
-
     external fun getMockStatusResponseWrapperGenericError(): ResponseWrapper<Status>
 
-    private val mockStatusResponseSuccess = Response.success(mockStatusResponseWrapper)
+    private val mockStatusResponseSuccess = Response.success(getResponseWrapperMockStatus())
 
     val mockStatusDeferredResponseSuccess =
         CompletableDeferred(

@@ -49,7 +49,7 @@ class PlayerDetailViewModelImplTest : BaseAndroidTest() {
             // when
             every { mockSavedStateHandle.get<String>("playerId") } returns mockRavenPlayerId
             every { mockQuidditchPlayersUseCase.currentPlayer } returns mockRavenPlayer
-            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockDataFromCPP.mockStatusResponseWrapper
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockDataFromCPP.getResponseWrapperMockStatus()
 
             // then init setup
             setupPlayerDetailViewModel()
@@ -212,7 +212,7 @@ class PlayerDetailViewModelImplTest : BaseAndroidTest() {
             // when
             every { mockSavedStateHandle.get<String>("playerId") } returns mockRavenPlayerId
             every { mockQuidditchPlayersUseCase.currentPlayer } returns null
-            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockDataFromCPP.mockStatusResponseWrapper
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByPlayerId(mockRavenPlayerId) } returns MockDataFromCPP.getResponseWrapperMockStatus()
 
             // then init setup
             setupPlayerDetailViewModel()
