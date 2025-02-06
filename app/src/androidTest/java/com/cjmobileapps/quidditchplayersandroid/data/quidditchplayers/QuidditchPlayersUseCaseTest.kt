@@ -138,14 +138,14 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
         runTest {
             // when
             coEvery { mockQuidditchPlayersRepository.fetchPlayersAndPositions(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockRavenclawPlayersAndPositionsResponseWrappers
-            coEvery { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) } returns Unit
+            coEvery { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.getRavenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) } returns Unit
 
             // then
             setupQuidditchPlayersUseCase()
             val playersAndPositionsApisResponse = quidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name)
 
             // verify
-            coVerify { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
+            coVerify { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.getRavenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
             assertEquals(
                 MockDataFromCPP.getMockTrueResponseWrapper(),
                 playersAndPositionsApisResponse,
@@ -163,7 +163,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
             val playersAndPositionsApisResponse = quidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name)
 
             // verify
-            coVerify(exactly = 0) { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
+            coVerify(exactly = 0) { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.getRavenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
             assertEquals(
                 MockDataFromCPP.getMockBooleanResponseWrapperGenericError(),
                 playersAndPositionsApisResponse,
@@ -181,7 +181,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
             val playersAndPositionsApisResponse = quidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name)
 
             // verify
-            coVerify(exactly = 0) { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
+            coVerify(exactly = 0) { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.getRavenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
             assertEquals(
                 MockDataFromCPP.getMockBooleanResponseWrapperGenericError(),
                 playersAndPositionsApisResponse,
@@ -193,14 +193,14 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
         runTest {
             // when
             coEvery { mockQuidditchPlayersRepository.fetchPlayersAndPositions(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockRavenclawPlayersAndPositionsResponseWrappers
-            coEvery { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) } throws RuntimeException("Some error")
+            coEvery { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.getRavenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) } throws RuntimeException("Some error")
 
             // then
             setupQuidditchPlayersUseCase()
             val playersAndPositionsApisResponse = quidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name)
 
             // verify
-            coVerify(exactly = 1) { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
+            coVerify(exactly = 1) { mockQuidditchPlayersRepository.createPlayersByHouseToDB(MockDataFromCPP.getRavenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions())) }
             assertEquals(
                 MockDataFromCPP.getMockBooleanResponseWrapperGenericError(),
                 playersAndPositionsApisResponse,
@@ -213,7 +213,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
             // given
             val mockGetAllPlayersPlayerEntityFlow: Flow<List<PlayerEntity>> =
                 flow {
-                    emit(MockDataFromCPP.ravenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions()))
+                    emit(MockDataFromCPP.getRavenclawTeam().toPlayersEntities(MockDataFromCPP.getMockPositions()))
                 }
 
             // when
@@ -276,7 +276,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
     fun fetchStatusByPlayerId_happy_success_flow() =
         runTest {
             // given
-            val playerId = MockDataFromCPP.ravenclawTeam().first().id.toString()
+            val playerId = MockDataFromCPP.getRavenclawTeam().first().id.toString()
 
             // when
             coEvery { mockQuidditchPlayersRepository.fetchStatusByPlayerId(playerId) } returns MockDataFromCPP.mockStatusResponseWrapper
@@ -296,7 +296,7 @@ class QuidditchPlayersUseCaseTest : BaseAndroidTest() {
     fun set_currentPlayer() {
         val playerState =
             MockDataFromCPP
-                .ravenclawTeam()
+                .getRavenclawTeam()
                 .first()
                 .toPlayerEntity(MockDataFromCPP.getMockPositions())
                 .toPlayerState()

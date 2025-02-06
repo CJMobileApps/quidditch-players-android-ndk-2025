@@ -704,6 +704,26 @@ namespace com::cjmobileapps::quidditchplayers {
         return responseWrapperObject;
     }
 
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getRavenclawTeam(
+        JNIEnv *env,
+        jobject /* this */
+    ) {
+        auto players = data::MockData::getRavenclawTeam();
+
+        // Create a Java List to hold the players
+        jclass listClass = env->FindClass("java/util/ArrayList");
+        jmethodID listConstructor = env->GetMethodID(listClass, "<init>", "()V");
+        jmethodID listAddMethod = env->GetMethodID(listClass, "add", "(Ljava/lang/Object;)Z");
+        jobject playerList = env->NewObject(listClass, listConstructor);
+
+        for (const auto &player: players) {
+            jobject playerObj = convertPlayerCppToKotlinObject(env, player);
+            env->CallBooleanMethod(playerList, listAddMethod, playerObj);
+        }
+
+        return playerList;
+    }
 
     jobject createJavaBoolean(JNIEnv *env, bool value) {
         jclass booleanClass = env->FindClass("java/lang/Boolean");
