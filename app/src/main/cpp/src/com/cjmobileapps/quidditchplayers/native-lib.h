@@ -76,10 +76,21 @@ namespace com::cjmobileapps::quidditchplayers {
     );
 
     extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockHousesGenericErrorResponseWrapper(
+        JNIEnv *env,
+        jobject thisJobject /* this */
+    );
+
+    extern "C" JNIEXPORT jobject JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockPositions(JNIEnv *env, jobject);
 
     extern "C" JNIEXPORT jobject JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockPositionsResponseWrapper(
+        JNIEnv *env,
+        jobject);
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockPositionsGenericErrorResponseWrapper(
         JNIEnv *env,
         jobject);
 
@@ -93,7 +104,7 @@ namespace com::cjmobileapps::quidditchplayers {
 
     extern "C" JNIEXPORT jobject JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockAllQuidditchTeamsResponseWrapper(
-        JNIEnv * env,
+        JNIEnv *env,
         jobject /* this */
     );
 
@@ -101,6 +112,18 @@ namespace com::cjmobileapps::quidditchplayers {
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getRavenclawTeam(
         JNIEnv *env,
         jobject /* this */
+    );
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockRavenclawPlayersResponseWrapper(
+        JNIEnv *env,
+        jobject thisJObject /* this */
+    );
+
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockRavenclawGenericErrorResponseWrapper(
+        JNIEnv *env,
+        jobject thisJObject /* this */
     );
 
     jobject createJavaBoolean(JNIEnv *env, bool value);

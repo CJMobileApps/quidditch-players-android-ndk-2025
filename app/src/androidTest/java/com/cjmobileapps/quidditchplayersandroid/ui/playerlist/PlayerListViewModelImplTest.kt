@@ -81,7 +81,7 @@ class PlayerListViewModelImplTest : BaseAndroidTest() {
             justRun { mockQuidditchPlayersUseCase.currentPlayer = any() }
             coEvery { mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getMockTrueResponseWrapper()
             coEvery { mockQuidditchPlayersUseCase.getAllPlayersToDB(capture(playerEntityResponseWrapperArgumentCaptor)) } returns Unit
-            coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockStatusResponseWrapper
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getResponseWrapperMockStatus()
 
             // then
             setupPlayerListViewModel()
@@ -171,7 +171,7 @@ class PlayerListViewModelImplTest : BaseAndroidTest() {
             // when
             coEvery { mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getMockBooleanResponseWrapperGenericError()
             coEvery { mockQuidditchPlayersUseCase.getAllPlayersToDB(capture(playerEntityResponseWrapperArgumentCaptor)) } returns Unit
-            coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockStatusResponseWrapper
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getResponseWrapperMockStatus()
 
             // then
             setupPlayerListViewModel()
@@ -210,7 +210,7 @@ class PlayerListViewModelImplTest : BaseAndroidTest() {
                 )
                 if (index == 0) {
                     assertEquals(
-                        MockDataFromCPP.mockStatus().status,
+                        MockDataFromCPP.getMockStatus().status,
                         playerState.status.value,
                     )
                 }
@@ -243,7 +243,7 @@ class PlayerListViewModelImplTest : BaseAndroidTest() {
             // when
             coEvery { mockQuidditchPlayersUseCase.fetchPlayersAndPositionsApis(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getMockTrueResponseWrapper()
             coEvery { mockQuidditchPlayersUseCase.getAllPlayersToDB(capture(playerEntityResponseWrapperArgumentCaptor)) } returns Unit
-            coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockStatusResponseWrapper
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getResponseWrapperMockStatus()
 
             // then
             setupPlayerListViewModel()
@@ -276,9 +276,10 @@ class PlayerListViewModelImplTest : BaseAndroidTest() {
             // given
             val mockRavenPlayers = MockDataFromCPP.mockRavenclawPlayersEntities.toPlayersState()
 
+
             // when
             coEvery { mockSavedStateHandle.get<String>("houseName") } returns HouseName.RAVENCLAW.name
-            coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockStatusResponseWrapper
+            coEvery { mockQuidditchPlayersUseCase.fetchStatusByHouseName(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getResponseWrapperMockStatus()
 
             // then
             setupPlayerListViewModel()
@@ -286,7 +287,7 @@ class PlayerListViewModelImplTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockDataFromCPP.mockStatus().status,
+                MockDataFromCPP.getMockStatus().status,
                 mockRavenPlayers.first().status.value,
             )
         }

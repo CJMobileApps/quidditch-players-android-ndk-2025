@@ -13,7 +13,6 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.Status
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersEntities
 import kotlinx.coroutines.CompletableDeferred
 import retrofit2.Response
-import java.net.HttpURLConnection
 
 object MockDataFromCPP {
     init {
@@ -42,10 +41,7 @@ object MockDataFromCPP {
 
     external fun getMockHousesResponseWrapper(): ResponseWrapper<List<House>>
 
-    val mockHousesGenericErrorResponseWrapper: ResponseWrapper<List<House>> =
-        ResponseWrapperUtil.createResponseWrapperError(
-            Error(isError = true, message = "Some error"),
-        )
+    external fun getMockHousesGenericErrorResponseWrapper(): ResponseWrapper<List<House>>
 
     private val mockHousesResponseSuccess: Response<ResponseWrapper<List<House>>> =
         Response.success(getMockHousesResponseWrapper())
@@ -60,18 +56,11 @@ object MockDataFromCPP {
 
     external fun getRavenclawTeam(): List<Player>
 
-    val mockRavenclawPlayersResponseWrapper =
-        ResponseWrapper(
-            data = getRavenclawTeam(),
-            statusCode = HttpURLConnection.HTTP_OK,
-        )
+    external fun getMockRavenclawPlayersResponseWrapper(): ResponseWrapper<List<Player>>
 
-    private val mockRavenclawPGenericErrorResponseWrapper: ResponseWrapper<List<Player>> =
-        ResponseWrapperUtil.createResponseWrapperError(
-            Error(isError = true, message = "Some error"),
-        )
+    private external fun getMockRavenclawGenericErrorResponseWrapper(): ResponseWrapper<List<Player>>
 
-    private val mockRavenclawPlayersResponseSuccess = Response.success(mockRavenclawPlayersResponseWrapper)
+    private val mockRavenclawPlayersResponseSuccess = Response.success(getMockRavenclawPlayersResponseWrapper())
 
     val mockRavenclawPlayersDeferredResponseSuccess =
         CompletableDeferred(
@@ -84,10 +73,7 @@ object MockDataFromCPP {
 
     external fun getMockPositionsResponseWrapper(): ResponseWrapper<Map<Int, Position>>
 
-    private val mockPositionsGenericErrorResponseWrapper: ResponseWrapper<Map<Int, Position>> =
-        ResponseWrapperUtil.createResponseWrapperError(
-            Error(isError = true, message = "Some error"),
-        )
+    private external fun getMockPositionsGenericErrorResponseWrapper(): ResponseWrapper<Map<Int, Position>>
 
     private val mockPositionsResponseSuccess = Response.success(getMockPositionsResponseWrapper())
 
@@ -104,8 +90,7 @@ object MockDataFromCPP {
 
     val mockRavenclawPlayersEntitiesResponseWrapperError =
         ResponseWrapperUtil.createResponseWrapperError<List<PlayerEntity>>(
-            error =
-            Error(
+            error = Error(
                 isError = true,
                 message = "Some error",
             ),
@@ -115,20 +100,20 @@ object MockDataFromCPP {
 
     val mockRavenclawPlayersAndPositionsResponseWrappers =
         ResponseWrappers(
-            responseWrapper1 = mockRavenclawPlayersResponseWrapper,
+            responseWrapper1 = getMockRavenclawPlayersResponseWrapper(),
             responseWrapper2 = getMockPositionsResponseWrapper(),
         )
 
     val mockRavenclawPlayersErrorAndPositionsResponseWrappers =
         ResponseWrappers(
-            responseWrapper1 = mockRavenclawPGenericErrorResponseWrapper,
+            responseWrapper1 = getMockRavenclawGenericErrorResponseWrapper(),
             responseWrapper2 = getMockPositionsResponseWrapper(),
         )
 
     val mockRavenclawPlayersAndPositionsErrorResponseWrappers =
         ResponseWrappers(
-            responseWrapper1 = mockRavenclawPlayersResponseWrapper,
-            responseWrapper2 = mockPositionsGenericErrorResponseWrapper,
+            responseWrapper1 = getMockRavenclawPlayersResponseWrapper(),
+            responseWrapper2 = getMockPositionsGenericErrorResponseWrapper(),
         )
 
     /*** status ***/
@@ -139,25 +124,9 @@ object MockDataFromCPP {
 
     fun getStatus(name: String) = String.format("%s is breaking into the Ministry of Magic %s", name, "\uD83D\uDD2E")
 
-    //todo update in cpp
-    fun mockStatus(): Status {
-        val player = getRavenclawTeam().first()
-        val name = "${player.firstName} ${player.lastName}"
-        return Status(
-            playerId = player.id,
-            status = getStatus(name),
-        )
-    }
-
-    val mockStatusResponseWrapper =
-        ResponseWrapper(
-            data = mockStatus(),
-            statusCode = HttpURLConnection.HTTP_OK,
-        )
-
     external fun getMockStatusResponseWrapperGenericError(): ResponseWrapper<Status>
 
-    private val mockStatusResponseSuccess = Response.success(mockStatusResponseWrapper)
+    private val mockStatusResponseSuccess = Response.success(getResponseWrapperMockStatus())
 
     val mockStatusDeferredResponseSuccess =
         CompletableDeferred(
@@ -170,4 +139,3 @@ object MockDataFromCPP {
 
     external fun getMockBooleanResponseWrapperGenericError(): ResponseWrapper<Boolean>
 }
-
