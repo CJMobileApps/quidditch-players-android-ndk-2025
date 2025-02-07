@@ -89,6 +89,11 @@ namespace com::cjmobileapps::quidditchplayers {
         JNIEnv *env,
         jobject);
 
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockPositionsGenericErrorResponseWrapper(
+        JNIEnv *env,
+        jobject);
+
     jobject convertPlayerCppToKotlinObject(JNIEnv *env, model::Player player);
 
     extern "C" JNIEXPORT jobject JNICALL
@@ -99,7 +104,7 @@ namespace com::cjmobileapps::quidditchplayers {
 
     extern "C" JNIEXPORT jobject JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockAllQuidditchTeamsResponseWrapper(
-        JNIEnv * env,
+        JNIEnv *env,
         jobject /* this */
     );
 

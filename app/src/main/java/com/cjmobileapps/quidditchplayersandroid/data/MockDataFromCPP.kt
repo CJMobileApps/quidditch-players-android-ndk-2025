@@ -13,7 +13,6 @@ import com.cjmobileapps.quidditchplayersandroid.data.model.Status
 import com.cjmobileapps.quidditchplayersandroid.data.model.toPlayersEntities
 import kotlinx.coroutines.CompletableDeferred
 import retrofit2.Response
-import java.net.HttpURLConnection
 
 object MockDataFromCPP {
     init {
@@ -74,10 +73,7 @@ object MockDataFromCPP {
 
     external fun getMockPositionsResponseWrapper(): ResponseWrapper<Map<Int, Position>>
 
-    private val mockPositionsGenericErrorResponseWrapper: ResponseWrapper<Map<Int, Position>> =
-        ResponseWrapperUtil.createResponseWrapperError(
-            Error(isError = true, message = "Some error"),
-        )
+    private external fun getMockPositionsGenericErrorResponseWrapper(): ResponseWrapper<Map<Int, Position>>
 
     private val mockPositionsResponseSuccess = Response.success(getMockPositionsResponseWrapper())
 
@@ -117,7 +113,7 @@ object MockDataFromCPP {
     val mockRavenclawPlayersAndPositionsErrorResponseWrappers =
         ResponseWrappers(
             responseWrapper1 = getMockRavenclawPlayersResponseWrapper(),
-            responseWrapper2 = mockPositionsGenericErrorResponseWrapper,
+            responseWrapper2 = getMockPositionsGenericErrorResponseWrapper(),
         )
 
     /*** status ***/
@@ -143,4 +139,3 @@ object MockDataFromCPP {
 
     external fun getMockBooleanResponseWrapperGenericError(): ResponseWrapper<Boolean>
 }
-
