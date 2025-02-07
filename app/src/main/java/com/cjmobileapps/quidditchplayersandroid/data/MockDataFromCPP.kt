@@ -18,19 +18,6 @@ object MockDataFromCPP {
     init {
         System.loadLibrary("quidditchplayersandroid")
     }
-
-    //todo delete
-    external fun stringFromJNI(): String
-
-    //todo delete
-    external fun stringFromJNI2()
-
-    //todo delete
-    external fun convertToKotlin(
-        playerId: String,
-        status: String,
-    ): Status
-
     /*** players entity ***/
 
     val mockPlayersEntities: List<PlayerEntity> = getMockAllQuidditchTeams().toPlayersEntities(mockPositions)

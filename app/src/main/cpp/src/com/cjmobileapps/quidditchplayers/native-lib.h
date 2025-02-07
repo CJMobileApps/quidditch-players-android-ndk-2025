@@ -10,14 +10,6 @@ extern "C" {
 #endif
 
 namespace com::cjmobileapps::quidditchplayers {
-    extern "C" JNIEXPORT jobject JNICALL
-    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_convertToKotlin(
-        JNIEnv *env,
-        jobject /* this */,
-        jstring playerId,
-        jstring status
-    );
-
     jobject convertCppUuidStringToUuidObject(JNIEnv *env, const std::string &uuidCppString);
 
     //todo add getMockStatus
