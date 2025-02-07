@@ -12,15 +12,6 @@ extern "C" {
 namespace com::cjmobileapps::quidditchplayers {
     jobject convertCppUuidStringToUuidObject(JNIEnv *env, const std::string &uuidCppString);
 
-    //todo add getMockStatus
-
-    extern "C" JNIEXPORT jstring JNICALL
-    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getStatus(
-        JNIEnv *env,
-        jobject /* this */,
-        jstring name
-    );
-
     extern "C" JNIEXPORT jobject JNICALL
     Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockStatus(
         JNIEnv *env,
