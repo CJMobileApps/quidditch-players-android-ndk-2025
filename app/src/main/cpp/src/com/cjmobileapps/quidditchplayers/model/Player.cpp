@@ -6,8 +6,8 @@
 namespace com::cjmobileapps::quidditchplayers::model {
 
     Player::Player(std::string id, std::string firstName, std::string lastName, std::vector<int> yearsPlayed,
-                   std::string favoriteSubject, int position, std::string imageUrl, HouseName house)
-        : id(id), firstName(std::move(firstName)), lastName(std::move(lastName)),
+                   std::string favoriteSubject, const int position, std::string imageUrl, const HouseName house)
+        : id(std::move(id)), firstName(std::move(firstName)), lastName(std::move(lastName)),
           yearsPlayed(std::move(yearsPlayed)), favoriteSubject(std::move(favoriteSubject)),
           position(position), imageUrl(std::move(imageUrl)), house(house) {}
 

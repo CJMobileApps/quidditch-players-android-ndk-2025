@@ -3,9 +3,6 @@
 
 #include "Error.h"
 
-#include <memory> // For smart pointers, if needed
-#include <string> // For std::string (if using Error class)
-
 namespace com::cjmobileapps::quidditchplayers::model {
 
     // Forward declaration of Error class

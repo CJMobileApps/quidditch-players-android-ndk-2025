@@ -17,10 +17,8 @@ int main() {
 
     //Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2();
 //    com::cjmobileapps::quidditchplayers::Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_stringFromJNI2();
-    com::cjmobileapps::quidditchplayers::blah();
 
     // // Create a Status object
-    // com::cjmobileapps::quidditchplayers::model::Status status("Player123", "Online");
     const auto status = com::cjmobileapps::quidditchplayers::data::MockData::getMockStatus();
 
     // //

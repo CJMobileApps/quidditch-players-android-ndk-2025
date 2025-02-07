@@ -1,22 +1,9 @@
 #include "ResponseWrapper.h"
 #include "Error.h"
 #include "Status.h"
-#include <iostream> // For debugging (if needed)
 #include <map>
 #include "House.h"
 #include "Positions.h"
-
-//TODO remove this move is
-// Defining the Error class here (simple example)
-// class com::cjmobileapps::quidditchplayers::model::Error {
-// public:
-//     bool isError;
-//     std::string message;
-//
-//     // Constructor for Error class
-//     Error(bool isError = false, const std::string& message = "")
-//         : isError(isError), message(message) {}
-// };
 
 // Template member function implementations
 namespace com::cjmobileapps::quidditchplayers::model {
@@ -56,8 +43,7 @@ namespace com::cjmobileapps::quidditchplayers::model {
     }
 }
 
-//TODO remove I dont think needed
-// // Explicit template instantiations (if needed for specific types)
+
 template class com::cjmobileapps::quidditchplayers::model::ResponseWrapper<int>;
 template class com::cjmobileapps::quidditchplayers::model::ResponseWrapper<
     com::cjmobileapps::quidditchplayers::model::Status>;

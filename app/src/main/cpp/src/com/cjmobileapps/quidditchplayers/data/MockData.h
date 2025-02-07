@@ -8,7 +8,6 @@
 #include "Status.h"
 #include "Player.h"
 
-
 namespace com::cjmobileapps::quidditchplayers::data {
     class MockData {
     public:

@@ -9,7 +9,7 @@ namespace com::cjmobileapps::quidditchplayers::model {
         std::string playerId;
         std::string status;
 
-        Status(const std::string &playerId, const std::string &status);
+        Status(std::string playerId, std::string status);
     };
 }
 
