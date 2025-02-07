@@ -6,8 +6,8 @@ project("quidditchplayersandroid")
 
 # TODO UNDO for testing with CLion
 # Find JNI and include its directories
-#find_package(JNI REQUIRED)
-#include_directories(${JNI_INCLUDE_DIRS})
+find_package(JNI REQUIRED)
+include_directories(${JNI_INCLUDE_DIRS})
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)

@@ -71,25 +71,9 @@ namespace com::cjmobileapps::quidditchplayers::data {
         return mockPositions;
     }
 
-    // static const model::ResponseWrapper<std::vector<model::House>> getMockHousesResponseWrapper() {
-    //
-    //     com::cjmobileapps::quidditchplayers::model::Error* error = new com::cjmobileapps::quidditchplayers::model::Error(true, "Something went wrong!");
-    //
-    //     static const model::ResponseWrapper<std::vector<model::House>> responseWrapperHouses(
-    //         getMockHouses(),
-    //         error,
-    //         network::HttpStatus::HTTP_OK
-    //     );
-    //
-    //     return responseWrapperHouses;
-    // }
-
     const model::ResponseWrapper<std::vector<model::House> > &
 
     MockData::getMockHousesResponseWrapper() {
-        //todo delete this use this some where else
-        model::Error *error = new model::Error(true, "Something went wrong!");
-
         const auto houses = getMockHouses();
 
         static const model::ResponseWrapper responseWrapperHouses(
@@ -442,11 +426,3 @@ namespace com::cjmobileapps::quidditchplayers::data {
         return allPlayers;
     }
 }
-
-
-//// Access the singleton instance and call its method
-//Singleton& instance = Singleton::getInstance();
-//instance.doSomething();
-//
-//// Additional calls will use the same instance
-//Singleton::getInstance().doSomething();

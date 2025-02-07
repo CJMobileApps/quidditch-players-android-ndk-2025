@@ -2,7 +2,7 @@
 
 namespace com::cjmobileapps::quidditchplayers::model {
     // Constructor
-    Error::Error(bool isError, std::string message)
+    Error::Error(const bool isError, std::string message)
         : isError(isError), message(std::move(message)) {
     }
 

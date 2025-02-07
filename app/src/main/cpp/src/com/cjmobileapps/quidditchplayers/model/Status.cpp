@@ -1,7 +1,7 @@
 #include "Status.h"
 
 namespace com::cjmobileapps::quidditchplayers::model {
-    Status::Status(const std::string &playerId, const std::string &status)
-        : playerId(playerId), status(status) {
+    Status::Status(std::string playerId, std::string status)
+        : playerId(std::move(playerId)), status(std::move(status)) {
     }
 }
