@@ -115,6 +115,12 @@ namespace com::cjmobileapps::quidditchplayers {
         jobject thisJObject /* this */
     );
 
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockRavenclawGenericErrorResponseWrapper(
+        JNIEnv *env,
+        jobject thisJObject /* this */
+    );
+
     jobject createJavaBoolean(JNIEnv *env, bool value);
 
     extern "C" JNIEXPORT jobject JNICALL

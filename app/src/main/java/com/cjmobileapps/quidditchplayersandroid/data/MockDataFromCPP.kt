@@ -59,10 +59,7 @@ object MockDataFromCPP {
 
     external fun getMockRavenclawPlayersResponseWrapper(): ResponseWrapper<List<Player>>
 
-    private val mockRavenclawPGenericErrorResponseWrapper: ResponseWrapper<List<Player>> =
-        ResponseWrapperUtil.createResponseWrapperError(
-            Error(isError = true, message = "Some error"),
-        )
+    private external fun getMockRavenclawGenericErrorResponseWrapper(): ResponseWrapper<List<Player>>
 
     private val mockRavenclawPlayersResponseSuccess = Response.success(getMockRavenclawPlayersResponseWrapper())
 
@@ -113,7 +110,7 @@ object MockDataFromCPP {
 
     val mockRavenclawPlayersErrorAndPositionsResponseWrappers =
         ResponseWrappers(
-            responseWrapper1 = mockRavenclawPGenericErrorResponseWrapper,
+            responseWrapper1 = getMockRavenclawGenericErrorResponseWrapper(),
             responseWrapper2 = getMockPositionsResponseWrapper(),
         )
 
