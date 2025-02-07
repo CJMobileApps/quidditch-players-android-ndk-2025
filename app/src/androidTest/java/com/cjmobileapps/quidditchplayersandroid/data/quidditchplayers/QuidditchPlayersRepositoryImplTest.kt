@@ -90,7 +90,7 @@ class QuidditchPlayersRepositoryImplTest : BaseAndroidTest() {
     fun getPlayersByHouseHappySuccessFlow() =
         runTest {
             // given
-            coEvery { mockQuidditchPlayersApiDataSource.getPlayersByHouse(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.mockRavenclawPlayersResponseWrapper
+            coEvery { mockQuidditchPlayersApiDataSource.getPlayersByHouse(HouseName.RAVENCLAW.name) } returns MockDataFromCPP.getMockRavenclawPlayersResponseWrapper()
 
             // then
             setupQuidditchPlayersRepositoryImpl()
@@ -98,7 +98,7 @@ class QuidditchPlayersRepositoryImplTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockDataFromCPP.mockRavenclawPlayersResponseWrapper,
+                MockDataFromCPP.getMockRavenclawPlayersResponseWrapper(),
                 players,
             )
         }

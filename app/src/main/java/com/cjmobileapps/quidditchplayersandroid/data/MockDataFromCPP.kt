@@ -57,18 +57,14 @@ object MockDataFromCPP {
 
     external fun getRavenclawTeam(): List<Player>
 
-    val mockRavenclawPlayersResponseWrapper =
-        ResponseWrapper(
-            data = getRavenclawTeam(),
-            statusCode = HttpURLConnection.HTTP_OK,
-        )
+    external fun getMockRavenclawPlayersResponseWrapper(): ResponseWrapper<List<Player>>
 
     private val mockRavenclawPGenericErrorResponseWrapper: ResponseWrapper<List<Player>> =
         ResponseWrapperUtil.createResponseWrapperError(
             Error(isError = true, message = "Some error"),
         )
 
-    private val mockRavenclawPlayersResponseSuccess = Response.success(mockRavenclawPlayersResponseWrapper)
+    private val mockRavenclawPlayersResponseSuccess = Response.success(getMockRavenclawPlayersResponseWrapper())
 
     val mockRavenclawPlayersDeferredResponseSuccess =
         CompletableDeferred(
@@ -111,7 +107,7 @@ object MockDataFromCPP {
 
     val mockRavenclawPlayersAndPositionsResponseWrappers =
         ResponseWrappers(
-            responseWrapper1 = mockRavenclawPlayersResponseWrapper,
+            responseWrapper1 = getMockRavenclawPlayersResponseWrapper(),
             responseWrapper2 = getMockPositionsResponseWrapper(),
         )
 
@@ -123,7 +119,7 @@ object MockDataFromCPP {
 
     val mockRavenclawPlayersAndPositionsErrorResponseWrappers =
         ResponseWrappers(
-            responseWrapper1 = mockRavenclawPlayersResponseWrapper,
+            responseWrapper1 = getMockRavenclawPlayersResponseWrapper(),
             responseWrapper2 = mockPositionsGenericErrorResponseWrapper,
         )
 

@@ -745,6 +745,37 @@ namespace com::cjmobileapps::quidditchplayers {
         return playerList;
     }
 
+    extern "C" JNIEXPORT jobject JNICALL
+    Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getMockRavenclawPlayersResponseWrapper(
+        JNIEnv *env,
+        jobject thisJObject /* this */
+    ) {
+        const auto ravenclawTeamObject =
+                Java_com_cjmobileapps_quidditchplayersandroid_data_MockDataFromCPP_getRavenclawTeam(env, thisJObject);
+
+        // Create a ResponseWrapper object
+        jclass responseWrapperClass = env->FindClass(
+            "com/cjmobileapps/quidditchplayersandroid/data/model/ResponseWrapper");
+        jmethodID responseWrapperConstructor = env->GetMethodID(
+            responseWrapperClass, "<init>",
+            "(Ljava/lang/Object;Lcom/cjmobileapps/quidditchplayersandroid/data/model/Error;I)V"
+        );
+
+        jint statusCode = network::HttpStatus::HTTP_OK;
+
+        jobject errorObject = nullptr;
+
+        jobject responseWrapperObject = env->NewObject(
+            responseWrapperClass,
+            responseWrapperConstructor,
+            ravenclawTeamObject,
+            errorObject,
+            statusCode
+        );
+
+        return responseWrapperObject;
+    }
+
     jobject createJavaBoolean(JNIEnv *env, bool value) {
         jclass booleanClass = env->FindClass("java/lang/Boolean");
         jmethodID constructor = env->GetMethodID(booleanClass, "<init>", "(Z)V");

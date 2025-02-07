@@ -57,7 +57,7 @@ class QuidditchPlayersApiDataSourceTest : BaseAndroidTest() {
 
             // verify
             assertEquals(
-                MockDataFromCPP.mockRavenclawPlayersResponseWrapper,
+                MockDataFromCPP.getMockRavenclawPlayersResponseWrapper(),
                 players,
             )
         }
